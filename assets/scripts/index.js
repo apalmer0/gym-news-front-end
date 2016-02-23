@@ -17,21 +17,22 @@ $(document).ready(() => {
   // initial page setup
 
   var toggleLoggedIn = function toggleLoggedIn() {
-    $('.login').hide();
-    $('.game').show();
+    $('.intro-page').hide();
     $('.logged-in').show();
     $('.logged-out').hide();
   };
 
   var toggleLoggedOut = function toggleLoggedOut() {
-    $('.login').show();
-    $('.game').hide();
+    $('.intro-page').show();
     $('.logged-out').show();
     $('.logged-in').hide();
   };
 
   var hidePageElements = function hidePageElements() {
-    $('.alert').hide();
+    $('.message-signout').hide();
+    $('.message-account-exists').hide();
+    $('.welcome').hide();
+    $('.password').hide();
     $('.wrong-password').hide();
   };
 

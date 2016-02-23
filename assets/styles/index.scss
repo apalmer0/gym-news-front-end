@@ -28,14 +28,8 @@ body {
 .password,
 .message-account-exists {
   font-family: sans-serif;
+  margin-top: 5%;
   position: fixed;
-  width: 100%;
-}
-
-.game {
-  height: 100%;
-  margin: 0 auto;
-  margin-top: 90px;
   width: 100%;
 }
 
@@ -48,11 +42,22 @@ body {
   font-size: 400%;
 }
 
-.login {
+.intro-page {
   background-color: $porch-blue;
   height: 1000px;
   margin-top: 50px;
   width: 100%;
+}
+
+.intro-page-section {
+  background-color: $gray;
+}
+
+.intro-page-image {
+  height: $image-width * .67;
+  opacity: .3;
+  position: relative;
+  width: $image-width;
 }
 
 .sign-up-hint {
@@ -61,20 +66,21 @@ body {
   font-size: 75%;
 }
 
-.section1 {
-  background-color: $gray;
-  padding: 20px;
-}
-
-.welcome-banner {
-  background-color: $white;
-  color: $gray;
-  height: 5%;
-  left: 0;
-  padding-bottom: 3%;
-  padding-top: 2%;
+.hero {
+  color: $white;
+  font-family: 'Podkova', serif;
+  margin-top: 5%;
   position: absolute;
   width: 100%;
+}
+
+.title {
+  font-size: 500%;
+}
+
+.subtitle {
+  font-size: 200%;
+  margin-top: 15%;
 }
 
 .column-content {
@@ -82,15 +88,8 @@ body {
   padding: 20px;
 }
 
-.section2 {
-  color: $gray;
-  margin-top: -20%;
-}
-
-.homepage-image {
-  height: $image-width * .67;
-  opacity: .3;
-  width: $image-width;
+.raised {
+  margin-top: -50%;
 }
 
 .wrong-password {

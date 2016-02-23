@@ -4,6 +4,7 @@
       <title>The Porch</title>
       <link rel='shortcut icon' href='assets/images/favicon.ico' type='image/x-icon'/ >
       <link href='https://fonts.googleapis.com/css?family=Raleway:900' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Podkova' rel='stylesheet' type='text/css'>
       <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
@@ -51,32 +52,35 @@
       <!-- end navbar -->
 
       <!-- pop-up messages -->
-      <div class="alert alert-info alert-dismissible message-signout" role="alert">
-        <strong>Adios!</strong> You've been signed out.
+      <div class="alert alert-success alert-dismissible welcome" role="alert">
+        <strong>Welcome!</strong> You've been logged in.
       </div>
       <div class="alert alert-warning alert-dismissible message-account-exists" role="alert">
         <strong>Hey!</strong> You've already got an account. Try signing in.
       </div>
-      <div class="alert alert-success alert-dismissible welcome" role="alert">
-        <strong>Welcome!</strong> You've been logged in. Prepare to tic tac toe your freaking face off.
-      </div>
       <div class="alert alert-info alert-dismissible password" role="alert">
         <strong>Booyah!</strong> Your password has been changed.
       </div>
+      <div class="alert alert-info alert-dismissible message-signout" role="alert">
+        <strong>Adios!</strong> You've been signed out.
+      </div>
       <!-- pop-up messages -->
 
-      <div class="login">
-        <div class="section1">
-          <div class="welcome-banner">
+      <div class="intro-page">
+        <div class="intro-page-section">
+          <div class="hero title">
             Welcome to The Porch.
           </div>
-          <img class="homepage-image" src="assets/images/pic1.jpg">
+          <div class="hero subtitle">
+            Climbing. Community. News.
+          </div>
+          <img class="intro-page-image" src="assets/images/pic1.jpg">
         </div>
         <div class='container'>
-          <div class="section2">
+          <div class="intro-page-section">
             <div class='row'>
               <div class='col-md-4'>
-                <div class="well">
+                <div class="well raised">
                   <div class="glyphicon glyphicon-user" aria-hidden="true"></div>
                   <div>Create an account</div>
                   <p class="column-content">Most places let you just play tic-tac-toe whenever you want. Here,
@@ -87,7 +91,7 @@
                 </div>
               </div>
               <div class='col-md-4'>
-                <div class="well">
+                <div class="well raised">
                   <div class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></div>
                   <div>Compete against friends</div>
                   <p class="column-content">Sick of playing tic-tac-toe by yourself? Well, you're probably the only person
@@ -98,7 +102,7 @@
                 </div>
               </div>
               <div class='col-md-4'>
-                <div class="well">
+                <div class="well raised">
                   <div class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></div>
                   <div>Look at this tree</div>
                   <p class="column-content">You might think it's just a tree, and you'd be right. But what kind of tree is it?
@@ -110,11 +114,9 @@
             </div>
           </div>
         </div>
-        <div class="container">
-          <div class="section3">
-          </div>
+        <div class="intro-page-section">
+          <img class="intro-page-image" src="assets/images/pic2.jpg">
         </div>
-
       </div>
 
       <!-- game board -->
