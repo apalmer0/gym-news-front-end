@@ -3,10 +3,11 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 
 $background-color: #000;
-$font-color: #458b00;
+$font-color: #006ba6;
 $white: #fff;
 $black: #000;
 $blue: #0198e1;
+$porch-blue: #006ba6;
 $gray: #282828;
 $light-gray: #d3d3d3;
 $red: #f00;
@@ -23,15 +24,9 @@ body {
 }
 
 .welcome,
-.winner-message,
-.tie-message,
 .message-signout,
 .password,
-.message-account-exists,
-.deathmatch-started,
-.yo-wait,
-.player-quit,
-.opp-quit {
+.message-account-exists {
   font-family: sans-serif;
   position: fixed;
   width: 100%;
@@ -44,19 +39,6 @@ body {
   width: 100%;
 }
 
-table {
-  color: $white;
-  font-size: 200%;
-  height: 20%;
-  margin: 0 auto;
-}
-
-.all-games {
-  color: $font-color;
-  font-size: 90%;
-  width: 80%;
-}
-
 .modal-body {
   max-height: calc(100vh - 210px);
   overflow-y: auto;
@@ -67,7 +49,7 @@ table {
 }
 
 .login {
-  background-color: $blue;
+  background-color: $porch-blue;
   height: 1000px;
   margin-top: 50px;
   width: 100%;
@@ -119,13 +101,6 @@ table {
   z-index: 1;
 }
 
-.test {
-  background-color: $blue;
-  cursor: pointer;
-  height: 100px;
-  margin: 0 auto;
-  width: 100px;
-}
 
 // this will be applied for browsers up to 563px wide
 @media (max-width: 500px) {
@@ -134,10 +109,6 @@ table {
     height: 60%;
     margin: 0 auto;
     width: 80%;
-  }
-
-  table {
-    width: 70%;
   }
 
   .overlay {
@@ -154,9 +125,6 @@ table {
     width: 400px;
   }
 
-  table {
-    width: 40%;
-  }
 }
 
 // this will be applied for browsers bigger than 564px wide
@@ -166,54 +134,6 @@ table {
   }
 }
 
-.restart {
-  cursor: pointer;
-  height: 100%;
-  margin: 0 auto;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.square {
-  color: $white;
-  float: left;
-  font-size: 500%;
-  height: 30%;
-  width: 33%;
-}
-
-.square:hover {
-  background-color: $gray;
-  opacity: .4;
-}
-
 .btn {
   margin: 10px;
-}
-
-.center {
-  border-left: 2px solid $white;
-  border-right: 2px solid $white;
-}
-
-.mid {
-  border-bottom: 2px solid $white;
-  border-top: 2px solid $white;
-}
-
-.left {
-  clear: left;
-}
-
-.white {
-  background-color: $white;
-}
-
-.blue {
-  color: $blue;
-}
-
-.gray {
-  color: $gray;
 }
