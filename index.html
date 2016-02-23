@@ -51,42 +51,15 @@
       <!-- end navbar -->
 
       <!-- pop-up messages -->
-      <div class="alert alert-success alert-dismissible welcome" role="alert">
-        <strong>Welcome!</strong> You've been logged in. Prepare to tic tac toe your freaking face off.
-      </div>
-      <div class="alert alert-info alert-dismissible password" role="alert">
-        <strong>Booyah!</strong> Your password has been changed.
-      </div>
-      <div class="alert alert-info alert-dismissible winner-message" role="alert">
-        <strong>Huzzah!</strong> <span id='winner'></span> won this round.
-      </div>
-      <div class="alert alert-warning alert-dismissible tie-message" role="alert">
-        <strong>Bummer.</strong> Somehow you both lost.
-      </div>
-      <div class="alert alert-info alert-dismissible message-signout" role="alert">
-        <strong>Adios!</strong> You've been signed out.
-      </div>
-      <div class="alert alert-warning alert-dismissible message-account-exists" role="alert">
-        <strong>Hey!</strong> You've already got an account. Try signing in.
-      </div>
-      <div class="alert alert-danger alert-dismissible deathmatch-started" role="alert">
-        <strong>Deathmatch <span class="game-number"></span> started!</strong> Good luck! You're playing as <span class='marker-type'><span>
-      </div>
-      <div class="alert alert-danger alert-dismissible yo-wait" role="alert">
-        <strong>Yo!</strong> Wait your turn.
-      </div>
-      <div class="alert alert-info alert-dismissible player-quit" role="alert">
-        <strong>Deathmatch ended.</strong> Sissy. Click to play by yourself. Have fun.
-      </div>
       <div class="alert alert-info alert-dismissible opp-quit" role="alert">
-        <strong>Awkward.</strong> Looks like your opponent quit...
+        <strong>Yo.</strong> This is just a placeholder.
       </div>
       <!-- pop-up messages -->
 
       <div class="login">
         <div class="section1">
           <div class="welcome-banner">
-            Welcome to Tic Tac Toe. Here's a picture of something that's not tic-tac-toe and is in no way related to this game.
+            Welcome to The Porch.
           </div>
           <img class="homepage-image" src="assets/images/pic1.jpg">
         </div>
@@ -132,42 +105,7 @@
       </div>
 
       <!-- game board -->
-      <div class='game'>
-        <div class='board'>
-          <div class='square top left' id=0></div>
-          <div class='square top center' id=1></div>
-          <div class='square top right' id=2></div>
-          <div class='square mid left' id=3></div>
-          <div class='square mid center' id=4></div>
-          <div class='square mid right' id=5></div>
-          <div class='square bot left' id=6></div>
-          <div class='square bot center' id=7></div>
-          <div class='square bot right' id=8></div>
-        </div>
-        <div class='restart'></div>
-        <!-- game board -->
-        <!-- score board -->
-        <div class="progress">
-          <div class="progress-bar progress-bar-success xProgressBar" style="width: 0%">
-          </div>
-          <div class="progress-bar progress-bar-info tieProgressBar" style="width: 0%">
-          </div>
-          <div class="progress-bar progress-bar-danger oProgressBar" style="width: 0%">
-          </div>
-        </div>
-        <table>
-          <tr>
-            <td> X </td>
-            <td>Ties</td>
-            <td> O </td>
-          </tr>
-          <tr>
-            <td id='xWins'>0</td>
-            <td id='ties'>0</td>
-            <td id='oWins'>0</td>
-          </tr>
-        </table>
-        <!-- score board -->
+      <div class='newsfeed'>
       </div>
 
       <!-- vvvv Sign up Modal vvvv -->
@@ -271,82 +209,6 @@
         </div>
       </div>
       <!-- ^^^^ Change password Modal ^^^^ -->
-
-      <!-- vvvv all games modal vvvv -->
-      <div class="modal fade" id="allGamesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h2 class="modal-title" id="myModalLabel">All games</h2>
-            </div>
-            <div class="modal-body">
-              <table class="all-games">
-                <tr class='get-game'>
-                  <td> Id </td>
-                  <td> Player X </td>
-                  <td> Player O </td>
-                  <td> Board preview </td>
-                  <td> View? </td>
-                </tr>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ^^^^ all games modal ^^^^ -->
-
-      <!-- vvvv join game modal vvvv -->
-      <div class="modal fade" id="joinGameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <form id="join-game">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title" id="myModalLabel">Join deathmatch!</h2>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                  <label for="inputGameID" class="col-sm-4 form-control-label">Which game?</label>
-                  <div class="col-sm-8">
-                    <input type="number" class="form-control" id="inputGameID" value="">
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" name="submit" class="btn btn-danger modal-button">Join</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- ^^^^ join game modal ^^^^ -->
-
-      <!-- vvvv start multiplayer game modal vvvv -->
-      <div class="modal fade" id="multiplayerGameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h2 class="modal-title" id="myModalLabel">Tic tac toe deathmatch!</h2>
-            </div>
-            <div class="modal-body">
-              <div class="form-group row">
-                <label for="inputGameID" class="col-sm-6 form-control-label">Send your friend this id</label>
-                <span class="col-sm-2" id="multiplayerGameID">x</span>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default modal-button donezo-button" data-dismiss="modal">Donezo</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ^^^^ start multiplayer game modal ^^^^ -->
 
       <script src="http://localhost:8080/webpack-dev-server.js"></script>
       <script src="vendor.bundle.js" type="text/javascript" charset="utf-8"></script>
