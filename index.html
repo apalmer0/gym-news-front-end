@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Tic Tac Toe</title>
+      <link rel='shortcut icon' href='assets/images/favicon.ico' type='image/x-icon'/ >
+      <link href='https://fonts.googleapis.com/css?family=Raleway:900' rel='stylesheet' type='text/css'>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+      <nav class="navbar navbar-inverse navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tic Tac Toe</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <!-- <li class="players"><a href="#">One Player</a></li> -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <button type="button" class="btn btn-warning logged-in modal-button" id='start-multiplayer-game' data-toggle="modal" data-target="#multiplayerGameModal">
+                  Start deathmatch!
+                </button>
+              </li>
+              <li>
+                <button type="button" class="btn btn-warning modal-button" id='end-multiplayer-game'>
+                  End deathmatch
+                </button>
+              </li>
+              <li>
+                <button type="button" class="btn btn-danger modal-button logged-in" id='join-multiplayer-game' data-toggle="modal" data-target="#joinGameModal">
+                  Join deathmatch!
+                </button>
+              </li>
+              <li>
+                <button type="button" class="btn btn-success logged-in modal-button" data-toggle="modal" data-target="#allGamesModal" id="get-games">
+                  Get games
+                </button>
+              </li>
+              <li>
+                <button type="button" class="btn btn-primary logged-in modal-button" data-toggle="modal" data-target="#changePasswordModal">
+                  Change password
+                </button>
+              </li>
+              <li>
+                <form class="nav navbar-nav navbar-right logged-in" id="sign-out">
+                  <button type="submit" name="submit" class="btn btn-default">Sign out</button>
+                </form>
+              </li>
+              <li>
+                <button type="button" class="btn btn-primary logged-out modal-button" data-toggle="modal" data-target="#signUpModal">
+                  Sign up
+                </button>
+                <button type="button" class="btn btn-default logged-out modal-button" data-toggle="modal" data-target="#signInModal">
+                  Sign in
+                </button>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <!-- end navbar -->
+
+      <!-- pop-up messages -->
+      <div class="alert alert-success alert-dismissible welcome" role="alert">
+        <strong>Welcome!</strong> You've been logged in. Prepare to tic tac toe your freaking face off.
+      </div>
+      <div class="alert alert-info alert-dismissible password" role="alert">
+        <strong>Booyah!</strong> Your password has been changed.
+      </div>
+      <div class="alert alert-info alert-dismissible winner-message" role="alert">
+        <strong>Huzzah!</strong> <span id='winner'></span> won this round.
+      </div>
+      <div class="alert alert-warning alert-dismissible tie-message" role="alert">
+        <strong>Bummer.</strong> Somehow you both lost.
+      </div>
+      <div class="alert alert-info alert-dismissible message-signout" role="alert">
+        <strong>Adios!</strong> You've been signed out.
+      </div>
+      <div class="alert alert-warning alert-dismissible message-account-exists" role="alert">
+        <strong>Hey!</strong> You've already got an account. Try signing in.
+      </div>
+      <div class="alert alert-danger alert-dismissible deathmatch-started" role="alert">
+        <strong>Deathmatch <span class="game-number"></span> started!</strong> Good luck! You're playing as <span class='marker-type'><span>
+      </div>
+      <div class="alert alert-danger alert-dismissible yo-wait" role="alert">
+        <strong>Yo!</strong> Wait your turn.
+      </div>
+      <div class="alert alert-info alert-dismissible player-quit" role="alert">
+        <strong>Deathmatch ended.</strong> Sissy. Click to play by yourself. Have fun.
+      </div>
+      <div class="alert alert-info alert-dismissible opp-quit" role="alert">
+        <strong>Awkward.</strong> Looks like your opponent quit...
+      </div>
+      <!-- pop-up messages -->
+
+      <div class="login">
+        <div class="section1">
+          <div class="welcome-banner">
+            Welcome to Tic Tac Toe. Here's a picture of something that's not tic-tac-toe and is in no way related to this game.
+          </div>
+          <img src="assets/images/pic1.jpg">
+        </div>
+        <div class='container'>
+          <div class="section2">
+            <div class='row'>
+              <div class='col-md-4'>
+                <div class="well">
+                  <div class="glyphicon glyphicon-user" aria-hidden="true"></div>
+                  <div>Create an account</div>
+                  <p class="column-content">Most places let you just play tic-tac-toe whenever you want. Here,
+                    you get to sign up for an account before you play. Because who wants to play a mindless
+                    game without having a record of all their games? Not you, that's for sure.
+                  </p>
+                  <strong>Sign up today.</strong>
+                </div>
+              </div>
+              <div class='col-md-4'>
+                <div class="well">
+                  <div class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></div>
+                  <div>Compete against friends</div>
+                  <p class="column-content">Sick of playing tic-tac-toe by yourself? Well, you're probably the only person
+                    in the world who plays tic-tac-toe by himself, so you probably don't have any friends to play with anyway.
+                    But if you did, you could play this awesome game with them.
+                  </p>
+                  <strong>Sign up today.</strong>
+                </div>
+              </div>
+              <div class='col-md-4'>
+                <div class="well">
+                  <div class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></div>
+                  <div>Look at this tree</div>
+                  <p class="column-content">You might think it's just a tree, and you'd be right. But what kind of tree is it?
+                    Well, it's a conifer. That's pretty much all you need to know about that. Actually yeah, there is literally nothing else to say about this tree.
+                  </p>
+                  <strong>Sign up today.</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- game board -->
+      <div class='game'>
+        <div class='board'>
+          <div class='square top left' id=0></div>
+          <div class='square top center' id=1></div>
+          <div class='square top right' id=2></div>
+          <div class='square mid left' id=3></div>
+          <div class='square mid center' id=4></div>
+          <div class='square mid right' id=5></div>
+          <div class='square bot left' id=6></div>
+          <div class='square bot center' id=7></div>
+          <div class='square bot right' id=8></div>
+        </div>
+        <div class='restart'></div>
+        <!-- game board -->
+        <!-- score board -->
+        <div class="progress">
+          <div class="progress-bar progress-bar-success xProgressBar" style="width: 0%">
+          </div>
+          <div class="progress-bar progress-bar-info tieProgressBar" style="width: 0%">
+          </div>
+          <div class="progress-bar progress-bar-danger oProgressBar" style="width: 0%">
+          </div>
+        </div>
+        <table>
+          <tr>
+            <td> X </td>
+            <td>Ties</td>
+            <td> O </td>
+          </tr>
+          <tr>
+            <td id='xWins'>0</td>
+            <td id='ties'>0</td>
+            <td id='oWins'>0</td>
+          </tr>
+        </table>
+        <!-- score board -->
+      </div>
+
+      <!-- vvvv Sign up Modal vvvv -->
+      <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form class="sign-up">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Sign up</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputEmail3" class="col-sm-2 form-control-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="email" name="credentials[email]" value="" aria-describedby="helpBlock1">
+                    <span id="helpBlock1" class="sign-up-hint">Don't use a real email address. This connection is not secure.</span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 form-control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="password" name="credentials[password]" value="" aria-describedby="helpBlock2">
+                    <span id="helpBlock2" class="sign-up-hint">Don't use a real password. This connection is not secure.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-primary modal-button" id="saveButton">Sign up</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- ^^^^ Sign up Modal ^^^^ -->
+
+      <!-- vvvv Sign in Modal vvvv -->
+      <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form class="sign-in">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Sign in</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputEmail4" class="col-sm-2 form-control-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="email" name="credentials[email]" value="">
+                  </div>
+                </div>
+                <div class="wrong-password">Your password is incorrect. Please try again.</div>
+                <div class="form-group row">
+                  <label for="inputPassword4" class="col-sm-2 form-control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword4" placeholder="password"name="credentials[password]" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-primary modal-button">Sign in</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ Sign in Modal ^^^^ -->
+
+      <!-- vvvv Change password Modal vvvv -->
+      <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form id="change-pw">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Change password</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputPassword5" class="col-sm-2 form-control-label">Old Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword5" placeholder="old password" name="passwords[old]" value="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPassword6" class="col-sm-2 form-control-label">New Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword6" placeholder="new password"name="passwords[new]" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-primary modal-button">Save password</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ Change password Modal ^^^^ -->
+
+      <!-- vvvv all games modal vvvv -->
+      <div class="modal fade" id="allGamesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title" id="myModalLabel">All games</h2>
+            </div>
+            <div class="modal-body">
+              <table class="all-games">
+                <tr class='get-game'>
+                  <td> Id </td>
+                  <td> Player X </td>
+                  <td> Player O </td>
+                  <td> Board preview </td>
+                  <td> View? </td>
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ all games modal ^^^^ -->
+
+      <!-- vvvv join game modal vvvv -->
+      <div class="modal fade" id="joinGameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form id="join-game">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Join deathmatch!</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputGameID" class="col-sm-4 form-control-label">Which game?</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="inputGameID" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-danger modal-button">Join</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ join game modal ^^^^ -->
+
+      <!-- vvvv start multiplayer game modal vvvv -->
+      <div class="modal fade" id="multiplayerGameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title" id="myModalLabel">Tic tac toe deathmatch!</h2>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row">
+                <label for="inputGameID" class="col-sm-6 form-control-label">Send your friend this id</label>
+                <span class="col-sm-2" id="multiplayerGameID">x</span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default modal-button donezo-button" data-dismiss="modal">Donezo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ start multiplayer game modal ^^^^ -->
+
+      <script src="http://localhost:8080/webpack-dev-server.js"></script>
+      <script src="vendor.bundle.js" type="text/javascript" charset="utf-8"></script>
+      <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+</html>

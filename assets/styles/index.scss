@@ -1,0 +1,219 @@
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+
+$background-color: #000;
+$font-color: #458b00;
+$white: #fff;
+$black: #000;
+$blue: #0198e1;
+$gray: #282828;
+$light-gray: #d3d3d3;
+$red: #f00;
+$image-width: 100%;
+
+html,
+body {
+  background-color: $background-color;
+  color: $font-color;
+  font-family: 'Raleway', sans-serif;
+  height: 100%;
+  text-align: center;
+  width: 100%;
+}
+
+.welcome,
+.winner-message,
+.tie-message,
+.message-signout,
+.password,
+.message-account-exists,
+.deathmatch-started,
+.yo-wait,
+.player-quit,
+.opp-quit {
+  font-family: sans-serif;
+  position: fixed;
+  width: 100%;
+}
+
+.game {
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 90px;
+  width: 100%;
+}
+
+table {
+  color: $white;
+  font-size: 200%;
+  height: 20%;
+  margin: 0 auto;
+}
+
+.all-games {
+  color: $font-color;
+  font-size: 90%;
+  width: 80%;
+}
+
+.modal-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+.glyphicon {
+  font-size: 400%;
+}
+
+.login {
+  background-color: $blue;
+  height: 1000px;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.sign-up-hint {
+  color: $light-gray;
+  font-family: sans-serif;
+  font-size: 75%;
+}
+
+.section1 {
+  background-color: $gray;
+  padding: 20px;
+}
+
+.welcome-banner {
+  background-color: $white;
+  color: $gray;
+  height: 5%;
+  left: 0;
+  padding-bottom: 3%;
+  padding-top: 2%;
+  position: absolute;
+  width: 100%;
+}
+
+.column-content {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.section2 {
+  color: $gray;
+  margin-top: -20%;
+}
+
+img {
+  height: $image-width * .67;
+  opacity: .3;
+  width: $image-width;
+}
+
+.wrong-password {
+  color: $red;
+}
+
+.navbar {
+  z-index: 1;
+}
+
+.test {
+  background-color: $blue;
+  cursor: pointer;
+  height: 100px;
+  margin: 0 auto;
+  width: 100px;
+}
+
+// this will be applied for browsers up to 563px wide
+@media (max-width: 500px) {
+  .board {
+    cursor: pointer;
+    height: 60%;
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  table {
+    width: 70%;
+  }
+
+  .overlay {
+    top: -70px;
+  }
+}
+
+// this will be applied for browsers bigger than 564px wide
+@media (min-width: 501px) {
+  .board {
+    cursor: pointer;
+    height: 350px;
+    margin: 0 auto;
+    width: 400px;
+  }
+
+  table {
+    width: 40%;
+  }
+}
+
+// this will be applied for browsers bigger than 564px wide
+@media (min-width: 990px) {
+  .well {
+    height: 340px;
+  }
+}
+
+.restart {
+  cursor: pointer;
+  height: 100%;
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.square {
+  color: $white;
+  float: left;
+  font-size: 500%;
+  height: 30%;
+  width: 33%;
+}
+
+.square:hover {
+  background-color: $gray;
+  opacity: .4;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.center {
+  border-left: 2px solid $white;
+  border-right: 2px solid $white;
+}
+
+.mid {
+  border-bottom: 2px solid $white;
+  border-top: 2px solid $white;
+}
+
+.left {
+  clear: left;
+}
+
+.white {
+  background-color: $white;
+}
+
+.blue {
+  color: $blue;
+}
+
+.gray {
+  color: $gray;
+}
