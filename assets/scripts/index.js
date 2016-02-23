@@ -10,7 +10,7 @@ require('./example');
 require('../styles/index.scss');
 
 const myApp = {
-  baseUrl: 'http://tic-tac-toe.wdibos.com',
+  baseUrl: 'http://localhost:3000',
 };
 
 $(document).ready(() => {
@@ -196,10 +196,10 @@ $(document).ready(() => {
         contentType: false,
         processData: false,
         data: formData,
-      }).done(function (data) {
+      }).done(function (user) {
         console.log('signin success');
-        myApp.user = data.user;
-        console.log(data.user.token);
+        myApp.user = user;
+        console.log(user.token);
         toggleLoggedIn();
         hideModal();
         createGame(event);
@@ -229,9 +229,10 @@ $(document).ready(() => {
       contentType: false,
       processData: false,
       data: formData,
-    }).done(function (data) {
-      myApp.user = data.user;
-      console.log(data.user.token);
+    }).done(function (user) {
+      myApp.user = user;
+      console.log(user);
+      console.log(user.token);
       toggleLoggedIn();
       hideModal();
       createGame(event);
