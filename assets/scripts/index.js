@@ -158,6 +158,63 @@ $(document).ready(() => {
 
   // ^^ change password actions ^^
 
+  // vv my profile actions vv
+  $('#my-profile').on('submit', function (event) {
+    event.preventDefault();
+    if (!myApp.user) {
+      console.error('Wrong!');
+    }
+
+    var formData = new FormData(event.target);
+    $.ajax({
+      url: myApp.baseUrl + '/users/' + myApp.user.id,
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function (data) {
+      console.log(data);
+
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^ my profile actions ^^
+
+  // vv all users actions vv
+  $('#all-users').on('submit', function (event) {
+    event.preventDefault();
+    if (!myApp.user) {
+      console.error('Wrong!');
+    }
+
+    var formData = new FormData(event.target);
+    $.ajax({
+      url: myApp.baseUrl + '/users',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function (data) {
+      for (let i = 0; i < data.length; i++) {
+        console.log(data[i]);
+      }
+
+
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^ all users actions ^^
+
   // vv sign out actions vv
   $('#sign-out').on('submit', function (event) {
     event.preventDefault();
