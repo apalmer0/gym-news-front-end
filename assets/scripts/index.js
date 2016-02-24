@@ -17,13 +17,11 @@ $(document).ready(() => {
   // initial page setup
 
   var toggleLoggedIn = function toggleLoggedIn() {
-    $('.intro-page').hide();
     $('.logged-in').show();
     $('.logged-out').hide();
   };
 
   var toggleLoggedOut = function toggleLoggedOut() {
-    $('.intro-page').show();
     $('.logged-out').show();
     $('.logged-in').hide();
   };
@@ -66,6 +64,23 @@ $(document).ready(() => {
   // when you click a button in an overlaying modal
   $('.modal-button').on('click', function () {
     $('.navbar-collapse').removeClass('in');
+  });
+
+  $(".story-btn").click(function () {
+    let $button = $(this);
+    //getting the next element
+    let $content = $button.next();
+    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+    $content.slideToggle(500, function () {
+        //execute this after slideToggle is done
+        //change text of header based on visibility of content div
+        console.log('done');
+    });
+    if ($(this).hasClass('glyphicon-chevron-down')) {
+      $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    } else {
+      $(this).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    }
   });
 
   // vv signup actions vv

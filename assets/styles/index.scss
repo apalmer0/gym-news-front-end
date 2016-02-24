@@ -100,6 +100,99 @@ body {
   z-index: 1;
 }
 
+.logged-in {
+  width: 100%;
+}
+
+.newsfeed {
+  border-bottom: 1px solid $light-gray;
+  margin-top: 70px;
+  width: 100%;
+}
+
+.feed-header {
+  color: $light-gray;
+  font-family: 'Podkova', serif;
+  font-size: 200%;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.content-body {
+  background-color: $white;
+}
+
+.content-header {
+  background-color: $light-gray;
+  border-bottom: 1px solid $black;
+  font-family: 'Podkova', serif;
+  font-size: 150%;
+  line-height: 40px;
+  padding-left: 10px;
+  text-align: left;
+}
+
+.story {
+  background-color: $white;
+  border-bottom: 1px solid $light-gray;
+}
+
+.story-header {
+  border-right: 5px solid $white;
+  font-family: sans-serif;
+  font-size: 60%;
+  height: 100%;
+}
+
+.gym-logo {
+  border: 1px solid $black;
+  height: 80px;
+  margin: 10px;
+  width: 80px;
+}
+
+.story-body {
+  font-family: sans-serif;
+  height: 100%;
+  margin-top: 10px;
+  padding-right: 20px;
+  position: relative;
+  text-align: left;
+}
+
+.story-btn {
+  border-bottom: 1px groove $light-gray;
+  border-left: 1px groove $light-gray;
+  border-right: 1px groove $light-gray;
+  box-shadow: 2px 2px 1px $light-gray;
+  cursor: pointer;
+  font-size: 120%;
+  margin-top: -12px;
+  position: absolute;
+  right: 20px;
+  text-align: center;
+}
+
+.story-expand {
+  display: none;
+}
+
+.climb-square {
+  border: 1px solid $black;
+  color: $white;
+  float: left;
+  font-size: 150%;
+  height: 60px;
+  margin: 10px;
+  padding-bottom: 10px;
+  padding-top: 15px;
+  text-align: center;
+  width: 60px;
+}
+
+.red {
+  background-color: $red;
+}
 
 // this will be applied for browsers up to 563px wide
 @media (max-width: 500px) {
