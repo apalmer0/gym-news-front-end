@@ -31,6 +31,7 @@ body {
   margin-top: 5%;
   position: fixed;
   width: 100%;
+  z-index: 2;
 }
 
 .modal-body {
@@ -109,6 +110,13 @@ body {
   margin-top: 70px;
   width: 100%;
 }
+//
+// .fixed {
+//   height: 10px;
+//   position: fixed;
+//   top: 20;
+//   z-index: 3;
+// }
 
 .feed-header {
   color: $light-gray;

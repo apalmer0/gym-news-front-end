@@ -83,6 +83,20 @@ $(document).ready(() => {
     }
   });
 
+ //  $(window).bind('scroll', function() {
+ //  var navHeight = $( window ).height() - 300;
+ //    if ($(window).scrollTop() > navHeight) {
+ //      console.log('addClass');
+ //      console.log(navHeight);
+ //      $('.newsfeed-menu').addClass('fixed');
+ //    }
+ //    else {
+ //      console.log('removeClass');
+ //      console.log(navHeight);
+ //      $('.newsfeed-menu').removeClass('fixed');
+ //    }
+ // });
+
   // vv signup actions vv
   $('.sign-up').on('submit', function (event) {
     event.preventDefault();
