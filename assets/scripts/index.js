@@ -154,6 +154,7 @@ $(document).ready(() => {
       toggleLoggedIn();
       hideModal();
       $('.users-index').hide();
+      $('.user-show').hide();
       displayMessage('.welcome');
     }).fail(function (jqxhr) {
       $('.wrong-password').show();
@@ -266,7 +267,7 @@ $(document).ready(() => {
     }).done(function (users) {
       $('.site-content').hide();
       $('.users-index').show();
-      let userListingTemplate = require('./user-listing.handlebars');
+      let userListingTemplate = require('./handlebars/users/user-listing.handlebars');
       $('.users-list').append(userListingTemplate({
         users
         // this is passing the JSON object into the bookListingTemplate
