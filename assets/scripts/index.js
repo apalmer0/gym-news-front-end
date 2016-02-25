@@ -27,7 +27,6 @@ $(document).ready(() => {
   };
 
   var hidePageElements = function hidePageElements() {
-    $('.message-signout').hide();
     $('.message-account-exists').hide();
     $('.welcome').hide();
     $('.password').hide();
@@ -39,6 +38,7 @@ $(document).ready(() => {
     $('.modal').removeClass('in');
     $('.modal').attr('style','display: none;');
     $('.modal-backdrop').hide();
+    $('body').removeClass('modal-open');
   };
 
   var displayMessage = function displayMessage(type) {
@@ -153,6 +153,7 @@ $(document).ready(() => {
       console.log(user.token);
       toggleLoggedIn();
       hideModal();
+      $('.users-index').hide();
       displayMessage('.welcome');
     }).fail(function (jqxhr) {
       $('.wrong-password').show();
@@ -187,6 +188,35 @@ $(document).ready(() => {
 
   // ^^ change password actions ^^
 
+  // vv see homepage vv
+  $('#homepage').on('submit', function (event) {
+    event.preventDefault();
+    if (!myApp.user) {
+      console.error('Wrong!');
+    }
+
+    var formData = new FormData(event.target);
+    $.ajax({
+      url: myApp.baseUrl,
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function (data) {
+      console.log(data);
+      $('.site-content').hide();
+      $('.homepage').show();
+
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^ my profile actions ^^
+
   // vv my profile actions vv
   $('#my-profile').on('submit', function (event) {
     event.preventDefault();
@@ -206,6 +236,8 @@ $(document).ready(() => {
       data: formData,
     }).done(function (data) {
       console.log(data);
+      $('.site-content').hide();
+      $('.user-show').show();
 
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -231,9 +263,18 @@ $(document).ready(() => {
       contentType: false,
       processData: false,
       data: formData,
-    }).done(function (data) {
-      for (let i = 0; i < data.length; i++) {
-        console.log(data[i]);
+    }).done(function (users) {
+      $('.site-content').hide();
+      $('.users-index').show();
+      let userListingTemplate = require('./user-listing.handlebars');
+      $('.users-list').append(userListingTemplate({
+        users
+        // this is passing the JSON object into the bookListingTemplate
+        // where handlebars will deal with each item of the array individually
+      }));
+      myApp.users = users;
+      for (let i = 0; i < myApp.users.length; i++) {
+        console.log(myApp.users[i]);
       }
 
 
@@ -265,7 +306,6 @@ $(document).ready(() => {
       console.log(data);
       toggleLoggedOut();
       hideModal();
-      displayMessage('.message-signout');
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });

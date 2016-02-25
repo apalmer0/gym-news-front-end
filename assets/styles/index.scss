@@ -5,6 +5,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 $background-color: #000;
 $font-color: #006ba6;
 $white: #fff;
+$off-white: #f5f5f5;
 $black: #000;
 $blue: #0198e1;
 $porch-blue: #006ba6;
@@ -34,6 +35,12 @@ body {
   z-index: 2;
 }
 
+.sign-up-hint {
+  color: $light-gray;
+  font-family: sans-serif;
+  font-size: 75%;
+}
+
 .modal-body {
   max-height: calc(100vh - 210px);
   overflow-y: auto;
@@ -44,9 +51,7 @@ body {
 }
 
 .intro-page {
-  background-color: $porch-blue;
   height: 1000px;
-  margin-top: 50px;
   width: 100%;
 }
 
@@ -59,12 +64,6 @@ body {
   opacity: .3;
   position: relative;
   width: $image-width;
-}
-
-.sign-up-hint {
-  color: $light-gray;
-  font-family: sans-serif;
-  font-size: 75%;
 }
 
 .hero {
@@ -84,6 +83,34 @@ body {
   margin-top: 15%;
 }
 
+.overlay {
+  color: $white;
+  font-family: sans-serif;
+  height: 50px;
+  left: 38%;
+  position: absolute;
+  top: 50%;
+  width: 300px;
+  z-index: 2;
+}
+
+.cta {
+  height: 50px;
+  width: 250px;
+}
+
+.site-details {
+  background-color: $off-white;
+  height: 400px;
+  width: 100%;
+}
+
+.site-details-header {
+  font-family: sans-serif;
+  font-size: 200%;
+  padding: 50px;
+}
+
 .column-content {
   font-family: sans-serif;
   padding: 20px;
@@ -98,6 +125,8 @@ body {
 }
 
 .navbar {
+  padding-left: 10%;
+  padding-right: 10%;
   z-index: 1;
 }
 

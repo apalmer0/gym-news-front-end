@@ -27,6 +27,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>
+                <form class="nav navbar-nav navbar-right logged-in" id="homepage">
+                  <button type="submit" name="submit" class="btn btn-default">Homepage</button>
+                </form>
+              </li>
+              <li>
                 <form class="nav navbar-nav navbar-right logged-in" id="all-users">
                   <button type="submit" name="submit" class="btn btn-default">All users</button>
                 </form>
@@ -70,11 +75,9 @@
       <div class="alert alert-info alert-dismissible password" role="alert">
         <strong>Booyah!</strong> Your password has been changed.
       </div>
-      <div class="alert alert-info alert-dismissible message-signout" role="alert">
-        <strong>Adios!</strong> You've been signed out.
-      </div>
       <!-- pop-up messages -->
 
+      <!-- vvvv intro-page vvvv -->
       <div class="logged-out intro-page">
         <div class="logged-out intro-page-section">
           <div class="hero title">
@@ -83,53 +86,40 @@
           <div class="hero subtitle">
             Climbing. Community. News.
           </div>
+          <div class="overlay">
+            <button class="btn btn-success btn-large cta">Check it out</button>
+            <p>Poke around a guest account and see what we're all about</p>
+          </div>
           <img class="logged-out intro-page-image" src="assets/images/pic1.jpg">
         </div>
-        <div class='container'>
-          <div class="logged-out intro-page-section">
-            <div class='row'>
-              <div class='col-md-4'>
-                <div class="well raised">
-                  <div class="glyphicon glyphicon-user" aria-hidden="true"></div>
-                  <div>Create an account</div>
-                  <p class="column-content">Most places let you just play tic-tac-toe whenever you want. Here,
-                    you get to sign up for an account before you play. Because who wants to play a mindless
-                    game without having a record of all their games? Not you, that's for sure.
-                  </p>
-                  <strong>Sign up today.</strong>
-                </div>
+
+        <div class="logged-out intro-page-section site-details">
+          <div class="site-details-header">
+            What Can The Porch Do For You?
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                yo
               </div>
-              <div class='col-md-4'>
-                <div class="well raised">
-                  <div class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></div>
-                  <div>Compete against friends</div>
-                  <p class="column-content">Sick of playing tic-tac-toe by yourself? Well, you're probably the only person
-                    in the world who plays tic-tac-toe by himself, so you probably don't have any friends to play with anyway.
-                    But if you did, you could play this awesome game with them.
-                  </p>
-                  <strong>Sign up today.</strong>
-                </div>
+              <div class="col-md-4">
+                yo
               </div>
-              <div class='col-md-4'>
-                <div class="well raised">
-                  <div class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></div>
-                  <div>Look at this tree</div>
-                  <p class="column-content">You might think it's just a tree, and you'd be right. But what kind of tree is it?
-                    Well, it's a conifer. That's pretty much all you need to know about that. Actually yeah, there is literally nothing else to say about this tree.
-                  </p>
-                  <strong>Sign up today.</strong>
-                </div>
+              <div class="col-md-4">
+                yo
               </div>
             </div>
           </div>
         </div>
+
         <div class="logged-out intro-page-section">
           <img class="logged-out intro-page-image" src="assets/images/pic2.jpg">
         </div>
       </div>
+      <!-- ^^^^ intro-page ^^^^ -->
 
       <!-- newsfeed -->
-      <div class='logged-in'>
+      <div class='logged-in homepage site-content'>
         <div class="container">
           <div class="row">
             <div class="newsfeed">
@@ -261,6 +251,89 @@
           </div>
         </div>
       </div>
+      <!-- ^^^^ Newsfeed ^^^^ -->
+
+      <!-- vvvv single user show vvvv -->
+      <div class='logged-in user-show site-content'>
+        <div class="container">
+          <div class="row">
+            <div class="newsfeed">
+              <div class="feed-header">Me</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="newsfeed-menu">
+                <ul>Here's a list
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </div>
+            </div>
+            <div class="content col-md-7">
+              <div class="content-header">
+                You
+              </div>
+              <div class="content-body">
+                <div class="story">
+                  <div class="row">
+                    <div class="story-header col-md-2">
+                      <img class="gym-logo" src="assets/images/me.png">
+                      Me
+                    </div>
+                    <div class="story-body col-md-10">
+                      Heyo
+                      <div class="story-btn glyphicon glyphicon-chevron-down" aria-hidden="true"></div>
+                      <div class="story-expand">
+                        Expand
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              col 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ users index ^^^^ -->
+
+      <!-- vvvv users index vvvv -->
+      <div class='logged-in users-index site-content'>
+        <div class="container">
+          <div class="row">
+            <div class="newsfeed">
+              <div class="feed-header">All users</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="newsfeed-menu">
+                <ul>Here's a list
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </div>
+            </div>
+            <div class="content col-md-7">
+              <div class="content-header">
+                Users
+              </div>
+              <div class="content-body users-list">
+                <!--  users get rendered here  -->
+              </div>
+            </div>
+            <div class="col-md-3">
+              col 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ users index ^^^^ -->
 
       <!-- vvvv Sign up Modal vvvv -->
       <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
