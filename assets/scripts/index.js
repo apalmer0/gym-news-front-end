@@ -153,8 +153,8 @@ $(document).ready(() => {
       console.log(user.token);
       toggleLoggedIn();
       hideModal();
-      $('.users-index').hide();
-      $('.user-show').hide();
+      $('.site-content').hide();
+      $('.homepage').show();
       displayMessage('.welcome');
     }).fail(function (jqxhr) {
       $('.wrong-password').show();
@@ -189,12 +189,33 @@ $(document).ready(() => {
 
   // ^^ change password actions ^^
 
-  // vv see homepage vv
+  // vv add gym actions vv
+  $('#new-gym').on('submit', function (event) {
+    event.preventDefault();
+    var formData = new FormData(event.target);
+    $.ajax({
+      url: myApp.baseUrl + '/gyms',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'POST',
+      contentType: false,
+      processData: false,
+      data: formData
+    }).done(function (data) {
+      console.log(data);
+      hideModal();
+      displayMessage('.new-gym');
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^ add gym actions ^^
+
+  // vv newsfeed actions vv
   $('#homepage').on('submit', function (event) {
     event.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-    }
 
     var formData = new FormData(event.target);
     $.ajax({
@@ -206,24 +227,26 @@ $(document).ready(() => {
       contentType: false,
       processData: false,
       data: formData,
-    }).done(function (data) {
-      console.log(data);
-      $('.site-content').hide();
-      $('.homepage').show();
-
+    }).done(function (bulletins) {
+      $('.feed-header').text('New in your gyms');
+      $('.content-header').text('Top stories');
+      $('.content-body').empty();
+      let bulletinListingTemplate = require('./handlebars/bulletins/bulletin-listing.handlebars');
+      $('.content-body').append(bulletinListingTemplate({
+        bulletins
+        // this is passing the JSON object into the bookListingTemplate
+        // where handlebars will deal with each item of the array individually
+      }));
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
   });
 
-  // ^^ my profile actions ^^
+  // ^^ newsfeed actions ^^
 
   // vv my profile actions vv
   $('#my-profile').on('submit', function (event) {
     event.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-    }
 
     var formData = new FormData(event.target);
     $.ajax({
@@ -239,7 +262,8 @@ $(document).ready(() => {
       console.log(data);
       $('.site-content').hide();
       $('.user-show').show();
-
+      $('.feed-header').text('Your profile');
+      $('.content-header').text('You');
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -250,9 +274,6 @@ $(document).ready(() => {
   // vv all users actions vv
   $('#all-users').on('submit', function (event) {
     event.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-    }
 
     var formData = new FormData(event.target);
     $.ajax({
@@ -265,10 +286,11 @@ $(document).ready(() => {
       processData: false,
       data: formData,
     }).done(function (users) {
-      $('.site-content').hide();
-      $('.users-index').show();
+      $('.feed-header').text('All users');
+      $('.content-header').text('Users');
+      $('.content-body').empty();
       let userListingTemplate = require('./handlebars/users/user-listing.handlebars');
-      $('.users-list').append(userListingTemplate({
+      $('.content-body').append(userListingTemplate({
         users
         // this is passing the JSON object into the bookListingTemplate
         // where handlebars will deal with each item of the array individually
@@ -286,12 +308,46 @@ $(document).ready(() => {
 
   // ^^ all users actions ^^
 
+  // vv all gyms actions vv
+  $('#all-gyms').on('submit', function (event) {
+    event.preventDefault();
+
+    var formData = new FormData(event.target);
+    $.ajax({
+      url: myApp.baseUrl + '/gyms',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function (gyms) {
+      $('.feed-header').text('All gyms');
+      $('.content-header').text('Gyms');
+      $('.content-body').empty();
+      let gymListingTemplate = require('./handlebars/gyms/gym-listing.handlebars');
+      $('.content-body').append(gymListingTemplate({
+        gyms
+        // this is passing the JSON object into the bookListingTemplate
+        // where handlebars will deal with each item of the array individually
+      }));
+      myApp.gyms = gyms;
+      for (let i = 0; i < myApp.gyms.length; i++) {
+        console.log(myApp.gyms[i]);
+      }
+
+
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^ all gyms actions ^^
+
   // vv sign out actions vv
   $('#sign-out').on('submit', function (event) {
     event.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-    }
 
     var formData = new FormData(event.target);
     $.ajax({

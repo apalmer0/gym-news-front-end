@@ -28,8 +28,18 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li>
+                <button type="button" class="btn btn-primary logged-in modal-button" data-toggle="modal" data-target="#newGymModal">
+                  Create new gym
+                </button>
+              </li>
+              <li>
                 <form class="nav navbar-nav navbar-right logged-in" id="homepage">
                   <button type="submit" name="submit" class="btn btn-default">Homepage</button>
+                </form>
+              </li>
+              <li>
+                <form class="nav navbar-nav navbar-right logged-in" id="all-gyms">
+                  <button type="submit" name="submit" class="btn btn-default">All gyms</button>
                 </form>
               </li>
               <li>
@@ -75,6 +85,9 @@
       </div>
       <div class="alert alert-info alert-dismissible password" role="alert">
         <strong>Booyah!</strong> Your password has been changed.
+      </div>
+      <div class="alert alert-info alert-dismissible new-gym" role="alert">
+        <strong>Thanks!</strong> Your gym has been created.
       </div>
       <!-- pop-up messages -->
 
@@ -214,12 +227,12 @@
       </div>
       <!-- ^^^^ intro-page ^^^^ -->
 
-      <!-- newsfeed -->
+      <!-- vvvv newsfeed vvvv -->
       <div class='logged-in homepage site-content'>
         <div class="container">
           <div class="row">
             <div class="newsfeed">
-              <div class="feed-header">New in Your Gyms</div>
+              <div class="feed-header"></div>
             </div>
           </div>
           <div class="row">
@@ -234,67 +247,9 @@
             </div>
             <div class="content col-md-7">
               <div class="content-header">
-                Top Stories
               </div>
               <div class="content-body">
-                <div class="story">
-                  <div class="row">
-                    <div class="story-header col-md-2">
-                      <img class="gym-logo" src="assets/images/gym-logo.png">
-                      Central Rock Gym - Watertown
-                    </div>
-                    <div class="story-body col-md-10">
-                      Yo check it out we set a whole bunch of new rock climbs aren't you psyched? Well
-                      you should be psyched because look at all these new rock climbs we set they're so
-                      dope you should come in and climb them.
-                      <div class="story-btn glyphicon glyphicon-chevron-down" aria-hidden="true"></div>
-                      <div class="story-expand">
-                        <div class="climb-square red">
-                          v10
-                        </div>
-                        <div class="climb-square red">
-                          v10
-                        </div>
-                        <div class="climb-square red">
-                          v10
-                        </div>
-                        <div class="climb-square red">
-                          v10
-                        </div>
-                        <div class="climb-square red">
-                          v10
-                        </div>
-                        <div class="climb-square red">
-                          v10
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="story">
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                  story story story story story story story story story story story
-                </div>
-                <div class="story">
-                  story
-                </div>
+                <!-- content goes here -->
               </div>
             </div>
             <div class="col-md-3">
@@ -310,7 +265,7 @@
         <div class="container">
           <div class="row">
             <div class="newsfeed">
-              <div class="feed-header">Me</div>
+              <div class="feed-header"></div>
             </div>
           </div>
           <div class="row">
@@ -325,7 +280,7 @@
             </div>
             <div class="content col-md-7">
               <div class="content-header">
-                You
+
               </div>
               <div class="content-body">
                 <div class="story">
@@ -358,7 +313,7 @@
         <div class="container">
           <div class="row">
             <div class="newsfeed">
-              <div class="feed-header">All users</div>
+              <div class="feed-header"></div>
             </div>
           </div>
           <div class="row">
@@ -373,7 +328,7 @@
             </div>
             <div class="content col-md-7">
               <div class="content-header">
-                Users
+
               </div>
               <div class="content-body users-list">
                 <!--  users get rendered here  -->
@@ -386,6 +341,40 @@
         </div>
       </div>
       <!-- ^^^^ users index ^^^^ -->
+
+      <!-- vvvv gyms index vvvv -->
+      <div class='logged-in gyms-index site-content'>
+        <div class="container">
+          <div class="newsfeed">
+            <div class="feed-header"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="newsfeed-menu">
+                <ul>Here's a list
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </div>
+            </div>
+            <div class="content col-md-7">
+              <div class="content-header">
+
+              </div>
+              <div class="content-body gyms-list">
+                <!--  gyms get rendered here  -->
+              </div>
+            </div>
+            <div class="col-md-3">
+              col 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ gyms index ^^^^ -->
+
+      <!--- modals below here --->
 
       <!-- vvvv Sign up Modal vvvv -->
       <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -488,6 +477,45 @@
         </div>
       </div>
       <!-- ^^^^ Change password Modal ^^^^ -->
+
+      <!-- vvvv new gym modal vvvv -->
+      <div class="modal fade" id="newGymModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form id="new-gym">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Create new gym</h2>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="inputGymName" class="col-sm-2 form-control-label">Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputGymName" placeholder="gym name" name="name" value="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputGymCity" class="col-sm-2 form-control-label">City</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputGymCity" placeholder="gym city" name="city" value="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputGymState" class="col-sm-2 form-control-label">State</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputGymState" placeholder="gym state" name="state" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-primary modal-button">Save password</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ new gym modal ^^^^ -->
 
       <script src="http://localhost:8080/webpack-dev-server.js"></script>
       <script src="vendor.bundle.js" type="text/javascript" charset="utf-8"></script>
