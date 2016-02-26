@@ -27,6 +27,8 @@
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-right">
+              <li><a class="logged-in" id="all-users" href="#">All users</a></li>
+              <li><a class="logged-in" id="all-gyms" href="#">All gyms</a></li>
               <li>
                 <div class="dropdown logged-in">
                   <button class="btn btn-link dropdown-toggle" type="button" id="main-navigation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -36,9 +38,6 @@
                   <ul class="dropdown-menu" aria-labelledby="main-navigation">
                     <li><a id="homepage" href="#">Homepage</a></li>
                     <li><a id="my-profile" href="#">My profile</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a id="all-users" href="#">All users</a></li>
-                    <li><a id="all-gyms" href="#">All gyms</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="modal-button" data-toggle="modal" data-target="#newGymModal" href="#">Create gym</a></li>
                     <li role="separator" class="divider"></li>
@@ -212,7 +211,7 @@
       </div>
       <!-- ^^^^ intro-page ^^^^ -->
 
-      <!-- vvvv newsfeed vvvv -->
+      <!-- vvvv logged in site content vvvv -->
       <div class='logged-in homepage site-content'>
         <div class="container">
           <div class="row">
@@ -243,7 +242,7 @@
           </div>
         </div>
       </div>
-      <!-- ^^^^ Newsfeed ^^^^ -->
+      <!-- ^^^^ logged in site content ^^^^ -->
 
       <!-- vvvv single user show vvvv -->
       <div class='logged-in user-show site-content'>
@@ -291,73 +290,7 @@
           </div>
         </div>
       </div>
-      <!-- ^^^^ users index ^^^^ -->
-
-      <!-- vvvv users index vvvv -->
-      <div class='logged-in users-index site-content'>
-        <div class="container">
-          <div class="row">
-            <div class="newsfeed">
-              <div class="feed-header"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2">
-              <div class="newsfeed-menu">
-                <ul>Here's a list
-                  <li>one</li>
-                  <li>two</li>
-                  <li>three</li>
-                </ul>
-              </div>
-            </div>
-            <div class="content col-md-7">
-              <div class="content-header">
-
-              </div>
-              <div class="content-body users-list">
-                <!--  users get rendered here  -->
-              </div>
-            </div>
-            <div class="col-md-3">
-              col 3
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ^^^^ users index ^^^^ -->
-
-      <!-- vvvv gyms index vvvv -->
-      <div class='logged-in gyms-index site-content'>
-        <div class="container">
-          <div class="newsfeed">
-            <div class="feed-header"></div>
-          </div>
-          <div class="row">
-            <div class="col-md-2">
-              <div class="newsfeed-menu">
-                <ul>Here's a list
-                  <li>one</li>
-                  <li>two</li>
-                  <li>three</li>
-                </ul>
-              </div>
-            </div>
-            <div class="content col-md-7">
-              <div class="content-header">
-
-              </div>
-              <div class="content-body gyms-list">
-                <!--  gyms get rendered here  -->
-              </div>
-            </div>
-            <div class="col-md-3">
-              col 3
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ^^^^ gyms index ^^^^ -->
+      <!-- ^^^^ single user show ^^^^ -->
 
       <!--- modals below here --->
 

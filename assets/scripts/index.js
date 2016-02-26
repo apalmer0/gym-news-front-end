@@ -232,7 +232,7 @@ $(document).ready(() => {
       $('.feed-header').text('New in your gyms');
       $('.content-header').text('Top stories');
       $('.content-body').empty();
-      let bulletinListingTemplate = require('./handlebars/bulletins/bulletin-listing.handlebars');
+      let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
       $('.content-body').append(bulletinListingTemplate({
         bulletins
         // this is passing the JSON object into the bookListingTemplate
@@ -276,7 +276,6 @@ $(document).ready(() => {
   $('#all-users').on('click', function (event) {
     event.preventDefault();
 
-    var formData = new FormData(event.target);
     $.ajax({
       url: myApp.baseUrl + '/users',
       headers: {
@@ -285,12 +284,11 @@ $(document).ready(() => {
       method: 'GET',
       contentType: false,
       processData: false,
-      data: formData,
     }).done(function (users) {
       $('.feed-header').text('All users');
       $('.content-header').text('Users');
       $('.content-body').empty();
-      let userListingTemplate = require('./handlebars/users/user-listing.handlebars');
+      let userListingTemplate = require('./handlebars/users/users-listing.handlebars');
       $('.content-body').append(userListingTemplate({
         users
         // this is passing the JSON object into the bookListingTemplate
@@ -313,7 +311,6 @@ $(document).ready(() => {
   $('#all-gyms').on('click', function (event) {
     event.preventDefault();
 
-    var formData = new FormData(event.target);
     $.ajax({
       url: myApp.baseUrl + '/gyms',
       headers: {
@@ -322,22 +319,17 @@ $(document).ready(() => {
       method: 'GET',
       contentType: false,
       processData: false,
-      data: formData,
     }).done(function (gyms) {
       $('.feed-header').text('All gyms');
       $('.content-header').text('Gyms');
       $('.content-body').empty();
-      let gymListingTemplate = require('./handlebars/gyms/gym-listing.handlebars');
+      let gymListingTemplate = require('./handlebars/gyms/gyms-listing.handlebars');
       $('.content-body').append(gymListingTemplate({
         gyms
         // this is passing the JSON object into the bookListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
       myApp.gyms = gyms;
-      for (let i = 0; i < myApp.gyms.length; i++) {
-        console.log(myApp.gyms[i]);
-      }
-
 
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -345,6 +337,37 @@ $(document).ready(() => {
   });
 
   // ^^ all gyms actions ^^
+
+  // vv visit single gym actions vv
+  $('.content-body').on('click', 'button', function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: myApp.baseUrl + '/gyms/' + $(this).data("gym-id"),
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false
+    }).done(function (single_gym) {
+      myApp.gym = single_gym;
+      console.log(single_gym);
+      $('.feed-header').text(myApp.gym.name);
+      $('.content-header').text('The latest:');
+      $('.content-body').empty();
+      let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+      $('.content-body').append(bulletinsListingTemplate({
+        single_gym
+        // this is passing the JSON object into the bookListingTemplate
+        // where handlebars will deal with each item of the array individually
+      }));
+
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^ visit single gym actions ^^
 
   // vv sign out actions vv
   $('#sign-out').on('click', function (event) {
