@@ -31,6 +31,7 @@ $(document).ready(() => {
     $('.welcome').hide();
     $('.password').hide();
     $('.wrong-password').hide();
+    $('.new-gym').hide();
   };
 
   var hideModal = function hideModal() {
@@ -214,7 +215,7 @@ $(document).ready(() => {
   // ^^ add gym actions ^^
 
   // vv newsfeed actions vv
-  $('#homepage').on('submit', function (event) {
+  $('#homepage').on('click', function (event) {
     event.preventDefault();
 
     var formData = new FormData(event.target);
@@ -245,7 +246,7 @@ $(document).ready(() => {
   // ^^ newsfeed actions ^^
 
   // vv my profile actions vv
-  $('#my-profile').on('submit', function (event) {
+  $('#my-profile').on('click', function (event) {
     event.preventDefault();
 
     var formData = new FormData(event.target);
@@ -272,7 +273,7 @@ $(document).ready(() => {
   // ^^ my profile actions ^^
 
   // vv all users actions vv
-  $('#all-users').on('submit', function (event) {
+  $('#all-users').on('click', function (event) {
     event.preventDefault();
 
     var formData = new FormData(event.target);
@@ -309,7 +310,7 @@ $(document).ready(() => {
   // ^^ all users actions ^^
 
   // vv all gyms actions vv
-  $('#all-gyms').on('submit', function (event) {
+  $('#all-gyms').on('click', function (event) {
     event.preventDefault();
 
     var formData = new FormData(event.target);
@@ -346,7 +347,7 @@ $(document).ready(() => {
   // ^^ all gyms actions ^^
 
   // vv sign out actions vv
-  $('#sign-out').on('submit', function (event) {
+  $('#sign-out').on('click', function (event) {
     event.preventDefault();
 
     var formData = new FormData(event.target);
