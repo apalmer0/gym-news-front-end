@@ -295,10 +295,6 @@ $(document).ready(() => {
         // where handlebars will deal with each item of the array individually
       }));
       myApp.users = users;
-      for (let i = 0; i < myApp.users.length; i++) {
-        console.log(myApp.users[i]);
-      }
-
 
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -338,26 +334,49 @@ $(document).ready(() => {
 
   // ^^ all gyms actions ^^
 
-  // vv visit single gym actions vv
+  // vv visit single gym/user actions vv
   $('.content-body').on('click', 'button', function (event) {
     event.preventDefault();
+    let targetClass = event.target.className;
+    // the event target is the button that got clicked. this pulls in the class name
+    // from the clicked button, bc otherwise every button is the same
+    let targetResource = (targetClass.indexOf('visit-gym') > -1) ? '/gyms/' : '/users/';
+    // this looks at the class and determines if it includes the string 'visit-gym'
+    // and returns a string parsed as a url path for either gyms or users.
+    // this doesn't account for any edge cases and will likely need to be improved.
+    let destination = event.target.dataset.linkId;
+    // this looks up the data element of the button, which is the target user/gym's id
+    let path;
+    if (targetResource === '/gyms/') {
+      path = '/gyms/' + destination;
+    } else if (targetResource === '/users/') {
+      path = '/users/' + destination;
+    } else {
+      path = '';
+    }
     $.ajax({
-      url: myApp.baseUrl + '/gyms/' + $(this).data("gym-id"),
+      url: myApp.baseUrl + path,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
       method: 'GET',
       contentType: false,
       processData: false
-    }).done(function (single_gym) {
-      myApp.gym = single_gym;
-      console.log(single_gym);
-      $('.feed-header').text(myApp.gym.name);
+    }).done(function (single_resource) {
+      console.log(single_resource);
+      if (targetResource === '/gyms/') {
+        myApp.gym = single_resource;
+        $('.feed-header').text(myApp.gym.name);
+      } else if (targetResource === '/users/') {
+        myApp.visited_user = single_resource;
+        $('.feed-header').text(myApp.visited_user.email);
+      } else {
+      }
       $('.content-header').text('The latest:');
       $('.content-body').empty();
       let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
       $('.content-body').append(bulletinsListingTemplate({
-        single_gym
+        single_resource
         // this is passing the JSON object into the bookListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
@@ -367,7 +386,7 @@ $(document).ready(() => {
     });
   });
 
-  // ^^ visit single gym actions ^^
+  // ^^ visit single gym/user actions ^^
 
   // vv sign out actions vv
   $('#sign-out').on('click', function (event) {
