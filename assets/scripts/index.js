@@ -14,6 +14,16 @@ const myApp = {
 };
 
 $(document).ready(() => {
+  console.log(localStorage.User);
+
+  // if(localStorage.getItem('User')) {
+  //   myApp.user = localStorage.getItem('User');
+  //   $('.site-content').hide();
+  //   $('.user-show').hide();
+  //   $('.homepage').show();
+  // }
+
+  // localStorage.setItem('User', JSON.stringify(user));
   // initial page setup
 
   var toggleLoggedIn = function toggleLoggedIn() {
@@ -149,9 +159,8 @@ $(document).ready(() => {
       processData: false,
       data: formData,
     }).done(function (user) {
+      localStorage.setItem('User', JSON.stringify(user));
       myApp.user = user;
-      console.log(user);
-      console.log(user.token);
       toggleLoggedIn();
       hideModal();
       $('.site-content').hide();
