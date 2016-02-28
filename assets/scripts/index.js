@@ -77,6 +77,56 @@ $(document).ready(() => {
     $('.navbar-collapse').removeClass('in');
   });
 
+  let color;
+  let type;
+  let grade;
+  let modifier;
+
+  $('.color-options').on('click', 'div', function () {
+    if ($(this).hasClass('create-active')) {
+      color = $(this)[0].dataset.colorId;
+      $('.new-climb-square').removeClass('create-active');
+      $('.new-climb-square').addClass('inactive');
+      $('.type-square').removeClass('inactive');
+      $('.new-climbs-list').append('<div class="new-climb-preview-square"></div>');
+      $('.new-climb-preview-square').last().addClass('bk-'+color);
+    }
+  });
+
+  $('.new-climbs-list').on('click', 'div', function() {
+    $(this).remove();
+    $('.new-climb-square').addClass('create-active');
+    $('.new-climb-square').removeClass('inactive');
+    $('.type-square').addClass('inactive');
+    $('.grade-square').addClass('inactive');
+    $('.modifier-square').addClass('inactive');
+    $('.climbs-count').text($('.new-climb-preview-square').length);
+  });
+
+  $('.type-square').on('click', function () {
+    $('.new-climb-preview-square').last().empty();
+    $('.grade-square').removeClass('inactive');
+    type = $(this)[0].dataset.typeId;
+    $('.new-climb-preview-square').last().append(document.createTextNode(type));
+  });
+
+  $('.grade-square').on('click', function () {
+    $('.new-climb-preview-square').last().empty();
+    $('.modifier-square').removeClass('inactive');
+    $('.new-climb-square').addClass('create-active');
+    $('.new-climb-square').removeClass('inactive');
+    $('.climbs-count').text($('.new-climb-preview-square').length);
+    grade = $(this)[0].dataset.gradeId;
+    $('.new-climb-preview-square').last().append(document.createTextNode(type+grade));
+  });
+
+  $('.modifier-square').on('click', function () {
+    $('.new-climb-preview-square').last().empty();
+    modifier = $(this)[0].dataset.modifierId;
+    $('.new-climb-preview-square').last().append(document.createTextNode(type+grade+modifier));
+  });
+
+
   $(".story-btn").click(function () {
     let $button = $(this);
     //getting the next element
@@ -372,6 +422,7 @@ $(document).ready(() => {
       contentType: false,
       processData: false
     }).done(function (single_resource) {
+      // this ajax call will return a single resource, be it a gym or user
       console.log(single_resource);
       if (targetResource === '/gyms/') {
         myApp.gym = single_resource;
@@ -379,9 +430,9 @@ $(document).ready(() => {
       } else if (targetResource === '/users/') {
         myApp.visited_user = single_resource;
         $('.feed-header').text(myApp.visited_user.email);
+        $('.content-header').text(myApp.visited_user.email);
       } else {
       }
-      $('.content-header').text('The latest:');
       $('.content-body').empty();
       let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
       $('.content-body').append(bulletinsListingTemplate({

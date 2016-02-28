@@ -9,15 +9,23 @@ $footer-company-name: #8f9296;
 $footer-glyph-inset: #33383b;
 $footer-email-link: #5383d3;
 $footer-company-about: #92999f;
+
+$black: #000;
+$gray: #282828;
+$light-gray: #d3d3d3;
 $white: #fff;
 $off-white: #f5f5f5;
-$black: #000;
+$red: #f00;
+$warning-red: #c00;
+$danger-red: #800000;
+$orange: #f90;
+$yellow: #ff0;
+$green: #31a234;
 $blue: #0198e1;
 $porch-blue: #006ba6;
-$gray: #282828;
-$green: #31a234;
-$light-gray: #d3d3d3;
-$red: #f00;
+$purple: #90c;
+$pink: #f6f;
+
 $image-width: 100%;
 
 html,
@@ -251,6 +259,11 @@ body {
   display: none;
 }
 
+.inactive {
+  color: $gray;
+  opacity: .5;
+}
+
 .climb-square {
   border: 1px solid $black;
   color: $white;
@@ -264,8 +277,170 @@ body {
   width: 60px;
 }
 
-.red {
+.new-climb-square {
+  border: 1px solid $black;
+  color: $white;
+  float: left;
+  height: 45px;
+  margin: 1px;
+  width: 19%;
+}
+
+.new-climb-square:hover {
+  border: 5px solid $porch-blue;
+  cursor: pointer;
+}
+
+.delete-banner {
+  background-color: $warning-red;
+  border-bottom: 1px solid $danger-red;
+  border-top: 1px solid $danger-red;
+  color: $white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 75%;
+  opacity: .5;
+  text-align: center;
+  width: 100%;
+}
+
+.new-climb-preview-square {
+  border: 1px solid $black;
+  color: $white;
+  float: left;
+  height: 45px;
+  margin: 1px;
+  width: 19%;
+}
+
+.new-climb-preview-square:hover {
+  background-color: $warning-red;
+  border: 5px solid $danger-red;
+  color: $warning-red;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 75%;
+  text-align: center;
+}
+
+.color-options {
+  padding-left: 5%;
+  padding-right: 5%;
+  width: 100%;
+}
+
+.bk-black {
+  background-color: $black;
+}
+
+.bk-gray {
+  background-color: $light-gray;
+  color: $black;
+}
+
+.bk-white {
+  background-color: $white;
+  color: $black;
+}
+
+.bk-red {
   background-color: $red;
+}
+
+.bk-orange {
+  background-color: $orange;
+}
+
+.bk-yellow {
+  background-color: $yellow;
+  color: $black;
+}
+
+.bk-green {
+  background-color: $green;
+}
+
+.bk-blue {
+  background-color: $blue;
+}
+
+.bk-purple {
+  background-color: $purple;
+}
+
+.bk-pink {
+  background-color: $pink;
+}
+
+.grade-options {
+  padding-left: 5%;
+  padding-right: 5%;
+  width: 100%;
+}
+
+.grade-square {
+  background-color: $light-gray;
+  border: 1px solid $black;
+  color: $white;
+  float: left;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  height: 30px;
+  // margin: 1px;
+  padding-top: 1%;
+  text-align: center;
+  width: 20%;
+}
+
+.grade-square:hover {
+  border: 5px solid $porch-blue;
+  cursor: pointer;
+}
+
+.type-options {
+  padding-left: 5%;
+  padding-right: 5%;
+  width: 100%;
+}
+
+.type-square {
+  background-color: $gray;
+  border: 1px solid $black;
+  color: $white;
+  float: left;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  height: 30px;
+  // margin: 1px;
+  text-align: center;
+  width: 50%;
+}
+
+.type-square:hover {
+  border: 5px solid $porch-blue;
+  cursor: pointer;
+}
+
+.modifier-options {
+  padding-left: 5%;
+  padding-right: 5%;
+  width: 100%;
+}
+
+.modifier-square {
+  background-color: $gray;
+  border: 1px solid $black;
+  color: $white;
+  float: left;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  height: 30px;
+  // margin: 1px;
+  text-align: center;
+  width: 50%;
+}
+
+.modifier-square:hover {
+  border: 5px solid $porch-blue;
+  cursor: pointer;
 }
 
 // this will be applied for browsers up to 563px wide
