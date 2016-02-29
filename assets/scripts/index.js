@@ -39,6 +39,7 @@ $(document).ready(() => {
   var hidePageElements = function hidePageElements() {
     $('.message-account-exists').hide();
     $('.welcome').hide();
+    $('.new-climbs').hide();
     $('.password').hide();
     $('.wrong-password').hide();
     $('.new-gym').hide();
@@ -173,6 +174,9 @@ $(document).ready(() => {
     }).done(function (data) {
       console.log(data);
       console.log('climbs added!');
+      displayMessage('.new-climbs');
+      hideModal();
+      $('.add-climbs').remove();
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -447,6 +451,31 @@ $(document).ready(() => {
 
   // ^^ all gyms actions ^^
 
+  // vvvv populate all gym climbs vvvv
+  let allGymClimbs = function allGymClimbs(gym) {
+    console.log('lets get all climbs');
+    $.ajax({
+      url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false
+    }).done(function (climbs) {
+      console.log('you should be seeing a lot of climbs now...');
+      $('.content-body').empty();
+      let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
+      $('.content-body').append(climbListingTemplate({
+        climbs
+      }));
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  };
+
+  // ^^^^ populate all gym climbs ^^^^
+
   // vv visit single gym/user actions vv
   $('.content-body').on('click', 'button', function (event) {
     event.preventDefault();
@@ -475,29 +504,35 @@ $(document).ready(() => {
       method: 'GET',
       contentType: false,
       processData: false
-    }).done(function (single_resource) {
-      // this ajax call will return a single resource, be it a gym or user
-      console.log(single_resource);
+    }).done(function (single_entity) {
+      console.log('returning a single entity');
+      // this ajax call will return a single entity, be it a gym or user
+      console.log(single_entity);
+      // gyms below
       if (targetResource === '/gyms/') {
-        myApp.gym = single_resource;
+        myApp.gym = single_entity;
         $('.feed-header').text(myApp.gym.name);
         let buttonTemplate = require('./handlebars/gyms/gym-button.handlebars');
         $('.action-items').empty();
-        $('.action-items').append(buttonTemplate(single_resource));
+        $('.action-items').append(buttonTemplate(single_entity));
+        allGymClimbs(single_entity);
+      // users below
       } else if (targetResource === '/users/') {
-        myApp.visited_user = single_resource;
+        myApp.visited_user = single_entity;
+        console.log(single_entity);
         $('.feed-header').text(myApp.visited_user.email);
         $('.content-header').text(myApp.visited_user.email);
+      // anything else... i have no idea what would trigger this.
       } else {
         $('.feed-header').text('error');
       }
-      $('.content-body').empty();
-      let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-      $('.content-body').append(bulletinsListingTemplate({
-        single_resource
-        // this is passing the JSON object into the bookListingTemplate
-        // where handlebars will deal with each item of the array individually
-      }));
+      // $('.content-body').empty();
+      // let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+      // $('.content-body').append(bulletinsListingTemplate({
+      //   single_entity
+      //   // this is passing the JSON object into the bookListingTemplate
+      //   // where handlebars will deal with each item of the array individually
+      // }));
 
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -505,6 +540,7 @@ $(document).ready(() => {
   });
 
   // ^^ visit single gym/user actions ^^
+
 
   // vv sign out actions vv
   $('#sign-out').on('click', function (event) {
