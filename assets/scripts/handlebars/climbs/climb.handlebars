@@ -1,11 +1,17 @@
-<div class="story">
+<div class="story climbNumber{{id}}">
   <div class="row">
     <div class="story-header col-md-2">
-      <div class="climb-square bk-{{color}}" data-climb-id="{{id}}">{{climb_type}}{{grade}}{{modifier}}</div>
+      <div class="climb-square bk-{{color}}">{{climb_type}}{{grade}}{{modifier}}</div>
     </div>
     <div class="story-body col-md-10">
       Holy shit check it out this worked!!!
       Wahooooooooooooo!!!
+      <button type="button" class="btn btn-default edit-climb-button" data-edit-climb-id="{{id}}">
+        Edit
+      </button>
+      <button type="button" class="btn btn-default delete-climb-button" data-delete-climb-id="{{id}}">
+        Delete
+      </button>
     </div>
   </div>
 </div>

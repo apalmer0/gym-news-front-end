@@ -478,69 +478,95 @@ $(document).ready(() => {
 
   // vv visit single gym/user actions vv
   $('.content-body').on('click', 'button', function (event) {
-    event.preventDefault();
-    let targetClass = event.target.className;
-    // the event target is the button that got clicked. this pulls in the class name
-    // from the clicked button, bc otherwise every button is the same
-    let targetResource = (targetClass.indexOf('visit-gym') > -1) ? '/gyms/' : '/users/';
-    // this looks at the class and determines if it includes the string 'visit-gym'
-    // and returns a string parsed as a url path for either gyms or users.
-    // this doesn't account for any edge cases and will likely need to be improved.
-    let destination = event.target.dataset.linkId;
-    // this looks up the data element of the button, which is the target user/gym's id
-    let path;
-    if (targetResource === '/gyms/') {
-      path = '/gyms/' + destination;
-    } else if (targetResource === '/users/') {
-      path = '/users/' + destination;
-    } else {
-      path = '';
-    }
-    $.ajax({
-      url: myApp.baseUrl + path,
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false
-    }).done(function (single_entity) {
-      console.log('returning a single entity');
-      // this ajax call will return a single entity, be it a gym or user
-      console.log(single_entity);
-      // gyms below
+    if ($(this).hasClass('visit-user') || $(this).hasClass('visit-gym')) {
+      event.preventDefault();
+      let targetClass = event.target.className;
+      // the event target is the button that got clicked. this pulls in the class name
+      // from the clicked button, bc otherwise every button is the same
+      let targetResource = (targetClass.indexOf('visit-gym') > -1) ? '/gyms/' : '/users/';
+      // this looks at the class and determines if it includes the string 'visit-gym'
+      // and returns a string parsed as a url path for either gyms or users.
+      // this doesn't account for any edge cases and will likely need to be improved.
+      let destination = event.target.dataset.linkId;
+      // this looks up the data element of the button, which is the target user/gym's id
+      let path;
       if (targetResource === '/gyms/') {
-        myApp.gym = single_entity;
-        $('.feed-header').text(myApp.gym.name);
-        let buttonTemplate = require('./handlebars/gyms/gym-button.handlebars');
-        $('.action-items').empty();
-        $('.action-items').append(buttonTemplate(single_entity));
-        allGymClimbs(single_entity);
-      // users below
+        path = '/gyms/' + destination;
       } else if (targetResource === '/users/') {
-        myApp.visited_user = single_entity;
-        console.log(single_entity);
-        $('.feed-header').text(myApp.visited_user.email);
-        $('.content-header').text(myApp.visited_user.email);
-      // anything else... i have no idea what would trigger this.
+        path = '/users/' + destination;
       } else {
-        $('.feed-header').text('error');
+        path = '';
       }
-      // $('.content-body').empty();
-      // let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-      // $('.content-body').append(bulletinsListingTemplate({
-      //   single_entity
-      //   // this is passing the JSON object into the bookListingTemplate
-      //   // where handlebars will deal with each item of the array individually
-      // }));
+      $.ajax({
+        url: myApp.baseUrl + path,
+        headers: {
+          Authorization: 'Token token=' + myApp.user.token,
+        },
+        method: 'GET',
+        contentType: false,
+        processData: false
+      }).done(function (single_entity) {
+        console.log('returning a single entity');
+        // this ajax call will return a single entity, be it a gym or user
+        console.log(single_entity);
+        // gyms below
+        if (targetResource === '/gyms/') {
+          myApp.gym = single_entity;
+          $('.feed-header').text(myApp.gym.name);
+          let buttonTemplate = require('./handlebars/gyms/gym-button.handlebars');
+          $('.action-items').empty();
+          $('.action-items').append(buttonTemplate(single_entity));
+          allGymClimbs(single_entity);
+        // users below
+        } else if (targetResource === '/users/') {
+          myApp.visited_user = single_entity;
+          console.log(single_entity);
+          $('.feed-header').text(myApp.visited_user.email);
+          $('.content-header').text(myApp.visited_user.email);
+          $('.content-body').empty();
+          let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+          $('.content-body').append(bulletinsListingTemplate({
+            single_entity
+            // this is passing the JSON object into the bookListingTemplate
+            // where handlebars will deal with each item of the array individually
+          }));
+        // anything else... i have no idea what would trigger this.
+        } else {
+          $('.feed-header').text('error');
+        }
 
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
+      }).fail(function (jqxhr) {
+        console.error(jqxhr);
+      });
+    }
   });
 
   // ^^ visit single gym/user actions ^^
 
+
+  $('.content-body').on('click', 'button', function() {
+    if ($(this).hasClass('delete-climb-button')) {
+      event.preventDefault();
+      var formData = new FormData(event.target);
+      let climbId = $(this)[0].dataset.deleteClimbId;
+      console.log(climbId);
+      $.ajax({
+        url: myApp.baseUrl + '/climbs/' + climbId,
+        headers: {
+          Authorization: 'Token token=' + myApp.user.token,
+        },
+        method: 'DELETE',
+        contentType: false,
+        processData: false
+        // data: formData,
+      }).done(function () {
+        console.log('deleting climb no '+climbId);
+        $('.climbNumber'+climbId).remove();
+      }).fail(function (jqxhr) {
+        console.error(jqxhr);
+      });
+    }
+  });
 
   // vv sign out actions vv
   $('#sign-out').on('click', function (event) {
