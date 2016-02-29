@@ -238,7 +238,10 @@
               </div>
             </div>
             <div class="col-md-3">
-              col 3
+              buttons and stuff will show up here.
+              <div class="action-items">
+                <!-- buttons go here -->
+              </div>
             </div>
           </div>
         </div>
@@ -440,9 +443,9 @@
       <div class="modal fade" id="addClimbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <form id="new-climb">
+            <form id="add-new-climb-form">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close clear-climbs" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h2 class="modal-title" id="myModalLabel">Create new climb(s)</h2>
               </div>
               <div class="modal-body">
@@ -496,8 +499,8 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" name="submit" class="btn btn-success modal-button">Create <span class="climbs-count"></span> climbs</button>
+                <button type="button" class="btn btn-default clear-climbs" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-success new-climbs-button modal-button">Create <span class="climbs-count"></span> climbs</button>
               </div>
             </form>
           </div>
