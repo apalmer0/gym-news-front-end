@@ -180,6 +180,7 @@ $(document).ready(() => {
       displayMessage('.new-climbs');
       hideModal();
       $('.add-climbs').remove();
+      allGymClimbs(myApp.gym);
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -305,8 +306,62 @@ $(document).ready(() => {
  //    }
  // });
 
-  // vv signup actions vv
-  $('.sign-up').on('submit', function (event) {
+ // vvv show newsfeed vvv
+ let showNewsfeed = function showNewsfeed(event) {
+   event.preventDefault();
+   var formData = new FormData(event.target);
+   $.ajax({
+     url: myApp.baseUrl,
+     headers: {
+       Authorization: 'Token token=' + myApp.user.token,
+     },
+     method: 'GET',
+     contentType: false,
+     processData: false,
+     data: formData,
+   }).done(function (bulletins) {
+     $('.feed-header').text('New in your gyms');
+     $('.content-header').text('Top stories');
+     $('.content-body').empty();
+     let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+     $('.content-body').append(bulletinListingTemplate({
+       bulletins
+       // this is passing the JSON object into the bookListingTemplate
+       // where handlebars will deal with each item of the array individually
+     }));
+   }).fail(function (jqxhr) {
+     console.error(jqxhr);
+   });
+ };
+
+ // vvv sign in function vvv
+ let signIn = function signIn (event) {
+   event.preventDefault();
+   var formData = new FormData(event.target);
+   $.ajax({
+     url: myApp.baseUrl + '/sign-in',
+     method: 'POST',
+     contentType: false,
+     processData: false,
+     data: formData,
+   }).done(function (user) {
+     localStorage.setItem('User', JSON.stringify(user));
+     myApp.user = user;
+     toggleLoggedIn();
+     hideModal();
+     $('.site-content').hide();
+     $('.homepage').show();
+     displayMessage('.welcome');
+     showNewsfeed(event);
+   }).fail(function (jqxhr) {
+     $('.wrong-password').show();
+     console.error(jqxhr);
+   });
+ };
+
+ // ^^ sign in function ^^
+
+  let signUp = function signUp(event) {
     event.preventDefault();
     var formData = new FormData(event.target);
     console.log('starting signup');
@@ -319,54 +374,24 @@ $(document).ready(() => {
     }).done(function () {
       console.log('signup success');
       console.log('starting signin');
-      $.ajax({
-        url: myApp.baseUrl + '/sign-in',
-        method: 'POST',
-        contentType: false,
-        processData: false,
-        data: formData,
-      }).done(function (user) {
-        console.log('signin success');
-        myApp.user = user;
-        console.log(user.token);
-        toggleLoggedIn();
-        hideModal();
-        displayMessage('.welcome');
-      }).fail(function (jqxhr) {
-        $('.wrong-password').show();
-        console.error(jqxhr);
-      });
+      signIn(event);
     }).fail(function (jqxhr) {
       console.error(jqxhr);
       hideModal();
       displayMessage('.message-account-exists');
     });
+  };
+
+  // vv signup actions vv
+  $('.sign-up').on('submit', function (event) {
+    signUp(event);
   });
 
   // ^^ signup actions ^^
 
   // vv signin actions vv
   $('.sign-in').on('submit', function (event) {
-    event.preventDefault();
-    var formData = new FormData(event.target);
-    $.ajax({
-      url: myApp.baseUrl + '/sign-in',
-      method: 'POST',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function (user) {
-      localStorage.setItem('User', JSON.stringify(user));
-      myApp.user = user;
-      toggleLoggedIn();
-      hideModal();
-      $('.site-content').hide();
-      $('.homepage').show();
-      displayMessage('.welcome');
-    }).fail(function (jqxhr) {
-      $('.wrong-password').show();
-      console.error(jqxhr);
-    });
+    signIn(event);
   });
 
   // ^^ signin actions ^^
@@ -422,31 +447,7 @@ $(document).ready(() => {
 
   // vv newsfeed actions vv
   $('#homepage').on('click', function (event) {
-    event.preventDefault();
-
-    var formData = new FormData(event.target);
-    $.ajax({
-      url: myApp.baseUrl,
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function (bulletins) {
-      $('.feed-header').text('New in your gyms');
-      $('.content-header').text('Top stories');
-      $('.content-body').empty();
-      let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-      $('.content-body').append(bulletinListingTemplate({
-        bulletins
-        // this is passing the JSON object into the bookListingTemplate
-        // where handlebars will deal with each item of the array individually
-      }));
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
+    showNewsfeed(event);
   });
 
   // ^^ newsfeed actions ^^
@@ -542,7 +543,6 @@ $(document).ready(() => {
 
   // vvvv populate all gym climbs vvvv
   let allGymClimbs = function allGymClimbs(gym) {
-    console.log('lets get all climbs');
     $.ajax({
       url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
       headers: {
