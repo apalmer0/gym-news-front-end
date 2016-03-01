@@ -68,11 +68,14 @@
       <div class="alert alert-info alert-dismissible password" role="alert">
         <strong>Booyah!</strong> Your password has been changed.
       </div>
-      <div class="alert alert-info alert-dismissible new-gym" role="alert">
+      <div class="alert alert-success alert-dismissible new-gym" role="alert">
         <strong>Thanks!</strong> Your gym has been created.
       </div>
-      <div class="alert alert-info alert-dismissible new-climbs" role="alert">
+      <div class="alert alert-success alert-dismissible new-climbs" role="alert">
         <strong>Awesome!</strong> <span class="climbs-count"></span> climbs created.
+      </div>
+      <div class="alert alert-info alert-dismissible climb-edited" role="alert">
+        <strong>Thanks!</strong> Your climb has been edited.
       </div>
       <!-- pop-up messages -->
 
@@ -509,6 +512,75 @@
         </div>
       </div>
       <!-- ^^^^ new climb modal ^^^^ -->
+
+      <!-- vvvv edit climb modal vvvv -->
+      <div class="modal fade" id="editClimbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form id="edit-climb-form">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Edit climb</h2>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="edit-color-options">
+                      <p>Select Color</p>
+                      <div class="edit-climb-square bk-black" data-color-id="black"></div>
+                      <div class="edit-climb-square bk-gray" data-color-id="gray"></div>
+                      <div class="edit-climb-square bk-white" data-color-id="white"></div>
+                      <div class="edit-climb-square bk-red" data-color-id="red"></div>
+                      <div class="edit-climb-square bk-orange" data-color-id="orange"></div>
+                      <div class="edit-climb-square bk-yellow" data-color-id="yellow"></div>
+                      <div class="edit-climb-square bk-green" data-color-id="green"></div>
+                      <div class="edit-climb-square bk-blue" data-color-id="blue"></div>
+                      <div class="edit-climb-square bk-purple" data-color-id="purple"></div>
+                      <div class="edit-climb-square bk-pink" data-color-id="pink"></div>
+                    </div>
+                    <div class="edit-type-options">
+                      <p>Select Grade</p>
+                      <div class="edit-type-square" data-type-id="5.">5.</div>
+                      <div class="edit-type-square" data-type-id="v">v</div>
+                    </div>
+                    <div class="edit-grade-options">
+                      <div class="edit-grade-square" data-grade-id="0">0</div>
+                      <div class="edit-grade-square" data-grade-id="1">1</div>
+                      <div class="edit-grade-square" data-grade-id="2">2</div>
+                      <div class="edit-grade-square" data-grade-id="3">3</div>
+                      <div class="edit-grade-square" data-grade-id="4">4</div>
+                      <div class="edit-grade-square" data-grade-id="5">5</div>
+                      <div class="edit-grade-square" data-grade-id="6">6</div>
+                      <div class="edit-grade-square" data-grade-id="7">7</div>
+                      <div class="edit-grade-square" data-grade-id="8">8</div>
+                      <div class="edit-grade-square" data-grade-id="9">9</div>
+                      <div class="edit-grade-square" data-grade-id="10">10</div>
+                      <div class="edit-grade-square" data-grade-id="11">11</div>
+                      <div class="edit-grade-square" data-grade-id="12">12</div>
+                      <div class="edit-grade-square" data-grade-id="13">13</div>
+                      <div class="edit-grade-square" data-grade-id="14">14</div>
+                    </div>
+                    <div class="edit-modifier-options">
+                      <div class="edit-modifier-square" data-modifier-id="-">-</div>
+                      <div class="edit-modifier-square" data-modifier-id="+">+</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <p>Edit Climb Preview</p>
+                    <div class="edit-climb-pane">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" name="submit" class="btn btn-success submit-climb-edits-button modal-button">Edit climb</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ edit climb modal ^^^^ -->
 
       <script src="http://localhost:8080/webpack-dev-server.js"></script>
       <script src="vendor.bundle.js" type="text/javascript" charset="utf-8"></script>

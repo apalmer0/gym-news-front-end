@@ -1,0 +1,10 @@
+<div class="edit-climb-square-preview edit-climb bk-{{color}}" data-edit-climb-id="{{id}}" data-edit-climb-color="{{color}}" data-edit-climb-type="{{climb_type}}" data-edit-climb-grade="{{grade}}" data-edit-climb-modifier="{{modifier}}">
+  {{climb_type}}{{grade}}{{modifier}}
+</div>
+<fieldset class="edit-climb">
+  <input type="hidden" class="form-control editInputClimbColor" data-edit-climb-id="{{id}}" name="climbs[][color]" value="{{color}}">
+  <input type="hidden" class="form-control editInputClimbClimb_Type" data-edit-climb-id="{{id}}" name="climbs[][climb_type]" value="{{climb_type}}">
+  <input type="hidden" class="form-control editInputClimbGrade" data-edit-climb-id="{{id}}" name="climbs[][grade]" value="{{grade}}">
+  <input type="hidden" class="form-control editInputClimbModifier" data-edit-climb-id="{{id}}" name="climbs[][modifier]" value="{{modifier}}">
+  <input type="hidden" class="form-control editInputClimbGym" data-edit-climb-id="{{id}}" name="climbs[][gym_id]" value="{{gym_id}}">
+</fieldset>

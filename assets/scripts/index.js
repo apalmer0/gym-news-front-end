@@ -38,6 +38,7 @@ $(document).ready(() => {
 
   var hidePageElements = function hidePageElements() {
     $('.message-account-exists').hide();
+    $('.climb-edited').hide();
     $('.welcome').hide();
     $('.new-climbs').hide();
     $('.password').hide();
@@ -78,6 +79,9 @@ $(document).ready(() => {
     $('.navbar-collapse').removeClass('in');
   });
 
+  // when a user clicks the 'add climbs' button, this function
+  // then appends the gym id to the submit button of the
+  // ensuing new-climbs modal
   $('.action-items').on('click', 'button', function() {
     if ($(this).hasClass('new-climb-button')) {
       console.log('hi');
@@ -107,6 +111,7 @@ $(document).ready(() => {
       let newClimbTemplate = require('./handlebars/climbs/new-climb.handlebars');
       $('.new-climbs-list').append(newClimbTemplate({climbNumber}));
       $('.new-climb-preview-square').last().addClass('bk-'+color);
+      $('.edit-climb-square-preview').addClass('bk-'+color);
       $('.inputClimbColor').last().val(color);
       let gymId = $('.new-climbs-button')[0].dataset.gymId;
       $('.inputClimbGym').last().val(gymId);
@@ -182,10 +187,101 @@ $(document).ready(() => {
     });
   });
 
+  // let currentColor = $('.edit-climb-square-preview')[0].dataset.editClimbColor;
+  // let currentType = $('.edit-climb-square-preview')[0].dataset.editClimbType;
+  // let currentGrade = $('.edit-climb-square-preview')[0].dataset.editClimbGrade;
+  // let currentModifier = $('.edit-climb-square-preview')[0].dataset.editClimbModifier;
+
+  $('.edit-color-options').on('click', 'div', function () {
+    color = $(this)[0].dataset.colorId;
+    $('.edit-climb-square-preview').removeClass (function (index, css) {
+       return (css.match (/(^|\s)bk-\S+/g) || []).join(' ');
+    });
+    $('.edit-climb-square-preview').addClass('bk-'+color);
+    $('.editInputClimbColor').val(color);
+  });
+
+  $('.edit-type-options').on('click', 'div', function () {
+    $('.edit-climb-square-preview').empty();
+    type = $(this)[0].dataset.typeId;
+    console.log(type);
+    // $('.edit-climb-square-preview').text(type);
+    $('.edit-climb-square-preview').append(document.createTextNode(type));
+    $('.editInputClimbClimb_Type').val(type);
+  });
+
+  $('.edit-grade-options').on('click', 'div', function () {
+    $('.edit-climb-square-preview').empty();
+    grade = $(this)[0].dataset.gradeId;
+    console.log(grade);
+    $('.edit-climb-square-preview').append(document.createTextNode(type+grade));
+    $('.editInputClimbGrade').val(grade);
+  });
+
+  $('.edit-modifier-options').on('click', 'div', function () {
+    $('.edit-climb-square-preview').empty();
+    modifier = $(this)[0].dataset.modifierId;
+    console.log(modifier);
+    $('.edit-climb-square-preview').append(document.createTextNode(type+grade+modifier));
+    $('.editInputClimbModifier').val(modifier);
+  });
+
+  // vvvv open edit climb menu vvvv
+  $('.content-body').on('click', 'button', function() {
+    console.log('opening edit menu!');
+    if ($(this).hasClass('edit-climb-button')) {
+      let climbId = $(this)[0].dataset.editClimbId;
+      $('.submit-climb-edits-button').attr('data-climb-id', climbId);
+      $.ajax({
+        url: myApp.baseUrl + '/climbs/' + climbId,
+        headers: {
+          Authorization: 'Token token=' + myApp.user.token,
+        },
+        method: 'GET',
+        contentType: false,
+        processData: false
+      }).done(function (single_climb) {
+        console.log(single_climb);
+        $('.edit-climb-pane').empty();
+        let editClimbTemplate = require('./handlebars/climbs/edit-climb.handlebars');
+        $('.edit-climb-pane').append(editClimbTemplate(single_climb));
+        console.log('editing climb no '+climbId);
+      }).fail(function (jqxhr) {
+        console.error(jqxhr);
+      });
+    }
+  });
+
+  // ^^^^ open edit climb menu
+
+  // vvv edit climb vvv
+  $('#edit-climb-form').on('submit', function (event) {
+    event.preventDefault();
+    var formData = new FormData(event.target);
+    let climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
+    console.log(event.target);
+    $.ajax({
+      url: myApp.baseUrl + '/climbs/' + climbId,
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'PATCH',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function (data) {
+      console.log(data);
+      displayMessage('.climb-edited');
+      $('.edit-climb-pane').empty();
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^^^ edit climb ^^^^
 
 
-
-  $(".story-btn").click(function () {
+  $('.story-btn').click(function () {
     let $button = $(this);
     //getting the next element
     let $content = $button.next();
@@ -543,11 +639,10 @@ $(document).ready(() => {
 
   // ^^ visit single gym/user actions ^^
 
-
+  // vvvv delete single climb actions vvvv
   $('.content-body').on('click', 'button', function() {
     if ($(this).hasClass('delete-climb-button')) {
       event.preventDefault();
-      var formData = new FormData(event.target);
       let climbId = $(this)[0].dataset.deleteClimbId;
       console.log(climbId);
       $.ajax({
@@ -558,7 +653,6 @@ $(document).ready(() => {
         method: 'DELETE',
         contentType: false,
         processData: false
-        // data: formData,
       }).done(function () {
         console.log('deleting climb no '+climbId);
         $('.climbNumber'+climbId).remove();
@@ -567,6 +661,8 @@ $(document).ready(() => {
       });
     }
   });
+
+  // ^^^^ delete single climb actions
 
   // vv sign out actions vv
   $('#sign-out').on('click', function (event) {
