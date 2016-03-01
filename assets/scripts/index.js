@@ -84,8 +84,6 @@ $(document).ready(() => {
   // ensuing new-climbs modal
   $('.action-items').on('click', 'button', function() {
     if ($(this).hasClass('new-climb-button')) {
-      console.log('hi');
-      console.log($(this)[0].dataset.gymId);
       $('.new-climbs-button').attr('data-gym-id', ($(this)[0].dataset.gymId));
     }
   });
@@ -186,11 +184,6 @@ $(document).ready(() => {
       console.error(jqxhr);
     });
   });
-
-  // let currentColor = $('.edit-climb-square-preview')[0].dataset.editClimbColor;
-  // let currentType = $('.edit-climb-square-preview')[0].dataset.editClimbType;
-  // let currentGrade = $('.edit-climb-square-preview')[0].dataset.editClimbGrade;
-  // let currentModifier = $('.edit-climb-square-preview')[0].dataset.editClimbModifier;
 
   $('.edit-color-options').on('click', 'div', function () {
     color = $(this)[0].dataset.colorId;
