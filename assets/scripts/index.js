@@ -88,6 +88,30 @@ $(document).ready(() => {
     }
   });
 
+  // vvvv populate all gym climbs vvvv
+  let allGymClimbs = function allGymClimbs(gym) {
+    $.ajax({
+      url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false
+    }).done(function (climbs) {
+      console.log('you should be seeing a lot of climbs now...');
+      $('.content-body').empty();
+      let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
+      $('.content-body').append(climbListingTemplate({
+        climbs
+      }));
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  };
+
+  // ^^^^ populate all gym climbs ^^^^
+
   let color = "";
   let type = "";
   let grade = "";
@@ -266,6 +290,8 @@ $(document).ready(() => {
     }).done(function (data) {
       console.log(data);
       displayMessage('.climb-edited');
+      allGymClimbs(myApp.gym);
+      hideModal();
       $('.edit-climb-pane').empty();
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -540,30 +566,6 @@ $(document).ready(() => {
   });
 
   // ^^ all gyms actions ^^
-
-  // vvvv populate all gym climbs vvvv
-  let allGymClimbs = function allGymClimbs(gym) {
-    $.ajax({
-      url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false
-    }).done(function (climbs) {
-      console.log('you should be seeing a lot of climbs now...');
-      $('.content-body').empty();
-      let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
-      $('.content-body').append(climbListingTemplate({
-        climbs
-      }));
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  };
-
-  // ^^^^ populate all gym climbs ^^^^
 
   // vv visit single gym/user actions vv
   $('.content-body').on('click', 'button', function (event) {
