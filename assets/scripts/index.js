@@ -39,6 +39,7 @@ $(document).ready(() => {
   var hidePageElements = function hidePageElements() {
     $('.message-account-exists').hide();
     $('.climb-edited').hide();
+    $('.climb-favorited').hide();
     $('.welcome').hide();
     $('.new-climbs').hide();
     $('.password').hide();
@@ -246,8 +247,8 @@ $(document).ready(() => {
 
   // vvvv open edit climb menu vvvv
   $('.content-body').on('click', 'button', function() {
-    console.log('opening edit menu!');
     if ($(this).hasClass('edit-climb-button')) {
+      console.log('opening edit menu!');
       let climbId = $(this)[0].dataset.editClimbId;
       $('.submit-climb-edits-button').attr('data-climb-id', climbId);
       $.ajax({
@@ -332,6 +333,31 @@ $(document).ready(() => {
  //    }
  // });
 
+ // favorite climbs
+ $('.content-body').on('click', 'button', function() {
+   if ($(this).hasClass('favorite-climb-button')) {
+     event.preventDefault();
+     let userId = myApp.user.id;
+     let climbId = $(this)[0].dataset.favoriteClimbId;
+     let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
+     $.ajax({
+       url: myApp.baseUrl + '/favorites',
+       headers: {
+         Authorization: 'Token token=' + myApp.user.token,
+       },
+       method: 'POST',
+       contentType: "application/json",
+       processData: false,
+       data: JSON.stringify(favoriteData)
+     }).done(function (data) {
+       console.log(data);
+       displayMessage('.climb-favorited');
+     }).fail(function (jqxhr) {
+       console.error(jqxhr);
+     });
+   }
+ });
+
  // vvv show newsfeed vvv
  let showNewsfeed = function showNewsfeed(event) {
    event.preventDefault();
@@ -349,6 +375,7 @@ $(document).ready(() => {
      $('.feed-header').text('New in your gyms');
      $('.content-header').text('Top stories');
      $('.content-body').empty();
+     $('.action-items').empty();
      let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
      $('.content-body').append(bulletinListingTemplate({
        bulletins
@@ -494,8 +521,10 @@ $(document).ready(() => {
       data: formData,
     }).done(function (data) {
       console.log(data);
-      $('.site-content').hide();
-      $('.user-show').show();
+      // $('.site-content').hide();
+      // $('.user-show').show();
+      $('.content-body').empty();
+      $('.action-items').empty();
       $('.feed-header').text('Your profile');
       $('.content-header').text('You');
     }).fail(function (jqxhr) {
@@ -521,6 +550,7 @@ $(document).ready(() => {
       $('.feed-header').text('All users');
       $('.content-header').text('Users');
       $('.content-body').empty();
+      $('.action-items').empty();
       let userListingTemplate = require('./handlebars/users/users-listing.handlebars');
       $('.content-body').append(userListingTemplate({
         users
@@ -552,6 +582,7 @@ $(document).ready(() => {
       $('.feed-header').text('All gyms');
       $('.content-header').text('Gyms');
       $('.content-body').empty();
+      $('.action-items').empty();
       let gymListingTemplate = require('./handlebars/gyms/gyms-listing.handlebars');
       $('.content-body').append(gymListingTemplate({
         gyms
