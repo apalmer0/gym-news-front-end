@@ -1,0 +1,20 @@
+<script>console.log('new bulletin handlebars');</script>
+<div class="story">
+  <div class="row">
+    <div class="story-header col-md-2">
+      <img class="bulletin-thumbnail" src="assets/images/create.png">
+    </div>
+    <div class="story-body col-md-10">
+      <form id="new-bulletin">
+        <input type="text" class="form-control" id="inputBulletinContent" placeholder="content" name="bulletin[content]" value="">
+        <input type="hidden" class="form-control" id="inputBulletinGymId" name="bulletin[gym_id]" value="{{gymId}}">
+        <div class="modal-footer">
+          <button type="submit" name="submit" class="btn btn-success create-bulletin-button" data-gym-id="{{gymId}}">Create Bulletin</button>
+        </div>
+      </form>
+      <div class="story-expand">
+
+      </div>
+    </div>
+  </div>
+</div>

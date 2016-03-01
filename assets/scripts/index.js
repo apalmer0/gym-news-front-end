@@ -246,29 +246,28 @@ $(document).ready(() => {
   });
 
   // vvvv open edit climb menu vvvv
-  $('.content-body').on('click', 'button', function() {
-    if ($(this).hasClass('edit-climb-button')) {
-      console.log('opening edit menu!');
-      let climbId = $(this)[0].dataset.editClimbId;
-      $('.submit-climb-edits-button').attr('data-climb-id', climbId);
-      $.ajax({
-        url: myApp.baseUrl + '/climbs/' + climbId,
-        headers: {
-          Authorization: 'Token token=' + myApp.user.token,
-        },
-        method: 'GET',
-        contentType: false,
-        processData: false
-      }).done(function (single_climb) {
-        console.log(single_climb);
-        $('.edit-climb-pane').empty();
-        let editClimbTemplate = require('./handlebars/climbs/edit-climb.handlebars');
-        $('.edit-climb-pane').append(editClimbTemplate(single_climb));
-        console.log('editing climb no '+climbId);
-      }).fail(function (jqxhr) {
-        console.error(jqxhr);
-      });
-    }
+  $('.content-body').on('click', 'button.edit-climb-button', function(event) {
+    event.preventDefault();
+    console.log('opening edit menu!');
+    let climbId = $(this)[0].dataset.editClimbId;
+    $('.submit-climb-edits-button').attr('data-climb-id', climbId);
+    $.ajax({
+      url: myApp.baseUrl + '/climbs/' + climbId,
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false
+    }).done(function (single_climb) {
+      console.log(single_climb);
+      $('.edit-climb-pane').empty();
+      let editClimbTemplate = require('./handlebars/climbs/edit-climb.handlebars');
+      $('.edit-climb-pane').append(editClimbTemplate(single_climb));
+      console.log('editing climb no '+climbId);
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
   });
 
   // ^^^^ open edit climb menu
@@ -334,28 +333,26 @@ $(document).ready(() => {
  // });
 
  // favorite climbs
- $('.content-body').on('click', 'button', function() {
-   if ($(this).hasClass('favorite-climb-button')) {
-     event.preventDefault();
-     let userId = myApp.user.id;
-     let climbId = $(this)[0].dataset.favoriteClimbId;
-     let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
-     $.ajax({
-       url: myApp.baseUrl + '/favorites',
-       headers: {
-         Authorization: 'Token token=' + myApp.user.token,
-       },
-       method: 'POST',
-       contentType: "application/json",
-       processData: false,
-       data: JSON.stringify(favoriteData)
-     }).done(function (data) {
-       console.log(data);
-       displayMessage('.climb-favorited');
-     }).fail(function (jqxhr) {
-       console.error(jqxhr);
-     });
-   }
+ $('.content-body').on('click', 'button.favorite-climb-button', function() {
+   event.preventDefault();
+   let userId = myApp.user.id;
+   let climbId = $(this)[0].dataset.favoriteClimbId;
+   let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
+   $.ajax({
+     url: myApp.baseUrl + '/favorites',
+     headers: {
+       Authorization: 'Token token=' + myApp.user.token,
+     },
+     method: 'POST',
+     contentType: "application/json",
+     processData: false,
+     data: JSON.stringify(favoriteData)
+   }).done(function (data) {
+     console.log(data);
+     displayMessage('.climb-favorited');
+   }).fail(function (jqxhr) {
+     console.error(jqxhr);
+   });
  });
 
  // vvv show newsfeed vvv
@@ -598,10 +595,68 @@ $(document).ready(() => {
 
   // ^^ all gyms actions ^^
 
+  // vvv get all bulletins for a single gym vvv
+  let getGymsBulletins = function getGymsBulletins(gym) {
+    $.ajax({
+      url: myApp.baseUrl + '/gyms/' + gym.id + '/bulletins',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false,
+    }).done(function (bulletins) {
+      $('.content-body').empty();
+      let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+      $('.content-body').append(bulletinListingTemplate({
+        bulletins
+      }));
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  };
+
+  // ^^^^ get all bulletins for a single gym ^^^^
+
+  // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
+  $('.action-items').on('click', 'button', function() {
+    if ($(this).hasClass('new-bulletin-button')) {
+      let gymId = $(this)[0].dataset.gymId;
+      let newBulletinTemplate = require('./handlebars/bulletins/new-bulletin.handlebars');
+      $('.content-body').prepend(newBulletinTemplate({gymId}));
+    }
+  });
+  // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
+
+  // vvvv here's where we actually create the bulletin. sweet. vvvv
+  $('.content-body').on('click', 'button.create-bulletin-button', function(event) {
+    event.preventDefault();
+    console.log(event.target);
+    let gymId = $(this)[0].dataset.gymId;
+    var formData = new FormData(event.target);
+    $.ajax({
+      url: myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'POST',
+      contentType: false,
+      processData: false,
+      data: formData
+    }).done(function (data) {
+      console.log(data);
+      console.log('holy crap did that work????');
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  // ^^^^ here's where we actually create the bulletin. sweet. ^^^^
+
   // vv visit single gym/user actions vv
-  $('.content-body').on('click', 'button', function (event) {
+  $('.content-body').on('click', 'button.visit-single-resource', function (event) {
+    event.preventDefault();
     if ($(this).hasClass('visit-user') || $(this).hasClass('visit-gym')) {
-      event.preventDefault();
       let targetClass = event.target.className;
       // the event target is the button that got clicked. this pulls in the class name
       // from the clicked button, bc otherwise every button is the same
@@ -635,10 +690,14 @@ $(document).ready(() => {
         if (targetResource === '/gyms/') {
           myApp.gym = single_entity;
           $('.feed-header').text(myApp.gym.name);
-          let buttonTemplate = require('./handlebars/gyms/gym-button.handlebars');
+          $('.content-header').text('The latest');
           $('.action-items').empty();
-          $('.action-items').append(buttonTemplate(single_entity));
-          allGymClimbs(single_entity);
+          let climbButtonTemplate = require('./handlebars/gyms/gym-button.handlebars');
+          $('.action-items').append(climbButtonTemplate(single_entity));
+          let bulletinButtonTemplate = require('./handlebars/bulletins/bulletin-button.handlebars');
+          $('.action-items').append(bulletinButtonTemplate(single_entity));
+          // allGymClimbs(single_entity);
+          getGymsBulletins(single_entity);
         // users below
         } else if (targetResource === '/users/') {
           myApp.visited_user = single_entity;
@@ -646,15 +705,16 @@ $(document).ready(() => {
           $('.feed-header').text(myApp.visited_user.email);
           $('.content-header').text(myApp.visited_user.email);
           $('.content-body').empty();
-          let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-          $('.content-body').append(bulletinsListingTemplate({
-            single_entity
-            // this is passing the JSON object into the bookListingTemplate
-            // where handlebars will deal with each item of the array individually
-          }));
+          // let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+          // $('.content-body').append(bulletinsListingTemplate({
+          //   single_entity
+          //   // this is passing the JSON object into the bookListingTemplate
+          //   // where handlebars will deal with each item of the array individually
+          // }));
         // anything else... i have no idea what would trigger this.
         } else {
           $('.feed-header').text('error');
+          console.log('error');
         }
 
       }).fail(function (jqxhr) {
@@ -666,26 +726,24 @@ $(document).ready(() => {
   // ^^ visit single gym/user actions ^^
 
   // vvvv delete single climb actions vvvv
-  $('.content-body').on('click', 'button', function() {
-    if ($(this).hasClass('delete-climb-button')) {
-      event.preventDefault();
-      let climbId = $(this)[0].dataset.deleteClimbId;
-      console.log(climbId);
-      $.ajax({
-        url: myApp.baseUrl + '/climbs/' + climbId,
-        headers: {
-          Authorization: 'Token token=' + myApp.user.token,
-        },
-        method: 'DELETE',
-        contentType: false,
-        processData: false
-      }).done(function () {
-        console.log('deleting climb no '+climbId);
-        $('.climbNumber'+climbId).remove();
-      }).fail(function (jqxhr) {
-        console.error(jqxhr);
-      });
-    }
+  $('.content-body').on('click', 'button.delete-climb-button', function() {
+    event.preventDefault();
+    let climbId = $(this)[0].dataset.deleteClimbId;
+    console.log(climbId);
+    $.ajax({
+      url: myApp.baseUrl + '/climbs/' + climbId,
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      method: 'DELETE',
+      contentType: false,
+      processData: false
+    }).done(function () {
+      console.log('deleting climb no '+climbId);
+      $('.climbNumber'+climbId).remove();
+    }).fail(function (jqxhr) {
+      console.error(jqxhr);
+    });
   });
 
   // ^^^^ delete single climb actions

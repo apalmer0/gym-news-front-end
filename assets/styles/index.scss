@@ -236,6 +236,12 @@ body {
   width: 80px;
 }
 
+.bulletin-thumbnail {
+  height: 80px;
+  margin: 10px;
+  width: 80px;
+}
+
 .story-body {
   font-family: 'Open Sans', sans-serif;
   height: 100%;
@@ -256,10 +262,6 @@ body {
   position: absolute;
   right: 20px;
   text-align: center;
-}
-
-.story-expand {
-  display: none;
 }
 
 .inactive {
