@@ -36,7 +36,8 @@ webpackJsonp([0],[
 	__webpack_require__(4);
 
 	var myApp = {
-	  baseUrl: 'http://localhost:3000'
+	  // baseUrl: 'http://localhost:3000',
+	  baseUrl: 'https://fathomless-castle-93150.herokuapp.com'
 	};
 
 	$(document).ready(function () {
