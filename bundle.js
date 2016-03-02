@@ -436,6 +436,10 @@ webpackJsonp([0],[
 	      }));
 	      //  getBulletinClimbs(event);
 	    }).fail(function (jqxhr) {
+	      $('.feed-header').text('New in your gyms');
+	      $('.content-header').text('You\'re not following any gyms yet!');
+	      $('.content-body').empty();
+	      $('.action-items').empty();
 	      console.error(jqxhr);
 	    });
 	  };
@@ -631,17 +635,23 @@ webpackJsonp([0],[
 	      contentType: false,
 	      processData: false
 	    }).done(function (gyms) {
-	      $('.feed-header').text('All gyms');
-	      $('.content-header').text('Gyms');
-	      $('.content-body').empty();
-	      $('.action-items').empty();
-	      var gymListingTemplate = __webpack_require__(40);
-	      $('.content-body').append(gymListingTemplate({
-	        gyms: gyms
-	        // this is passing the JSON object into the bookListingTemplate
-	        // where handlebars will deal with each item of the array individually
-	      }));
-	      myApp.gyms = gyms;
+	      if (gyms.count !== 0) {
+	        $('.feed-header').text('All gyms');
+	        $('.content-header').text('Gyms');
+	        $('.content-body').empty();
+	        $('.action-items').empty();
+	        var gymListingTemplate = __webpack_require__(40);
+	        $('.content-body').append(gymListingTemplate({
+	          gyms: gyms
+	          // this is passing the JSON object into the bookListingTemplate
+	          // where handlebars will deal with each item of the array individually
+	        }));
+	        myApp.gyms = gyms;
+	      } else {
+	        $('.feed-header').text('All gyms');
+	        $('.content-header').text('No gyms found.');
+	        $('.content-body').empty();
+	      }
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
 	    });
