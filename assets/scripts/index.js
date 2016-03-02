@@ -18,13 +18,13 @@ $(document).ready(() => {
 
   // if(localStorage.getItem('User')) {
   //   myApp.user = localStorage.getItem('User');
+  //   toggleLoggedIn();
+  //   hideModal();
   //   $('.site-content').hide();
-  //   $('.user-show').hide();
   //   $('.homepage').show();
+  //   displayMessage('.welcome');
+  //   showNewsfeed(event);
   // }
-
-  // localStorage.setItem('User', JSON.stringify(user));
-  // initial page setup
 
   var toggleLoggedIn = function toggleLoggedIn() {
     $('.logged-in').show();
@@ -38,6 +38,7 @@ $(document).ready(() => {
 
   var hidePageElements = function hidePageElements() {
     $('.message-account-exists').hide();
+    $('.bulletin-created').hide();
     $('.climb-edited').hide();
     $('.climb-favorited').hide();
     $('.welcome').hide();
@@ -78,15 +79,6 @@ $(document).ready(() => {
   // when you click a button in an overlaying modal
   $('.modal-button').on('click', function () {
     $('.navbar-collapse').removeClass('in');
-  });
-
-  // when a user clicks the 'add climbs' button, this function
-  // then appends the gym id to the submit button of the
-  // ensuing new-climbs modal
-  $('.action-items').on('click', 'button', function() {
-    if ($(this).hasClass('new-climb-button')) {
-      $('.new-climbs-button').attr('data-gym-id', ($(this)[0].dataset.gymId));
-    }
   });
 
   // vvvv populate all gym climbs vvvv
@@ -185,7 +177,8 @@ $(document).ready(() => {
     }
   });
 
-  $('#add-new-climb-form').on('submit', function (event) {
+// add a new climb
+  $('#add-new-climb-form').submit(function (event) {
     event.preventDefault();
     console.log('starting new climb addition');
     var formData = new FormData(event.target);
@@ -596,9 +589,9 @@ $(document).ready(() => {
   // ^^ all gyms actions ^^
 
   // vvv get all bulletins for a single gym vvv
-  let getGymsBulletins = function getGymsBulletins(gym) {
+  let getGymsBulletins = function getGymsBulletins(single_gym) {
     $.ajax({
-      url: myApp.baseUrl + '/gyms/' + gym.id + '/bulletins',
+      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -619,20 +612,26 @@ $(document).ready(() => {
   // ^^^^ get all bulletins for a single gym ^^^^
 
   // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
+  // when a user clicks the 'add bulletin' button, this function
+  // then appends the gym id to the submit button of the
+  // ensuing new-climbs list in the bulletin modal
   $('.action-items').on('click', 'button', function() {
     if ($(this).hasClass('new-bulletin-button')) {
       let gymId = $(this)[0].dataset.gymId;
+      $('.new-bulletin-list').empty();
       let newBulletinTemplate = require('./handlebars/bulletins/new-bulletin.handlebars');
-      $('.content-body').prepend(newBulletinTemplate({gymId}));
+      $('.new-bulletin-list').append(newBulletinTemplate({gymId}));
+      $('.new-climbs-button').attr('data-gym-id', ($(this)[0].dataset.gymId));
+      $('.new-bulletin-button').attr('data-gym-id', ($(this)[0].dataset.gymId));
     }
   });
-  // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
+
+  // ^^^^ create the new bulletin FORM (not the actual bulletin) ^^^^
 
   // vvvv here's where we actually create the bulletin. sweet. vvvv
-  $('.content-body').on('click', 'button.create-bulletin-button', function(event) {
+  $('#new-bulletin-form').on('submit', function(event) {
     event.preventDefault();
-    console.log(event.target);
-    let gymId = $(this)[0].dataset.gymId;
+    let gymId = parseInt($('.new-bulletin-button')[0].dataset.gymId);
     var formData = new FormData(event.target);
     $.ajax({
       url: myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
@@ -644,8 +643,14 @@ $(document).ready(() => {
       processData: false,
       data: formData
     }).done(function (data) {
-      console.log(data);
-      console.log('holy crap did that work????');
+      $('.inputClimbBulletinId').val(data.id);
+      if ($('.new-climbs-list').children().length !== 0){
+        $('#add-new-climb-form').trigger('submit');
+      }
+      console.log(data.id);
+      hideModal();
+      getGymsBulletins(myApp.gym);
+      displayMessage('.bulletin-created');
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -692,8 +697,8 @@ $(document).ready(() => {
           $('.feed-header').text(myApp.gym.name);
           $('.content-header').text('The latest');
           $('.action-items').empty();
-          let climbButtonTemplate = require('./handlebars/gyms/gym-button.handlebars');
-          $('.action-items').append(climbButtonTemplate(single_entity));
+          // let climbButtonTemplate = require('./handlebars/gyms/gym-button.handlebars');
+          // $('.action-items').append(climbButtonTemplate(single_entity));
           let bulletinButtonTemplate = require('./handlebars/bulletins/bulletin-button.handlebars');
           $('.action-items').append(bulletinButtonTemplate(single_entity));
           // allGymClimbs(single_entity);

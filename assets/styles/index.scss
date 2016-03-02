@@ -49,7 +49,8 @@ body {
 .message-account-exists,
 .new-climbs,
 .climb-edited,
-.climb-favorited {
+.climb-favorited,
+.bulletin-created {
   font-family: 'Open Sans', sans-serif;
   margin-top: 5%;
   position: fixed;
@@ -405,6 +406,14 @@ body {
 .new-climb-square:hover {
   border: 5px solid $porch-blue;
   cursor: pointer;
+}
+
+.new-climbs-button {
+  display: none;
+}
+
+.bulletin-content {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .delete-banner {

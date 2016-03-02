@@ -80,6 +80,9 @@
       <div class="alert alert-info alert-dismissible climb-favorited" role="alert">
         <strong>Cool!</strong> Climb favorited.
       </div>
+      <div class="alert alert-info alert-dismissible bulletin-created" role="alert">
+        <strong>Cool!</strong> Bulletin created.
+      </div>
       <!-- pop-up messages -->
 
       <!-- vvvv intro-page vvvv -->
@@ -438,7 +441,7 @@
       </div>
       <!-- ^^^^ new gym modal ^^^^ -->
 
-      <!-- vvvv new climb modal vvvv -->
+      <!-- vvvv new climb modal vvvv
       <div class="modal fade" id="addClimbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -505,7 +508,79 @@
           </div>
         </div>
       </div>
-      <!-- ^^^^ new climb modal ^^^^ -->
+       ^^^^ new climb modal ^^^^ -->
+
+      <!-- vvvv new bulletin modal vvvv -->
+      <div class="modal fade" id="newBulletinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close clear-climbs" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title" id="myModalLabel">Create new bulletin</h2>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="color-options">
+                    <p>Select Color</p>
+                    <div class="new-climb-square create-active bk-black" data-color-id="black"></div>
+                    <div class="new-climb-square create-active bk-gray" data-color-id="gray"></div>
+                    <div class="new-climb-square create-active bk-white" data-color-id="white"></div>
+                    <div class="new-climb-square create-active bk-red" data-color-id="red"></div>
+                    <div class="new-climb-square create-active bk-orange" data-color-id="orange"></div>
+                    <div class="new-climb-square create-active bk-yellow" data-color-id="yellow"></div>
+                    <div class="new-climb-square create-active bk-green" data-color-id="green"></div>
+                    <div class="new-climb-square create-active bk-blue" data-color-id="blue"></div>
+                    <div class="new-climb-square create-active bk-purple" data-color-id="purple"></div>
+                    <div class="new-climb-square create-active bk-pink" data-color-id="pink"></div>
+                  </div>
+                  <div class="type-options">
+                    <p>Select Grade</p>
+                    <div class="type-square inactive" data-type-id="5.">5.</div>
+                    <div class="type-square inactive" data-type-id="v">v</div>
+                  </div>
+                  <div class="grade-options">
+                    <div class="grade-square inactive" data-grade-id="0">0</div>
+                    <div class="grade-square inactive" data-grade-id="1">1</div>
+                    <div class="grade-square inactive" data-grade-id="2">2</div>
+                    <div class="grade-square inactive" data-grade-id="3">3</div>
+                    <div class="grade-square inactive" data-grade-id="4">4</div>
+                    <div class="grade-square inactive" data-grade-id="5">5</div>
+                    <div class="grade-square inactive" data-grade-id="6">6</div>
+                    <div class="grade-square inactive" data-grade-id="7">7</div>
+                    <div class="grade-square inactive" data-grade-id="8">8</div>
+                    <div class="grade-square inactive" data-grade-id="9">9</div>
+                    <div class="grade-square inactive" data-grade-id="10">10</div>
+                    <div class="grade-square inactive" data-grade-id="11">11</div>
+                    <div class="grade-square inactive" data-grade-id="12">12</div>
+                    <div class="grade-square inactive" data-grade-id="13">13</div>
+                    <div class="grade-square inactive" data-grade-id="14">14</div>
+                  </div>
+                  <div class="modifier-options">
+                    <div class="modifier-square inactive" data-modifier-id="-">-</div>
+                    <div class="modifier-square inactive" data-modifier-id="+">+</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <form id="add-new-climb-form">
+                    <p>New Climb(s) Preview</p>
+                    <div class="new-climbs-list">
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-success new-climbs-button modal-button"></button>
+                  </form>
+                  <form id="new-bulletin-form">
+                    <div class="new-bulletin-list">
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-success new-bulletin-button modal-button">Create <span class="climbs-count"></span> climbs</button>
+                    <button type="button" class="btn btn-default clear-climbs" data-dismiss="modal">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ^^^^ new bulletin modal ^^^^ -->
 
       <!-- vvvv edit climb modal vvvv -->
       <div class="modal fade" id="editClimbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
