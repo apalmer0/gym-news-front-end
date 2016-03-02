@@ -95,8 +95,8 @@
             Climbing. Community. News.
           </div>
           <div class="overlay">
-            <button class="btn btn-success btn-large cta">Check it out</button>
-            <p>Poke around a guest account and see what we're all about.</p>
+            <button class="btn btn-success btn-large cta logged-out modal-button" data-toggle="modal" data-target="#signInModal">Check it out</button>
+            <p>Sign in and explore today.</p>
           </div>
 
           <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -206,7 +206,7 @@
             <div>
               <button class="btn btn-success btn-large cta">Check it out</button>
               <br>
-              <p class="column-content">Poke around a guest account and see what we're all about.</p>
+              <p class="column-content">Sign in and explore today.</p>
             </div>
 
           </div>
@@ -562,18 +562,23 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <form id="add-new-climb-form">
-                    <p>New Climb(s) Preview</p>
-                    <div class="new-climbs-list">
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-success new-climbs-button modal-button"></button>
-                  </form>
-                  <form id="new-bulletin-form">
-                    <div class="new-bulletin-list">
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-success new-bulletin-button modal-button">Create <span class="climbs-count"></span> climbs</button>
-                    <button type="button" class="btn btn-default clear-climbs" data-dismiss="modal">Cancel</button>
-                  </form>
+                  <div>
+                    <form id="add-new-climb-form">
+                      <p>New Climb(s) Preview</p>
+                      <div class="new-climbs-list">
+                      </div>
+                      <button type="submit" name="submit" class="btn btn-success new-climbs-button modal-button"></button>
+                    </form>
+                  </div>
+                  <br>
+                  <div>
+                    <form id="new-bulletin-form">
+                      <div class="new-bulletin-list">
+                      </div>
+                      <button type="submit" name="submit" class="btn btn-success new-bulletin-button modal-button">Create <span class="climbs-count"></span> climbs</button>
+                      <button type="button" class="btn btn-default clear-climbs" data-dismiss="modal">Cancel</button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>

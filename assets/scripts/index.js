@@ -198,7 +198,7 @@ $(document).ready(() => {
       displayMessage('.new-climbs');
       hideModal();
       $('.add-climbs').remove();
-      allGymClimbs(myApp.gym);
+      // allGymClimbs(myApp.gym);
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -348,19 +348,56 @@ $(document).ready(() => {
    });
  });
 
+
+  // let getBulletinClimbs = function getBulletinClimbs(event) {
+  //   // console.log($('.bulletin-climbs-list'));
+  //   let bulletins = $('.bulletin-climbs-list');
+  //   let bulletinId = $('.bulletin-climbs-list')[0].dataset.bulletinId;
+  //   console.log(bulletins.length);
+  //   // for (let i = 0; i < bulletins.length; i++){
+  //   //   bulletinId = $('.bulletin-climbs-list')[i].dataset.bulletinId;
+  //   //   console.log(bulletinId);
+  //   //   event.preventDefault();
+  //   //   $.ajax({
+  //   //     url: myApp.baseUrl + '/bulletins/' + bulletinId + '/climbs',
+  //   //     headers: {
+  //   //       Authorization: 'Token token=' + myApp.user.token,
+  //   //     },
+  //   //     method: 'GET',
+  //   //     contentType: false,
+  //   //     processData: false
+  //   //   }).success(function (climbs) {
+  //   //     console.log(climbs);
+  //   //     // if (climbs.length !== 0) {
+  //   //     //   console.log('some climbs');
+  //   //     //  //  $('.feed-header').text('New in your gyms');
+  //   //     //  //  $('.content-header').text('Top stories');
+  //   //     //  //  $('.content-body').empty();
+  //   //     //  //  $('.action-items').empty();
+  //   //     //   // let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
+  //   //     //   // $('.bulletin'+bulletinId).append(climbListingTemplate({
+  //   //     //   //   climbs
+  //   //     //   // }));
+  //   //     // }
+  //   //   }).fail(function (jqxhr) {
+  //   //     console.error(jqxhr);
+  //   //   });
+  //   // }
+  // };
+
  // vvv show newsfeed vvv
  let showNewsfeed = function showNewsfeed(event) {
    event.preventDefault();
-   var formData = new FormData(event.target);
+  //  var formData = new FormData(event.target);
    $.ajax({
-     url: myApp.baseUrl,
+     url: myApp.baseUrl + '/gyms/' + 1 + '/bulletins',
      headers: {
        Authorization: 'Token token=' + myApp.user.token,
      },
      method: 'GET',
      contentType: false,
      processData: false,
-     data: formData,
+    //  data: formData,
    }).done(function (bulletins) {
      $('.feed-header').text('New in your gyms');
      $('.content-header').text('Top stories');
@@ -372,10 +409,12 @@ $(document).ready(() => {
        // this is passing the JSON object into the bookListingTemplate
        // where handlebars will deal with each item of the array individually
      }));
+    //  getBulletinClimbs(event);
    }).fail(function (jqxhr) {
      console.error(jqxhr);
    });
  };
+
 
  // vvv sign in function vvv
  let signIn = function signIn (event) {

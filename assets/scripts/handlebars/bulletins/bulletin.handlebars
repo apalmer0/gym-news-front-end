@@ -1,4 +1,3 @@
-<script>console.log('bulletins handlebars');</script>
 <div class="story">
   <div class="row">
     <div class="story-header col-md-2">
@@ -6,26 +5,9 @@
     </div>
     <div class="story-body col-md-10">
       {{content}}
-      <div class="story-btn glyphicon glyphicon-chevron-down" aria-hidden="true"></div>
-      <div class="story-expand">
-        <div class="climb-square">
-          v10
-        </div>
-        <div class="climb-square">
-          v10
-        </div>
-        <div class="climb-square">
-          v10
-        </div>
-        <div class="climb-square">
-          v10
-        </div>
-        <div class="climb-square">
-          v10
-        </div>
-        <div class="climb-square">
-          v10
-        </div>
+      <!--<div class="story-btn glyphicon glyphicon-chevron-down" aria-hidden="true"></div>-->
+      <div class="story-expand bulletin-climbs-list bulletin{{id}}" data-bulletin-id="{{id}}">
+
       </div>
     </div>
   </div>
