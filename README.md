@@ -2,7 +2,8 @@
 
 ## Hosted on github pages
 
-  [Andrew Palmer - Gym News](http://apalmer0.github.io/gym-news-front-end/index.html)
+  [Gym News Front End](http://apalmer0.github.io/gym-news-front-end/index.html)
+  [Gym News Back End](https://fathomless-castle-93150.herokuapp.com/)
 
 ## Front End Mockups
 
