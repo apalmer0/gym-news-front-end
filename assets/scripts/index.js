@@ -11,7 +11,7 @@ require('../styles/index.scss');
 
 const myApp = {
   // baseUrl: 'http://localhost:3000',
-  baseUrl: 'http://fathomless-castle-93150.herokuapp.com',
+  baseUrl: 'https://fathomless-castle-93150.herokuapp.com',
 };
 
 $(document).ready(() => {
