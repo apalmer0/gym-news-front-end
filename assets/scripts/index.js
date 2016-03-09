@@ -81,29 +81,29 @@ $(document).ready(() => {
     $('.navbar-collapse').removeClass('in');
   });
 
-  // vvvv populate all gym climbs vvvv
-  let allGymClimbs = function allGymClimbs(gym) {
-    $.ajax({
-      url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false
-    }).done(function (climbs) {
-      console.log('you should be seeing a lot of climbs now...');
-      $('.content-body').empty();
-      let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
-      $('.content-body').append(climbListingTemplate({
-        climbs
-      }));
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  };
-
-  // ^^^^ populate all gym climbs ^^^^
+  // // vvvv populate all gym climbs vvvv
+  // let allGymClimbs = function allGymClimbs(gym) {
+  //   $.ajax({
+  //     url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
+  //     headers: {
+  //       Authorization: 'Token token=' + myApp.user.token,
+  //     },
+  //     method: 'GET',
+  //     contentType: false,
+  //     processData: false
+  //   }).done(function (climbs) {
+  //     console.log('you should be seeing a lot of climbs now...');
+  //     $('.content-body').empty();
+  //     let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
+  //     $('.content-body').append(climbListingTemplate({
+  //       climbs
+  //     }));
+  //   }).fail(function (jqxhr) {
+  //     console.error(jqxhr);
+  //   });
+  // };
+  //
+  // // ^^^^ populate all gym climbs ^^^^
 
   let color = "";
   let type = "";
@@ -198,7 +198,6 @@ $(document).ready(() => {
       displayMessage('.new-climbs');
       hideModal();
       $('.add-climbs').remove();
-      // allGymClimbs(myApp.gym);
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -217,7 +216,6 @@ $(document).ready(() => {
     $('.edit-climb-square-preview').empty();
     type = $(this)[0].dataset.typeId;
     console.log(type);
-    // $('.edit-climb-square-preview').text(type);
     $('.edit-climb-square-preview').append(document.createTextNode(type));
     $('.editInputClimbClimb_Type').val(type);
   });
@@ -239,8 +237,9 @@ $(document).ready(() => {
   });
 
   // vvvv open edit climb menu vvvv
-  $('.content-body').on('click', 'button.edit-climb-button', function(event) {
+  $('.content-body').on('click', 'div.climb-square', function(event) {
     event.preventDefault();
+    $("#editClimbModal").modal("show");
     console.log('opening edit menu!');
     let climbId = $(this)[0].dataset.editClimbId;
     $('.submit-climb-edits-button').attr('data-climb-id', climbId);
@@ -283,8 +282,10 @@ $(document).ready(() => {
     }).done(function (data) {
       console.log(data);
       displayMessage('.climb-edited');
-      allGymClimbs(myApp.gym);
       hideModal();
+      $("#editClimbModal").modal("hide");
+      // getGymsBulletins(myApp.)
+      showNewsfeed(event);
       $('.edit-climb-pane').empty();
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -348,68 +349,58 @@ $(document).ready(() => {
    });
  });
 
-
-  // let getBulletinClimbs = function getBulletinClimbs(event) {
-  //   // console.log($('.bulletin-climbs-list'));
-  //   let bulletins = $('.bulletin-climbs-list');
-  //   let bulletinId = $('.bulletin-climbs-list')[0].dataset.bulletinId;
-  //   console.log(bulletins.length);
-  //   // for (let i = 0; i < bulletins.length; i++){
-  //   //   bulletinId = $('.bulletin-climbs-list')[i].dataset.bulletinId;
-  //   //   console.log(bulletinId);
-  //   //   event.preventDefault();
-  //   //   $.ajax({
-  //   //     url: myApp.baseUrl + '/bulletins/' + bulletinId + '/climbs',
-  //   //     headers: {
-  //   //       Authorization: 'Token token=' + myApp.user.token,
-  //   //     },
-  //   //     method: 'GET',
-  //   //     contentType: false,
-  //   //     processData: false
-  //   //   }).success(function (climbs) {
-  //   //     console.log(climbs);
-  //   //     // if (climbs.length !== 0) {
-  //   //     //   console.log('some climbs');
-  //   //     //  //  $('.feed-header').text('New in your gyms');
-  //   //     //  //  $('.content-header').text('Top stories');
-  //   //     //  //  $('.content-body').empty();
-  //   //     //  //  $('.action-items').empty();
-  //   //     //   // let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
-  //   //     //   // $('.bulletin'+bulletinId).append(climbListingTemplate({
-  //   //     //   //   climbs
-  //   //     //   // }));
-  //   //     // }
-  //   //   }).fail(function (jqxhr) {
-  //   //     console.error(jqxhr);
-  //   //   });
-  //   // }
-  // };
-
- // vvv show newsfeed vvv
- let showNewsfeed = function showNewsfeed(event) {
-   event.preventDefault();
-  //  var formData = new FormData(event.target);
+ let setGyms = function setGyms() {
+   myApp.gyms = [];
    $.ajax({
-     url: myApp.baseUrl + '/gyms/' + 1 + '/bulletins',
+     url: myApp.baseUrl + '/gyms/2',
      headers: {
        Authorization: 'Token token=' + myApp.user.token,
      },
      method: 'GET',
      contentType: false,
      processData: false,
-    //  data: formData,
+   }).done(function (gym) {
+     console.log('success');
+     myApp.gyms.push(gym);
+   }).fail(function (jqxhr) {
+     console.error(jqxhr);
+   });
+ };
+
+
+  let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
+    let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
+    $('.content-body').append(bulletinListingTemplate({
+      bulletins
+    }));
+    for (let i = 0; i < $('.bulletin-climbs-list').length; i++) {
+      for (let j = 0; j < myApp.climbs.length; j++) {
+        if (Number(myApp.climbs[j].bulletin_id) === Number($('.bulletin-climbs-list')[i].dataset.bulletinId)) {
+          $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).append("<div class='climb-square bk-"+myApp.climbs[j].color+"' data-edit-climb-id="+myApp.climbs[j].id+">" + myApp.climbs[j].climb_type + myApp.climbs[j].grade + myApp.climbs[j].modifier + '</div>');
+          // $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).attr('data-climb-id', myApp.climbs[j].id);
+        }
+      }
+    }
+  };
+
+
+ // vvv show newsfeed vvv
+ let showNewsfeed = function showNewsfeed(event) {
+   event.preventDefault();
+   $.ajax({
+     url: myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
+     headers: {
+       Authorization: 'Token token=' + myApp.user.token,
+     },
+     method: 'GET',
+     contentType: false,
+     processData: false,
    }).done(function (bulletins) {
      $('.feed-header').text('New in your gyms');
      $('.content-header').text('Top stories');
      $('.content-body').empty();
      $('.action-items').empty();
-     let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-     $('.content-body').append(bulletinListingTemplate({
-       bulletins
-       // this is passing the JSON object into the bookListingTemplate
-       // where handlebars will deal with each item of the array individually
-     }));
-    //  getBulletinClimbs(event);
+     getGymsBulletins(myApp.gyms[0]);
    }).fail(function (jqxhr) {
      $('.feed-header').text('New in your gyms');
      $('.content-header').text('You\'re not following any gyms yet!');
@@ -438,6 +429,7 @@ $(document).ready(() => {
      $('.site-content').hide();
      $('.homepage').show();
      displayMessage('.welcome');
+     setGyms();
      showNewsfeed(event);
    }).fail(function (jqxhr) {
      $('.wrong-password').show();
@@ -623,7 +615,7 @@ $(document).ready(() => {
           // this is passing the JSON object into the bookListingTemplate
           // where handlebars will deal with each item of the array individually
         }));
-        myApp.gyms = gyms;
+        // myApp.gyms = gyms;
       } else {
         $('.feed-header').text('All gyms');
         $('.content-header').text('No gyms found.');
@@ -639,19 +631,29 @@ $(document).ready(() => {
   // vvv get all bulletins for a single gym vvv
   let getGymsBulletins = function getGymsBulletins(single_gym) {
     $.ajax({
-      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
       method: 'GET',
       contentType: false,
       processData: false,
-    }).done(function (bulletins) {
-      $('.content-body').empty();
-      let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-      $('.content-body').append(bulletinListingTemplate({
-        bulletins
-      }));
+    }).done(function (climbs) {
+      myApp.climbs = climbs;
+      $.ajax({
+        url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+        headers: {
+          Authorization: 'Token token=' + myApp.user.token,
+        },
+        method: 'GET',
+        contentType: false,
+        processData: false,
+      }).done(function (bulletins) {
+        $('.content-body').empty();
+        showBulletinsWithClimbs(bulletins);
+      }).fail(function (jqxhr) {
+        console.error(jqxhr);
+      });
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -695,9 +697,12 @@ $(document).ready(() => {
       if ($('.new-climbs-list').children().length !== 0){
         $('#add-new-climb-form').trigger('submit');
       }
-      console.log(data.id);
       hideModal();
-      getGymsBulletins(myApp.gym);
+      for (let i = 0; i < myApp.gyms.length; i++) {
+        if (myApp.gyms[i].id === gymId) {
+          getGymsBulletins(myApp.gyms[i]);
+        }
+      }
       displayMessage('.bulletin-created');
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -745,11 +750,8 @@ $(document).ready(() => {
           $('.feed-header').text(myApp.gym.name);
           $('.content-header').text('The latest');
           $('.action-items').empty();
-          // let climbButtonTemplate = require('./handlebars/gyms/gym-button.handlebars');
-          // $('.action-items').append(climbButtonTemplate(single_entity));
           let bulletinButtonTemplate = require('./handlebars/bulletins/bulletin-button.handlebars');
           $('.action-items').append(bulletinButtonTemplate(single_entity));
-          // allGymClimbs(single_entity);
           getGymsBulletins(single_entity);
         // users below
         } else if (targetResource === '/users/') {
