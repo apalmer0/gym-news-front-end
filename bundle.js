@@ -16,8 +16,8 @@ webpackJsonp([0],[
 	__webpack_require__(4);
 
 	// attach jQuery globally
-	__webpack_require__(44);
-	__webpack_require__(45);
+	__webpack_require__(42);
+	__webpack_require__(43);
 
 /***/ },
 /* 1 */
@@ -108,29 +108,29 @@ webpackJsonp([0],[
 	    $('.navbar-collapse').removeClass('in');
 	  });
 
-	  // vvvv populate all gym climbs vvvv
-	  var allGymClimbs = function allGymClimbs(gym) {
-	    $.ajax({
-	      url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
-	      headers: {
-	        Authorization: 'Token token=' + myApp.user.token
-	      },
-	      method: 'GET',
-	      contentType: false,
-	      processData: false
-	    }).done(function (climbs) {
-	      console.log('you should be seeing a lot of climbs now...');
-	      $('.content-body').empty();
-	      var climbListingTemplate = __webpack_require__(13);
-	      $('.content-body').append(climbListingTemplate({
-	        climbs: climbs
-	      }));
-	    }).fail(function (jqxhr) {
-	      console.error(jqxhr);
-	    });
-	  };
-
-	  // ^^^^ populate all gym climbs ^^^^
+	  // // vvvv populate all gym climbs vvvv
+	  // let allGymClimbs = function allGymClimbs(gym) {
+	  //   $.ajax({
+	  //     url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
+	  //     headers: {
+	  //       Authorization: 'Token token=' + myApp.user.token,
+	  //     },
+	  //     method: 'GET',
+	  //     contentType: false,
+	  //     processData: false
+	  //   }).done(function (climbs) {
+	  //     console.log('you should be seeing a lot of climbs now...');
+	  //     $('.content-body').empty();
+	  //     let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
+	  //     $('.content-body').append(climbListingTemplate({
+	  //       climbs
+	  //     }));
+	  //   }).fail(function (jqxhr) {
+	  //     console.error(jqxhr);
+	  //   });
+	  // };
+	  //
+	  // // ^^^^ populate all gym climbs ^^^^
 
 	  var color = "";
 	  var type = "";
@@ -150,7 +150,7 @@ webpackJsonp([0],[
 	      $('.grade-square').removeClass('create-active');
 	      $('.modifier-square').addClass('inactive');
 	      $('.modifier-square').removeClass('create-active');
-	      var newClimbTemplate = __webpack_require__(34);
+	      var newClimbTemplate = __webpack_require__(13);
 	      $('.new-climbs-list').append(newClimbTemplate({ climbNumber: climbNumber }));
 	      $('.new-climb-preview-square').last().addClass('bk-' + color);
 	      $('.edit-climb-square-preview').addClass('bk-' + color);
@@ -225,7 +225,6 @@ webpackJsonp([0],[
 	      displayMessage('.new-climbs');
 	      hideModal();
 	      $('.add-climbs').remove();
-	      // allGymClimbs(myApp.gym);
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
 	    });
@@ -244,7 +243,6 @@ webpackJsonp([0],[
 	    $('.edit-climb-square-preview').empty();
 	    type = $(this)[0].dataset.typeId;
 	    console.log(type);
-	    // $('.edit-climb-square-preview').text(type);
 	    $('.edit-climb-square-preview').append(document.createTextNode(type));
 	    $('.editInputClimbClimb_Type').val(type);
 	  });
@@ -266,8 +264,9 @@ webpackJsonp([0],[
 	  });
 
 	  // vvvv open edit climb menu vvvv
-	  $('.content-body').on('click', 'button.edit-climb-button', function (event) {
+	  $('.content-body').on('click', 'div.climb-square', function (event) {
 	    event.preventDefault();
+	    $("#editClimbModal").modal("show");
 	    console.log('opening edit menu!');
 	    var climbId = $(this)[0].dataset.editClimbId;
 	    $('.submit-climb-edits-button').attr('data-climb-id', climbId);
@@ -282,7 +281,7 @@ webpackJsonp([0],[
 	    }).done(function (single_climb) {
 	      console.log(single_climb);
 	      $('.edit-climb-pane').empty();
-	      var editClimbTemplate = __webpack_require__(35);
+	      var editClimbTemplate = __webpack_require__(33);
 	      $('.edit-climb-pane').append(editClimbTemplate(single_climb));
 	      console.log('editing climb no ' + climbId);
 	    }).fail(function (jqxhr) {
@@ -310,8 +309,10 @@ webpackJsonp([0],[
 	    }).done(function (data) {
 	      console.log(data);
 	      displayMessage('.climb-edited');
-	      allGymClimbs(myApp.gym);
 	      hideModal();
+	      $("#editClimbModal").modal("hide");
+	      // getGymsBulletins(myApp.)
+	      showNewsfeed(event);
 	      $('.edit-climb-pane').empty();
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
@@ -374,67 +375,56 @@ webpackJsonp([0],[
 	    });
 	  });
 
-	  // let getBulletinClimbs = function getBulletinClimbs(event) {
-	  //   // console.log($('.bulletin-climbs-list'));
-	  //   let bulletins = $('.bulletin-climbs-list');
-	  //   let bulletinId = $('.bulletin-climbs-list')[0].dataset.bulletinId;
-	  //   console.log(bulletins.length);
-	  //   // for (let i = 0; i < bulletins.length; i++){
-	  //   //   bulletinId = $('.bulletin-climbs-list')[i].dataset.bulletinId;
-	  //   //   console.log(bulletinId);
-	  //   //   event.preventDefault();
-	  //   //   $.ajax({
-	  //   //     url: myApp.baseUrl + '/bulletins/' + bulletinId + '/climbs',
-	  //   //     headers: {
-	  //   //       Authorization: 'Token token=' + myApp.user.token,
-	  //   //     },
-	  //   //     method: 'GET',
-	  //   //     contentType: false,
-	  //   //     processData: false
-	  //   //   }).success(function (climbs) {
-	  //   //     console.log(climbs);
-	  //   //     // if (climbs.length !== 0) {
-	  //   //     //   console.log('some climbs');
-	  //   //     //  //  $('.feed-header').text('New in your gyms');
-	  //   //     //  //  $('.content-header').text('Top stories');
-	  //   //     //  //  $('.content-body').empty();
-	  //   //     //  //  $('.action-items').empty();
-	  //   //     //   // let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
-	  //   //     //   // $('.bulletin'+bulletinId).append(climbListingTemplate({
-	  //   //     //   //   climbs
-	  //   //     //   // }));
-	  //   //     // }
-	  //   //   }).fail(function (jqxhr) {
-	  //   //     console.error(jqxhr);
-	  //   //   });
-	  //   // }
-	  // };
-
-	  // vvv show newsfeed vvv
-	  var showNewsfeed = function showNewsfeed(event) {
-	    event.preventDefault();
-	    //  var formData = new FormData(event.target);
+	  var setGyms = function setGyms() {
+	    myApp.gyms = [];
 	    $.ajax({
-	      url: myApp.baseUrl + '/gyms/' + 1 + '/bulletins',
+	      url: myApp.baseUrl + '/gyms/2',
 	      headers: {
 	        Authorization: 'Token token=' + myApp.user.token
 	      },
 	      method: 'GET',
 	      contentType: false,
 	      processData: false
-	    }). //  data: formData,
-	    done(function (bulletins) {
+	    }).done(function (gym) {
+	      console.log('success');
+	      myApp.gyms.push(gym);
+	    }).fail(function (jqxhr) {
+	      console.error(jqxhr);
+	    });
+	  };
+
+	  var showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
+	    var bulletinListingTemplate = __webpack_require__(34);
+	    $('.content-body').append(bulletinListingTemplate({
+	      bulletins: bulletins
+	    }));
+	    for (var i = 0; i < $('.bulletin-climbs-list').length; i++) {
+	      for (var j = 0; j < myApp.climbs.length; j++) {
+	        if (Number(myApp.climbs[j].bulletin_id) === Number($('.bulletin-climbs-list')[i].dataset.bulletinId)) {
+	          $('.bulletin' + $('.bulletin-climbs-list')[i].dataset.bulletinId).append("<div class='climb-square bk-" + myApp.climbs[j].color + "' data-edit-climb-id=" + myApp.climbs[j].id + ">" + myApp.climbs[j].climb_type + myApp.climbs[j].grade + myApp.climbs[j].modifier + '</div>');
+	          // $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).attr('data-climb-id', myApp.climbs[j].id);
+	        }
+	      }
+	    }
+	  };
+
+	  // vvv show newsfeed vvv
+	  var showNewsfeed = function showNewsfeed(event) {
+	    event.preventDefault();
+	    $.ajax({
+	      url: myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
+	      headers: {
+	        Authorization: 'Token token=' + myApp.user.token
+	      },
+	      method: 'GET',
+	      contentType: false,
+	      processData: false
+	    }).done(function (bulletins) {
 	      $('.feed-header').text('New in your gyms');
 	      $('.content-header').text('Top stories');
 	      $('.content-body').empty();
 	      $('.action-items').empty();
-	      var bulletinListingTemplate = __webpack_require__(36);
-	      $('.content-body').append(bulletinListingTemplate({
-	        bulletins: bulletins
-	        // this is passing the JSON object into the bookListingTemplate
-	        // where handlebars will deal with each item of the array individually
-	      }));
-	      //  getBulletinClimbs(event);
+	      getGymsBulletins(myApp.gyms[0]);
 	    }).fail(function (jqxhr) {
 	      $('.feed-header').text('New in your gyms');
 	      $('.content-header').text('You\'re not following any gyms yet!');
@@ -462,6 +452,7 @@ webpackJsonp([0],[
 	      $('.site-content').hide();
 	      $('.homepage').show();
 	      displayMessage('.welcome');
+	      setGyms();
 	      showNewsfeed(event);
 	    }).fail(function (jqxhr) {
 	      $('.wrong-password').show();
@@ -608,7 +599,7 @@ webpackJsonp([0],[
 	      $('.content-header').text('Users');
 	      $('.content-body').empty();
 	      $('.action-items').empty();
-	      var userListingTemplate = __webpack_require__(38);
+	      var userListingTemplate = __webpack_require__(36);
 	      $('.content-body').append(userListingTemplate({
 	        users: users
 	        // this is passing the JSON object into the bookListingTemplate
@@ -640,18 +631,18 @@ webpackJsonp([0],[
 	        $('.content-header').text('Gyms');
 	        $('.content-body').empty();
 	        $('.action-items').empty();
-	        var gymListingTemplate = __webpack_require__(40);
+	        var gymListingTemplate = __webpack_require__(38);
 	        $('.content-body').append(gymListingTemplate({
 	          gyms: gyms
 	          // this is passing the JSON object into the bookListingTemplate
 	          // where handlebars will deal with each item of the array individually
 	        }));
-	        myApp.gyms = gyms;
+	        // myApp.gyms = gyms;
 	      } else {
-	        $('.feed-header').text('All gyms');
-	        $('.content-header').text('No gyms found.');
-	        $('.content-body').empty();
-	      }
+	          $('.feed-header').text('All gyms');
+	          $('.content-header').text('No gyms found.');
+	          $('.content-body').empty();
+	        }
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
 	    });
@@ -662,19 +653,29 @@ webpackJsonp([0],[
 	  // vvv get all bulletins for a single gym vvv
 	  var getGymsBulletins = function getGymsBulletins(single_gym) {
 	    $.ajax({
-	      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+	      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
 	      headers: {
 	        Authorization: 'Token token=' + myApp.user.token
 	      },
 	      method: 'GET',
 	      contentType: false,
 	      processData: false
-	    }).done(function (bulletins) {
-	      $('.content-body').empty();
-	      var bulletinListingTemplate = __webpack_require__(36);
-	      $('.content-body').append(bulletinListingTemplate({
-	        bulletins: bulletins
-	      }));
+	    }).done(function (climbs) {
+	      myApp.climbs = climbs;
+	      $.ajax({
+	        url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+	        headers: {
+	          Authorization: 'Token token=' + myApp.user.token
+	        },
+	        method: 'GET',
+	        contentType: false,
+	        processData: false
+	      }).done(function (bulletins) {
+	        $('.content-body').empty();
+	        showBulletinsWithClimbs(bulletins);
+	      }).fail(function (jqxhr) {
+	        console.error(jqxhr);
+	      });
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
 	    });
@@ -690,7 +691,7 @@ webpackJsonp([0],[
 	    if ($(this).hasClass('new-bulletin-button')) {
 	      var gymId = $(this)[0].dataset.gymId;
 	      $('.new-bulletin-list').empty();
-	      var newBulletinTemplate = __webpack_require__(42);
+	      var newBulletinTemplate = __webpack_require__(40);
 	      $('.new-bulletin-list').append(newBulletinTemplate({ gymId: gymId }));
 	      $('.new-climbs-button').attr('data-gym-id', $(this)[0].dataset.gymId);
 	      $('.new-bulletin-button').attr('data-gym-id', $(this)[0].dataset.gymId);
@@ -718,9 +719,12 @@ webpackJsonp([0],[
 	      if ($('.new-climbs-list').children().length !== 0) {
 	        $('#add-new-climb-form').trigger('submit');
 	      }
-	      console.log(data.id);
 	      hideModal();
-	      getGymsBulletins(myApp.gym);
+	      for (var i = 0; i < myApp.gyms.length; i++) {
+	        if (myApp.gyms[i].id === gymId) {
+	          getGymsBulletins(myApp.gyms[i]);
+	        }
+	      }
 	      displayMessage('.bulletin-created');
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
@@ -769,11 +773,8 @@ webpackJsonp([0],[
 	            $('.feed-header').text(myApp.gym.name);
 	            $('.content-header').text('The latest');
 	            $('.action-items').empty();
-	            // let climbButtonTemplate = require('./handlebars/gyms/gym-button.handlebars');
-	            // $('.action-items').append(climbButtonTemplate(single_entity));
-	            var bulletinButtonTemplate = __webpack_require__(43);
+	            var bulletinButtonTemplate = __webpack_require__(41);
 	            $('.action-items').append(bulletinButtonTemplate(single_entity));
-	            // allGymClimbs(single_entity);
 	            getGymsBulletins(single_entity);
 	            // users below
 	          } else if (targetResource === '/users/') {
@@ -1239,15 +1240,41 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
-	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
-	    var stack1;
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-	  return ((stack1 = container.invokePartial(__webpack_require__(33),depth0,{"name":"climb","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
-	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var stack1;
-
-	  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.climbs : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
-	},"usePartial":true,"useData":true});
+	  return "<div class=\"new-climb-preview-square add-climbs climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\">\n</div>\n<fieldset class=\"add-climbs\">\n  <input type=\"hidden\" class=\"form-control inputClimbColor climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" name=\"climbs[][color]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbClimb_Type climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" name=\"climbs[][climb_type]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbGrade climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" name=\"climbs[][grade]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbModifier climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" name=\"climbs[][modifier]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbBulletinId climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" name=\"climbs[][bulletin_id]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbGym climbNumber"
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" data-climb-id=\""
+	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
+	    + "\" name=\"climbs[][gym_id]\" value=\""
+	    + alias4(((helper = (helper = helpers.gymId || (depth0 != null ? depth0.gymId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gymId","hash":{},"data":data}) : helper)))
+	    + "\">\n</fieldset>\n";
+	},"useData":true});
 
 /***/ },
 /* 14 */
@@ -2432,64 +2459,6 @@ webpackJsonp([0],[
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-	  return "<div class=\"climb-square bk-"
-	    + alias4(((helper = (helper = helpers.color || (depth0 != null ? depth0.color : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data}) : helper)))
-	    + "\">"
-	    + alias4(((helper = (helper = helpers.climb_type || (depth0 != null ? depth0.climb_type : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climb_type","hash":{},"data":data}) : helper)))
-	    + alias4(((helper = (helper = helpers.grade || (depth0 != null ? depth0.grade : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"grade","hash":{},"data":data}) : helper)))
-	    + alias4(((helper = (helper = helpers.modifier || (depth0 != null ? depth0.modifier : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"modifier","hash":{},"data":data}) : helper)))
-	    + "</div>\n";
-	},"useData":true});
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Handlebars = __webpack_require__(14);
-	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-	  return "<div class=\"new-climb-preview-square add-climbs climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\">\n</div>\n<fieldset class=\"add-climbs\">\n  <input type=\"hidden\" class=\"form-control inputClimbColor climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" name=\"climbs[][color]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbClimb_Type climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" name=\"climbs[][climb_type]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbGrade climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" name=\"climbs[][grade]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbModifier climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" name=\"climbs[][modifier]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbBulletinId climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" name=\"climbs[][bulletin_id]\" value=\"\">\n  <input type=\"hidden\" class=\"form-control inputClimbGym climbNumber"
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" data-climb-id=\""
-	    + alias4(((helper = (helper = helpers.climbNumber || (depth0 != null ? depth0.climbNumber : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"climbNumber","hash":{},"data":data}) : helper)))
-	    + "\" name=\"climbs[][gym_id]\" value=\""
-	    + alias4(((helper = (helper = helpers.gymId || (depth0 != null ? depth0.gymId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gymId","hash":{},"data":data}) : helper)))
-	    + "\">\n</fieldset>\n";
-	},"useData":true});
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Handlebars = __webpack_require__(14);
-	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
 	  return "<div class=\"edit-climb-square-preview edit-climb bk-"
 	    + alias4(((helper = (helper = helpers.color || (depth0 != null ? depth0.color : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data}) : helper)))
 	    + "\" data-edit-climb-id=\""
@@ -2530,14 +2499,14 @@ webpackJsonp([0],[
 	},"useData":true});
 
 /***/ },
-/* 36 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 
-	  return ((stack1 = container.invokePartial(__webpack_require__(37),depth0,{"name":"bulletin","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+	  return ((stack1 = container.invokePartial(__webpack_require__(35),depth0,{"name":"bulletin","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 
@@ -2545,7 +2514,7 @@ webpackJsonp([0],[
 	},"usePartial":true,"useData":true});
 
 /***/ },
-/* 37 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
@@ -2554,7 +2523,7 @@ webpackJsonp([0],[
 
 	  return "<div class=\"story\">\n  <div class=\"row\">\n    <div class=\"story-header col-md-2\">\n      <img class=\"bulletin-thumbnail\" src=\"assets/images/comment.png\">\n    </div>\n    <div class=\"story-body col-md-10\">\n      "
 	    + alias4(((helper = (helper = helpers.content || (depth0 != null ? depth0.content : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"content","hash":{},"data":data}) : helper)))
-	    + "\n      <!--<div class=\"story-btn glyphicon glyphicon-chevron-down\" aria-hidden=\"true\"></div>-->\n      <div class=\"story-expand bulletin-climbs-list bulletin"
+	    + "\n      <div class=\"story-expand bulletin-climbs-list bulletin"
 	    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
 	    + "\" data-bulletin-id=\""
 	    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
@@ -2562,14 +2531,14 @@ webpackJsonp([0],[
 	},"useData":true});
 
 /***/ },
-/* 38 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 
-	  return ((stack1 = container.invokePartial(__webpack_require__(39),depth0,{"name":"user","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+	  return ((stack1 = container.invokePartial(__webpack_require__(37),depth0,{"name":"user","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 
@@ -2577,7 +2546,7 @@ webpackJsonp([0],[
 	},"usePartial":true,"useData":true});
 
 /***/ },
-/* 39 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
@@ -2596,14 +2565,14 @@ webpackJsonp([0],[
 	},"useData":true});
 
 /***/ },
-/* 40 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 
-	  return ((stack1 = container.invokePartial(__webpack_require__(41),depth0,{"name":"gym","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+	  return ((stack1 = container.invokePartial(__webpack_require__(39),depth0,{"name":"gym","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 
@@ -2611,7 +2580,7 @@ webpackJsonp([0],[
 	},"usePartial":true,"useData":true});
 
 /***/ },
-/* 41 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
@@ -2632,7 +2601,7 @@ webpackJsonp([0],[
 	},"useData":true});
 
 /***/ },
-/* 42 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
@@ -2645,7 +2614,7 @@ webpackJsonp([0],[
 	},"useData":true});
 
 /***/ },
-/* 43 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(14);
@@ -2658,14 +2627,14 @@ webpackJsonp([0],[
 	},"useData":true});
 
 /***/ },
-/* 44 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["$"] = __webpack_require__(2);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 45 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["jQuery"] = __webpack_require__(2);
