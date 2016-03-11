@@ -5,176 +5,34 @@
 
 // use require without a reference to ensure a file is bundled
 require('./example');
+let authentication = require('./authentication');
+let ajax = require('./ajax');
+let pageSetup = require('./page-setup');
+let pageChanges = require('./page-changes');
+let globalVariables = require('./global-variables');
+require('./climbs');
 
 // load sass manifest
 require('../styles/index.scss');
 
-const myApp = {
-  baseUrl: 'http://localhost:3000',
-};
 
 $(document).ready(() => {
-  console.log(localStorage.User);
-
-  // if(localStorage.getItem('User')) {
-  //   myApp.user = localStorage.getItem('User');
-  //   toggleLoggedIn();
-  //   hideModal();
-  //   $('.site-content').hide();
-  //   $('.homepage').show();
-  //   displayMessage('.welcome');
-  //   showNewsfeed(event);
-  // }
-
-  var toggleLoggedIn = function toggleLoggedIn() {
-    $('.logged-in').show();
-    $('.logged-out').hide();
-  };
-
-  var toggleLoggedOut = function toggleLoggedOut() {
-    $('.logged-out').show();
-    $('.logged-in').hide();
-  };
-
-  var hidePageElements = function hidePageElements() {
-    $('.message-account-exists').hide();
-    $('.bulletin-created').hide();
-    $('.climb-edited').hide();
-    $('.climb-favorited').hide();
-    $('.welcome').hide();
-    $('.new-climbs').hide();
-    $('.password').hide();
-    $('.wrong-password').hide();
-    $('.new-gym').hide();
-  };
-
-  var hideModal = function hideModal() {
-    $('.modal').hide();
-    $('.modal').removeClass('in');
-    $('.modal').attr('style','display: none;');
-    $('.modal-backdrop').hide();
-    $('body').removeClass('modal-open');
-  };
-
-  var displayMessage = function displayMessage(type) {
-    $(function () {
-      $(type).delay(50).fadeIn('normal', function () {
-        $(this).delay(2000).fadeOut();
-      });
-    });
-  };
 
   // hides all page elements that need to appear at specific points.
-  hidePageElements();
+  pageSetup.hidePageElements();
 
   // make sure the appropriate page elements are displayed
   // based on whether or not you're logged in
-  if (!myApp.user) {
-    toggleLoggedOut();
+  if (!globalVariables.myApp.user) {
+    pageSetup.toggleLoggedOut();
   } else {
-    toggleLoggedIn();
+    pageSetup.toggleLoggedIn();
   }
 
   // miscellaneous; causes the navbar to collapse
   // when you click a button in an overlaying modal
   $('.modal-button').on('click', function () {
     $('.navbar-collapse').removeClass('in');
-  });
-
-  // // vvvv populate all gym climbs vvvv
-  // let allGymClimbs = function allGymClimbs(gym) {
-  //   $.ajax({
-  //     url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
-  //     headers: {
-  //       Authorization: 'Token token=' + myApp.user.token,
-  //     },
-  //     method: 'GET',
-  //     contentType: false,
-  //     processData: false
-  //   }).done(function (climbs) {
-  //     console.log('you should be seeing a lot of climbs now...');
-  //     $('.content-body').empty();
-  //     let climbListingTemplate = require('./handlebars/climbs/climbs-listing.handlebars');
-  //     $('.content-body').append(climbListingTemplate({
-  //       climbs
-  //     }));
-  //   }).fail(function (jqxhr) {
-  //     console.error(jqxhr);
-  //   });
-  // };
-  //
-  // // ^^^^ populate all gym climbs ^^^^
-
-  let color = "";
-  let type = "";
-  let grade = "";
-  let modifier = "";
-  let climbNumber = 0;
-
-  $('.color-options').on('click', 'div', function () {
-    climbNumber++;
-    color = $(this)[0].dataset.colorId;
-    if ($(this).hasClass('create-active')) {
-      $('.new-climb-square').removeClass('create-active');
-      $('.new-climb-square').addClass('inactive');
-      $('.type-square').removeClass('inactive');
-      $('.type-square').addClass('create-active');
-      $('.grade-square').addClass('inactive');
-      $('.grade-square').removeClass('create-active');
-      $('.modifier-square').addClass('inactive');
-      $('.modifier-square').removeClass('create-active');
-      let newClimbTemplate = require('./handlebars/climbs/new-climb.handlebars');
-      $('.new-climbs-list').append(newClimbTemplate({climbNumber}));
-      $('.new-climb-preview-square').last().addClass('bk-'+color);
-      $('.edit-climb-square-preview').addClass('bk-'+color);
-      $('.inputClimbColor').last().val(color);
-      let gymId = $('.new-climbs-button')[0].dataset.gymId;
-      $('.inputClimbGym').last().val(gymId);
-    }
-  });
-
-  $('.new-climbs-list').on('click', 'div', function() {
-    $('.climbNumber'+$(this)[0].dataset.climbId).remove();
-  });
-
-  $('.clear-climbs').on('click', function() {
-    $('.add-climbs').remove();
-  });
-
-  $('.type-square').on('click', function () {
-    if ($(this).hasClass('create-active')) {
-      $('.new-climb-preview-square').last().empty();
-      $('.grade-square').addClass('create-active');
-      $('.grade-square').removeClass('inactive');
-      type = $(this)[0].dataset.typeId;
-      $('.new-climb-preview-square').last().append(document.createTextNode(type));
-      $('.inputClimbClimb_Type').last().val(type);
-    }
-  });
-
-  $('.grade-square').on('click', function () {
-    if ($(this).hasClass('create-active')) {
-      $('.new-climb-preview-square').last().empty();
-      $('.modifier-square').addClass('create-active');
-      $('.modifier-square').removeClass('inactive');
-      $('.new-climb-square').addClass('create-active');
-      $('.new-climb-square').removeClass('inactive');
-      $('.climbs-count').text($('.new-climb-preview-square').length);
-      grade = $(this)[0].dataset.gradeId;
-      $('.new-climb-preview-square').last().append(document.createTextNode(type+grade));
-      $('.inputClimbGrade').last().val(grade);
-    }
-  });
-
-  $('.modifier-square').on('click', function () {
-    if ($(this).hasClass('create-active')) {
-      $('.modifier-square').removeClass('create-active');
-      $('.modifier-square').addClass('inactive');
-      $('.new-climb-preview-square').last().empty();
-      modifier = $(this)[0].dataset.modifierId;
-      $('.new-climb-preview-square').last().append(document.createTextNode(type+grade+modifier));
-      $('.inputClimbModifier').last().val(modifier);
-    }
   });
 
 // add a new climb
@@ -184,9 +42,9 @@ $(document).ready(() => {
     var formData = new FormData(event.target);
     let gymId = $('.new-climbs-button')[0].dataset.gymId;
     $.ajax({
-      url: myApp.baseUrl + '/gyms/'+ gymId + '/climbs',
+      url: globalVariables.myApp.baseUrl + '/gyms/'+ gymId + '/climbs',
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'POST',
       contentType: false,
@@ -195,45 +53,12 @@ $(document).ready(() => {
     }).done(function (data) {
       console.log(data);
       console.log('climbs added!');
-      displayMessage('.new-climbs');
-      hideModal();
+      pageChanges.displayMessage('.new-climbs');
+      pageChanges.hideModal();
       $('.add-climbs').remove();
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
-  });
-
-  $('.edit-color-options').on('click', 'div', function () {
-    color = $(this)[0].dataset.colorId;
-    $('.edit-climb-square-preview').removeClass (function (index, css) {
-       return (css.match (/(^|\s)bk-\S+/g) || []).join(' ');
-    });
-    $('.edit-climb-square-preview').addClass('bk-'+color);
-    $('.editInputClimbColor').val(color);
-  });
-
-  $('.edit-type-options').on('click', 'div', function () {
-    $('.edit-climb-square-preview').empty();
-    type = $(this)[0].dataset.typeId;
-    console.log(type);
-    $('.edit-climb-square-preview').append(document.createTextNode(type));
-    $('.editInputClimbClimb_Type').val(type);
-  });
-
-  $('.edit-grade-options').on('click', 'div', function () {
-    $('.edit-climb-square-preview').empty();
-    grade = $(this)[0].dataset.gradeId;
-    console.log(grade);
-    $('.edit-climb-square-preview').append(document.createTextNode(type+grade));
-    $('.editInputClimbGrade').val(grade);
-  });
-
-  $('.edit-modifier-options').on('click', 'div', function () {
-    $('.edit-climb-square-preview').empty();
-    modifier = $(this)[0].dataset.modifierId;
-    console.log(modifier);
-    $('.edit-climb-square-preview').append(document.createTextNode(type+grade+modifier));
-    $('.editInputClimbModifier').val(modifier);
   });
 
   // vvvv open edit climb menu vvvv
@@ -244,9 +69,9 @@ $(document).ready(() => {
     let climbId = $(this)[0].dataset.editClimbId;
     $('.submit-climb-edits-button').attr('data-climb-id', climbId);
     $.ajax({
-      url: myApp.baseUrl + '/climbs/' + climbId,
+      url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'GET',
       contentType: false,
@@ -271,9 +96,9 @@ $(document).ready(() => {
     let climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
     console.log(event.target);
     $.ajax({
-      url: myApp.baseUrl + '/climbs/' + climbId,
+      url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'PATCH',
       contentType: false,
@@ -281,11 +106,11 @@ $(document).ready(() => {
       data: formData,
     }).done(function (data) {
       console.log(data);
-      displayMessage('.climb-edited');
-      hideModal();
+      pageChanges.displayMessage('.climb-edited');
+      pageChanges.hideModal();
       $("#editClimbModal").modal("hide");
-      // getGymsBulletins(myApp.)
-      showNewsfeed(event);
+      // getGymsBulletins(globalVariables.myApp.)
+      ajax.showNewsfeed(event);
       $('.edit-climb-pane').empty();
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -295,47 +120,16 @@ $(document).ready(() => {
   // ^^^^ edit climb ^^^^
 
 
-  $('.story-btn').click(function () {
-    let $button = $(this);
-    //getting the next element
-    let $content = $button.next();
-    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
-    $content.slideToggle(500, function () {
-        //execute this after slideToggle is done
-        //change text of header based on visibility of content div
-        console.log('done');
-    });
-    if ($(this).hasClass('glyphicon-chevron-down')) {
-      $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-    } else {
-      $(this).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-    }
-  });
-
- //  $(window).bind('scroll', function() {
- //  var navHeight = $( window ).height() - 300;
- //    if ($(window).scrollTop() > navHeight) {
- //      console.log('addClass');
- //      console.log(navHeight);
- //      $('.newsfeed-menu').addClass('fixed');
- //    }
- //    else {
- //      console.log('removeClass');
- //      console.log(navHeight);
- //      $('.newsfeed-menu').removeClass('fixed');
- //    }
- // });
-
  // favorite climbs
  $('.content-body').on('click', 'button.favorite-climb-button', function() {
    event.preventDefault();
-   let userId = myApp.user.id;
+   let userId = globalVariables.myApp.user.id;
    let climbId = $(this)[0].dataset.favoriteClimbId;
    let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
    $.ajax({
-     url: myApp.baseUrl + '/favorites',
+     url: globalVariables.myApp.baseUrl + '/favorites',
      headers: {
-       Authorization: 'Token token=' + myApp.user.token,
+       Authorization: 'Token token=' + globalVariables.myApp.user.token,
      },
      method: 'POST',
      contentType: "application/json",
@@ -343,170 +137,40 @@ $(document).ready(() => {
      data: JSON.stringify(favoriteData)
    }).done(function (data) {
      console.log(data);
-     displayMessage('.climb-favorited');
+     pageChanges.displayMessage('.climb-favorited');
    }).fail(function (jqxhr) {
      console.error(jqxhr);
    });
  });
 
- let setGyms = function setGyms() {
-   myApp.gyms = [];
-   $.ajax({
-     url: myApp.baseUrl + '/gyms/2',
-     headers: {
-       Authorization: 'Token token=' + myApp.user.token,
-     },
-     method: 'GET',
-     contentType: false,
-     processData: false,
-   }).done(function (gym) {
-     console.log('success');
-     myApp.gyms.push(gym);
-   }).fail(function (jqxhr) {
-     console.error(jqxhr);
-   });
- };
-
-
-  let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
-    let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-    $('.content-body').append(bulletinListingTemplate({
-      bulletins
-    }));
-    for (let i = 0; i < $('.bulletin-climbs-list').length; i++) {
-      for (let j = 0; j < myApp.climbs.length; j++) {
-        if (Number(myApp.climbs[j].bulletin_id) === Number($('.bulletin-climbs-list')[i].dataset.bulletinId)) {
-          $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).append("<div class='climb-square bk-"+myApp.climbs[j].color+"' data-edit-climb-id="+myApp.climbs[j].id+">" + myApp.climbs[j].climb_type + myApp.climbs[j].grade + myApp.climbs[j].modifier + '</div>');
-          // $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).attr('data-climb-id', myApp.climbs[j].id);
-        }
-      }
-    }
-  };
-
-
- // vvv show newsfeed vvv
- let showNewsfeed = function showNewsfeed(event) {
-   event.preventDefault();
-   $.ajax({
-     url: myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
-     headers: {
-       Authorization: 'Token token=' + myApp.user.token,
-     },
-     method: 'GET',
-     contentType: false,
-     processData: false,
-   }).done(function (bulletins) {
-     $('.feed-header').text('New in your gyms');
-     $('.content-header').text('Top stories');
-     $('.content-body').empty();
-     $('.action-items').empty();
-     getGymsBulletins(myApp.gyms[0]);
-   }).fail(function (jqxhr) {
-     $('.feed-header').text('New in your gyms');
-     $('.content-header').text('You\'re not following any gyms yet!');
-     $('.content-body').empty();
-     $('.action-items').empty();
-     console.error(jqxhr);
-   });
- };
-
-
- // vvv sign in function vvv
- let signIn = function signIn (event) {
-   event.preventDefault();
-   var formData = new FormData(event.target);
-   $.ajax({
-     url: myApp.baseUrl + '/sign-in',
-     method: 'POST',
-     contentType: false,
-     processData: false,
-     data: formData,
-   }).done(function (user) {
-     localStorage.setItem('User', JSON.stringify(user));
-     myApp.user = user;
-     toggleLoggedIn();
-     hideModal();
-     $('.site-content').hide();
-     $('.homepage').show();
-     displayMessage('.welcome');
-     setGyms();
-     showNewsfeed(event);
-   }).fail(function (jqxhr) {
-     $('.wrong-password').show();
-     console.error(jqxhr);
-   });
- };
-
- // ^^ sign in function ^^
-
-  let signUp = function signUp(event) {
-    event.preventDefault();
-    var formData = new FormData(event.target);
-    console.log('starting signup');
-    $.ajax({
-      url: myApp.baseUrl + '/sign-up',
-      method: 'POST',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function () {
-      console.log('signup success');
-      console.log('starting signin');
-      signIn(event);
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-      hideModal();
-      displayMessage('.message-account-exists');
-    });
-  };
-
   // vv signup actions vv
   $('.sign-up').on('submit', function (event) {
-    signUp(event);
+    authentication.signUp(event);
   });
-
-  // ^^ signup actions ^^
 
   // vv signin actions vv
   $('.sign-in').on('submit', function (event) {
-    signIn(event);
+    authentication.signIn(event);
   });
 
-  // ^^ signin actions ^^
+  // vv signOut actions vv
+  $('#sign-out').on('click', function (event) {
+    authentication.signOut(event);
+  });
 
   // vv change password actions vv
   $('#change-pw').on('submit', function (event) {
-    event.preventDefault();
-    var formData = new FormData(event.target);
-    $.ajax({
-      url: myApp.baseUrl + '/change-password/' + myApp.user.id,
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'PATCH',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function (data) {
-      console.log(data);
-      $('.password-field').val('');
-      hideModal();
-      displayMessage('.password');
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
+    authentication.changePassword(event);
   });
-
-  // ^^ change password actions ^^
 
   // vv add gym actions vv
   $('#new-gym').on('submit', function (event) {
     event.preventDefault();
     var formData = new FormData(event.target);
     $.ajax({
-      url: myApp.baseUrl + '/gyms',
+      url: globalVariables.myApp.baseUrl + '/gyms',
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'POST',
       contentType: false,
@@ -514,8 +178,8 @@ $(document).ready(() => {
       data: formData
     }).done(function (data) {
       console.log(data);
-      hideModal();
-      displayMessage('.new-gym');
+      pageChanges.hideModal();
+      pageChanges.displayMessage('.new-gym');
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -525,7 +189,7 @@ $(document).ready(() => {
 
   // vv newsfeed actions vv
   $('#homepage').on('click', function (event) {
-    showNewsfeed(event);
+    ajax.showNewsfeed(event);
   });
 
   // ^^ newsfeed actions ^^
@@ -536,9 +200,9 @@ $(document).ready(() => {
 
     var formData = new FormData(event.target);
     $.ajax({
-      url: myApp.baseUrl + '/users/' + myApp.user.id,
+      url: globalVariables.myApp.baseUrl + '/users/' + globalVariables.myApp.user.id,
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'GET',
       contentType: false,
@@ -564,9 +228,9 @@ $(document).ready(() => {
     event.preventDefault();
 
     $.ajax({
-      url: myApp.baseUrl + '/users',
+      url: globalVariables.myApp.baseUrl + '/users',
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'GET',
       contentType: false,
@@ -582,7 +246,7 @@ $(document).ready(() => {
         // this is passing the JSON object into the bookListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
-      myApp.users = users;
+      globalVariables.myApp.users = users;
 
     }).fail(function (jqxhr) {
       console.error(jqxhr);
@@ -596,9 +260,9 @@ $(document).ready(() => {
     event.preventDefault();
 
     $.ajax({
-      url: myApp.baseUrl + '/gyms',
+      url: globalVariables.myApp.baseUrl + '/gyms',
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'GET',
       contentType: false,
@@ -615,7 +279,7 @@ $(document).ready(() => {
           // this is passing the JSON object into the bookListingTemplate
           // where handlebars will deal with each item of the array individually
         }));
-        // myApp.gyms = gyms;
+        // globalVariables.myApp.gyms = gyms;
       } else {
         $('.feed-header').text('All gyms');
         $('.content-header').text('No gyms found.');
@@ -627,39 +291,6 @@ $(document).ready(() => {
   });
 
   // ^^ all gyms actions ^^
-
-  // vvv get all bulletins for a single gym vvv
-  let getGymsBulletins = function getGymsBulletins(single_gym) {
-    $.ajax({
-      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false,
-    }).done(function (climbs) {
-      myApp.climbs = climbs;
-      $.ajax({
-        url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
-        headers: {
-          Authorization: 'Token token=' + myApp.user.token,
-        },
-        method: 'GET',
-        contentType: false,
-        processData: false,
-      }).done(function (bulletins) {
-        $('.content-body').empty();
-        showBulletinsWithClimbs(bulletins);
-      }).fail(function (jqxhr) {
-        console.error(jqxhr);
-      });
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  };
-
-  // ^^^^ get all bulletins for a single gym ^^^^
 
   // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
   // when a user clicks the 'add bulletin' button, this function
@@ -684,9 +315,9 @@ $(document).ready(() => {
     let gymId = parseInt($('.new-bulletin-button')[0].dataset.gymId);
     var formData = new FormData(event.target);
     $.ajax({
-      url: myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
+      url: globalVariables.myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'POST',
       contentType: false,
@@ -697,13 +328,13 @@ $(document).ready(() => {
       if ($('.new-climbs-list').children().length !== 0){
         $('#add-new-climb-form').trigger('submit');
       }
-      hideModal();
-      for (let i = 0; i < myApp.gyms.length; i++) {
-        if (myApp.gyms[i].id === gymId) {
-          getGymsBulletins(myApp.gyms[i]);
+      pageChanges.hideModal();
+      for (let i = 0; i < globalVariables.myApp.gyms.length; i++) {
+        if (globalVariables.myApp.gyms[i].id === gymId) {
+          ajax.getGymsBulletins(globalVariables.myApp.gyms[i]);
         }
       }
-      displayMessage('.bulletin-created');
+      pageChanges.displayMessage('.bulletin-created');
     }).fail(function (jqxhr) {
       console.error(jqxhr);
     });
@@ -733,9 +364,9 @@ $(document).ready(() => {
         path = '';
       }
       $.ajax({
-        url: myApp.baseUrl + path,
+        url: globalVariables.myApp.baseUrl + path,
         headers: {
-          Authorization: 'Token token=' + myApp.user.token,
+          Authorization: 'Token token=' + globalVariables.myApp.user.token,
         },
         method: 'GET',
         contentType: false,
@@ -746,19 +377,19 @@ $(document).ready(() => {
         console.log(single_entity);
         // gyms below
         if (targetResource === '/gyms/') {
-          myApp.gym = single_entity;
-          $('.feed-header').text(myApp.gym.name);
+          globalVariables.myApp.gym = single_entity;
+          $('.feed-header').text(globalVariables.myApp.gym.name);
           $('.content-header').text('The latest');
           $('.action-items').empty();
           let bulletinButtonTemplate = require('./handlebars/bulletins/bulletin-button.handlebars');
           $('.action-items').append(bulletinButtonTemplate(single_entity));
-          getGymsBulletins(single_entity);
+          ajax.getGymsBulletins(single_entity);
         // users below
         } else if (targetResource === '/users/') {
-          myApp.visited_user = single_entity;
+          globalVariables.myApp.visited_user = single_entity;
           console.log(single_entity);
-          $('.feed-header').text(myApp.visited_user.email);
-          $('.content-header').text(myApp.visited_user.email);
+          $('.feed-header').text(globalVariables.myApp.visited_user.email);
+          $('.content-header').text(globalVariables.myApp.visited_user.email);
           $('.content-body').empty();
           // let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
           // $('.content-body').append(bulletinsListingTemplate({
@@ -786,9 +417,9 @@ $(document).ready(() => {
     let climbId = $(this)[0].dataset.deleteClimbId;
     console.log(climbId);
     $.ajax({
-      url: myApp.baseUrl + '/climbs/' + climbId,
+      url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
       headers: {
-        Authorization: 'Token token=' + myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.myApp.user.token,
       },
       method: 'DELETE',
       contentType: false,
@@ -803,29 +434,5 @@ $(document).ready(() => {
 
   // ^^^^ delete single climb actions
 
-  // vv sign out actions vv
-  $('#sign-out').on('click', function (event) {
-    event.preventDefault();
-
-    var formData = new FormData(event.target);
-    $.ajax({
-      url: myApp.baseUrl + '/sign-out/' + myApp.user.id,
-      headers: {
-        Authorization: 'Token token=' + myApp.user.token,
-      },
-      method: 'DELETE',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function (data) {
-      console.log(data);
-      toggleLoggedOut();
-      hideModal();
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  // ^^ sign out actions ^^
 
 });
