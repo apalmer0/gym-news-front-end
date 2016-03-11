@@ -15,19 +15,10 @@ const myApp = {
   // } else {
   //   baseUrl: 'https://fathomless-castle-93150.herokuapp.com'
   // }
-  // baseUrl: 'http://localhost:3000'
+  baseUrl: 'http://localhost:3000'
 };
 
 $(document).ready(() => {
-
-let baseUrl;
-
-  if ( window.document.domain === 'localhost' ) {
-    baseUrl = 'http://localhost:3000';
-  } else {
-    baseUrl = 'https://fathomless-castle-93150.herokuapp.com';
-  }
-
   console.log(localStorage.User);
 
   // if(localStorage.getItem('User')) {
@@ -98,7 +89,7 @@ let baseUrl;
   // // vvvv populate all gym climbs vvvv
   // let allGymClimbs = function allGymClimbs(gym) {
   //   $.ajax({
-  //     url: baseUrl + '/gyms/' + gym.id + '/climbs',
+  //     url: myApp.baseUrl + '/gyms/' + gym.id + '/climbs',
   //     headers: {
   //       Authorization: 'Token token=' + myApp.user.token,
   //     },
@@ -198,7 +189,7 @@ let baseUrl;
     var formData = new FormData(event.target);
     let gymId = $('.new-climbs-button')[0].dataset.gymId;
     $.ajax({
-      url: baseUrl + '/gyms/'+ gymId + '/climbs',
+      url: myApp.baseUrl + '/gyms/'+ gymId + '/climbs',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -258,7 +249,7 @@ let baseUrl;
     let climbId = $(this)[0].dataset.editClimbId;
     $('.submit-climb-edits-button').attr('data-climb-id', climbId);
     $.ajax({
-      url: baseUrl + '/climbs/' + climbId,
+      url: myApp.baseUrl + '/climbs/' + climbId,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -285,7 +276,7 @@ let baseUrl;
     let climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
     console.log(event.target);
     $.ajax({
-      url: baseUrl + '/climbs/' + climbId,
+      url: myApp.baseUrl + '/climbs/' + climbId,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -347,7 +338,7 @@ let baseUrl;
    let climbId = $(this)[0].dataset.favoriteClimbId;
    let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
    $.ajax({
-     url: baseUrl + '/favorites',
+     url: myApp.baseUrl + '/favorites',
      headers: {
        Authorization: 'Token token=' + myApp.user.token,
      },
@@ -366,7 +357,7 @@ let baseUrl;
  let setGyms = function setGyms() {
    myApp.gyms = [];
    $.ajax({
-     url: baseUrl + '/gyms/2',
+     url: myApp.baseUrl + '/gyms/2',
      headers: {
        Authorization: 'Token token=' + myApp.user.token,
      },
@@ -401,7 +392,7 @@ let baseUrl;
  let showNewsfeed = function showNewsfeed(event) {
    event.preventDefault();
    $.ajax({
-     url: baseUrl + '/gyms/' + 2 + '/bulletins',
+     url: myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
      headers: {
        Authorization: 'Token token=' + myApp.user.token,
      },
@@ -429,7 +420,7 @@ let baseUrl;
    event.preventDefault();
    var formData = new FormData(event.target);
    $.ajax({
-     url: baseUrl + '/sign-in',
+     url: myApp.baseUrl + '/sign-in',
      method: 'POST',
      contentType: false,
      processData: false,
@@ -457,7 +448,7 @@ let baseUrl;
     var formData = new FormData(event.target);
     console.log('starting signup');
     $.ajax({
-      url: baseUrl + '/sign-up',
+      url: myApp.baseUrl + '/sign-up',
       method: 'POST',
       contentType: false,
       processData: false,
@@ -492,7 +483,7 @@ let baseUrl;
     event.preventDefault();
     var formData = new FormData(event.target);
     $.ajax({
-      url: baseUrl + '/change-password/' + myApp.user.id,
+      url: myApp.baseUrl + '/change-password/' + myApp.user.id,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -517,7 +508,7 @@ let baseUrl;
     event.preventDefault();
     var formData = new FormData(event.target);
     $.ajax({
-      url: baseUrl + '/gyms',
+      url: myApp.baseUrl + '/gyms',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -549,7 +540,7 @@ let baseUrl;
 
     var formData = new FormData(event.target);
     $.ajax({
-      url: baseUrl + '/users/' + myApp.user.id,
+      url: myApp.baseUrl + '/users/' + myApp.user.id,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -577,7 +568,7 @@ let baseUrl;
     event.preventDefault();
 
     $.ajax({
-      url: baseUrl + '/users',
+      url: myApp.baseUrl + '/users',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -609,7 +600,7 @@ let baseUrl;
     event.preventDefault();
 
     $.ajax({
-      url: baseUrl + '/gyms',
+      url: myApp.baseUrl + '/gyms',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -644,7 +635,7 @@ let baseUrl;
   // vvv get all bulletins for a single gym vvv
   let getGymsBulletins = function getGymsBulletins(single_gym) {
     $.ajax({
-      url: baseUrl + '/gyms/' + single_gym.id + '/climbs',
+      url: myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -654,7 +645,7 @@ let baseUrl;
     }).done(function (climbs) {
       myApp.climbs = climbs;
       $.ajax({
-        url: baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+        url: myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
         headers: {
           Authorization: 'Token token=' + myApp.user.token,
         },
@@ -697,7 +688,7 @@ let baseUrl;
     let gymId = parseInt($('.new-bulletin-button')[0].dataset.gymId);
     var formData = new FormData(event.target);
     $.ajax({
-      url: baseUrl + '/gyms/' + gymId + '/bulletins',
+      url: myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -746,7 +737,7 @@ let baseUrl;
         path = '';
       }
       $.ajax({
-        url: baseUrl + path,
+        url: myApp.baseUrl + path,
         headers: {
           Authorization: 'Token token=' + myApp.user.token,
         },
@@ -799,7 +790,7 @@ let baseUrl;
     let climbId = $(this)[0].dataset.deleteClimbId;
     console.log(climbId);
     $.ajax({
-      url: baseUrl + '/climbs/' + climbId,
+      url: myApp.baseUrl + '/climbs/' + climbId,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
@@ -822,7 +813,7 @@ let baseUrl;
 
     var formData = new FormData(event.target);
     $.ajax({
-      url: baseUrl + '/sign-out/' + myApp.user.id,
+      url: myApp.baseUrl + '/sign-out/' + myApp.user.id,
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
