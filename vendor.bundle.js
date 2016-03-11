@@ -100,7 +100,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(2);
-	module.exports = __webpack_require__(46);
+	module.exports = __webpack_require__(59);
 
 
 /***/ },
@@ -9943,29 +9943,7 @@
 
 /***/ },
 
-/***/ 3:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	// $(document).ready(() => {
-	//   $('#saveButton').on('click',function(){
-	//     console.log($('#exampleInputEmail1').val());
-	//   });
-	//
-	//   // $('#saveButton').on('click',function(event) {
-	//   //   event.preventDefault();
-	//   //   let item = new FormData(event.target);
-	//   //   console.log(item);
-	//   // });
-	//
-	// });
-
-	module.exports = true;
-
-/***/ },
-
-/***/ 46:
+/***/ 59:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {/*!
