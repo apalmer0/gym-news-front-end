@@ -1,0 +1,65 @@
+'use strict';
+
+let globalVariables = require('./global-variables');
+let pageChanges = require('./page-changes');
+
+let getAllGyms = function getAllGyms (event) {
+  event.preventDefault();
+  $.ajax({
+    url: globalVariables.myApp.baseUrl + '/gyms',
+    headers: {
+      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+    },
+    method: 'GET',
+    contentType: false,
+    processData: false,
+  }).done(function (gyms) {
+    if (gyms.count !== 0) {
+      $('.feed-header').text('All gyms');
+      $('.content-header').text('Gyms');
+      $('.content-body').empty();
+      $('.action-items').empty();
+      let gymListingTemplate = require('./handlebars/gyms/gyms-listing.handlebars');
+      $('.content-body').append(gymListingTemplate({
+        gyms
+        // this is passing the JSON object into the bookListingTemplate
+        // where handlebars will deal with each item of the array individually
+      }));
+      // globalVariables.myApp.gyms = gyms;
+    } else {
+      $('.feed-header').text('All gyms');
+      $('.content-header').text('No gyms found.');
+      $('.content-body').empty();
+    }
+  }).fail(function (jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+// ^^ all gyms actions ^^
+
+let createNewGym = function createNewGym(event) {
+  event.preventDefault();
+  var formData = new FormData(event.target);
+  $.ajax({
+    url: globalVariables.myApp.baseUrl + '/gyms',
+    headers: {
+      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+    },
+    method: 'POST',
+    contentType: false,
+    processData: false,
+    data: formData
+  }).done(function (data) {
+    console.log(data);
+    pageChanges.hideModal();
+    pageChanges.displayMessage('.new-gym');
+  }).fail(function (jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+module.exports = {
+  getAllGyms,
+  createNewGym
+};
