@@ -1,7 +1,9 @@
 'use strict';
 
 const myApp = {
-  baseUrl: 'http://localhost:3000',
+  baseUrl: document.location.hostname === 'localhost' ?
+    'http://localhost:3000' :
+    'https://fathomless-castle-93150.herokuapp.com/',
 };
 
 
