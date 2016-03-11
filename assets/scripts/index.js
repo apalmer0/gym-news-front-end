@@ -1,15 +1,13 @@
 'use strict';
 
-// user require with a reference to bundle the file and use it in this file
-// var example = require('./example');
-
-// use require without a reference to ensure a file is bundled
-require('./example');
-let authentication = require('./authentication');
+// use require with a reference to bundle the file and use it in this file
 let ajax = require('./ajax');
 let pageSetup = require('./page-setup');
 let pageChanges = require('./page-changes');
 let globalVariables = require('./global-variables');
+
+// use require without a reference to ensure a file is bundled
+require('./event-handlers');
 require('./climbs');
 
 // load sass manifest
@@ -29,37 +27,6 @@ $(document).ready(() => {
     pageSetup.toggleLoggedIn();
   }
 
-  // miscellaneous; causes the navbar to collapse
-  // when you click a button in an overlaying modal
-  $('.modal-button').on('click', function () {
-    $('.navbar-collapse').removeClass('in');
-  });
-
-// add a new climb
-  $('#add-new-climb-form').submit(function (event) {
-    event.preventDefault();
-    console.log('starting new climb addition');
-    var formData = new FormData(event.target);
-    let gymId = $('.new-climbs-button')[0].dataset.gymId;
-    $.ajax({
-      url: globalVariables.myApp.baseUrl + '/gyms/'+ gymId + '/climbs',
-      headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
-      },
-      method: 'POST',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function (data) {
-      console.log(data);
-      console.log('climbs added!');
-      pageChanges.displayMessage('.new-climbs');
-      pageChanges.hideModal();
-      $('.add-climbs').remove();
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  });
 
   // vvvv open edit climb menu vvvv
   $('.content-body').on('click', 'div.climb-square', function(event) {
@@ -118,179 +85,6 @@ $(document).ready(() => {
   });
 
   // ^^^^ edit climb ^^^^
-
-
- // favorite climbs
- $('.content-body').on('click', 'button.favorite-climb-button', function() {
-   event.preventDefault();
-   let userId = globalVariables.myApp.user.id;
-   let climbId = $(this)[0].dataset.favoriteClimbId;
-   let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
-   $.ajax({
-     url: globalVariables.myApp.baseUrl + '/favorites',
-     headers: {
-       Authorization: 'Token token=' + globalVariables.myApp.user.token,
-     },
-     method: 'POST',
-     contentType: "application/json",
-     processData: false,
-     data: JSON.stringify(favoriteData)
-   }).done(function (data) {
-     console.log(data);
-     pageChanges.displayMessage('.climb-favorited');
-   }).fail(function (jqxhr) {
-     console.error(jqxhr);
-   });
- });
-
-  // vv signup actions vv
-  $('.sign-up').on('submit', function (event) {
-    authentication.signUp(event);
-  });
-
-  // vv signin actions vv
-  $('.sign-in').on('submit', function (event) {
-    authentication.signIn(event);
-  });
-
-  // vv signOut actions vv
-  $('#sign-out').on('click', function (event) {
-    authentication.signOut(event);
-  });
-
-  // vv change password actions vv
-  $('#change-pw').on('submit', function (event) {
-    authentication.changePassword(event);
-  });
-
-  // vv add gym actions vv
-  $('#new-gym').on('submit', function (event) {
-    event.preventDefault();
-    var formData = new FormData(event.target);
-    $.ajax({
-      url: globalVariables.myApp.baseUrl + '/gyms',
-      headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
-      },
-      method: 'POST',
-      contentType: false,
-      processData: false,
-      data: formData
-    }).done(function (data) {
-      console.log(data);
-      pageChanges.hideModal();
-      pageChanges.displayMessage('.new-gym');
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  // ^^ add gym actions ^^
-
-  // vv newsfeed actions vv
-  $('#homepage').on('click', function (event) {
-    ajax.showNewsfeed(event);
-  });
-
-  // ^^ newsfeed actions ^^
-
-  // vv my profile actions vv
-  $('#my-profile').on('click', function (event) {
-    event.preventDefault();
-
-    var formData = new FormData(event.target);
-    $.ajax({
-      url: globalVariables.myApp.baseUrl + '/users/' + globalVariables.myApp.user.id,
-      headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false,
-      data: formData,
-    }).done(function (data) {
-      console.log(data);
-      // $('.site-content').hide();
-      // $('.user-show').show();
-      $('.content-body').empty();
-      $('.action-items').empty();
-      $('.feed-header').text('Your profile');
-      $('.content-header').text('You');
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  // ^^ my profile actions ^^
-
-  // vv all users actions vv
-  $('#all-users').on('click', function (event) {
-    event.preventDefault();
-
-    $.ajax({
-      url: globalVariables.myApp.baseUrl + '/users',
-      headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false,
-    }).done(function (users) {
-      $('.feed-header').text('All users');
-      $('.content-header').text('Users');
-      $('.content-body').empty();
-      $('.action-items').empty();
-      let userListingTemplate = require('./handlebars/users/users-listing.handlebars');
-      $('.content-body').append(userListingTemplate({
-        users
-        // this is passing the JSON object into the bookListingTemplate
-        // where handlebars will deal with each item of the array individually
-      }));
-      globalVariables.myApp.users = users;
-
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  // ^^ all users actions ^^
-
-  // vv all gyms actions vv
-  $('#all-gyms').on('click', function (event) {
-    event.preventDefault();
-
-    $.ajax({
-      url: globalVariables.myApp.baseUrl + '/gyms',
-      headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
-      },
-      method: 'GET',
-      contentType: false,
-      processData: false,
-    }).done(function (gyms) {
-      if (gyms.count !== 0) {
-        $('.feed-header').text('All gyms');
-        $('.content-header').text('Gyms');
-        $('.content-body').empty();
-        $('.action-items').empty();
-        let gymListingTemplate = require('./handlebars/gyms/gyms-listing.handlebars');
-        $('.content-body').append(gymListingTemplate({
-          gyms
-          // this is passing the JSON object into the bookListingTemplate
-          // where handlebars will deal with each item of the array individually
-        }));
-        // globalVariables.myApp.gyms = gyms;
-      } else {
-        $('.feed-header').text('All gyms');
-        $('.content-header').text('No gyms found.');
-        $('.content-body').empty();
-      }
-    }).fail(function (jqxhr) {
-      console.error(jqxhr);
-    });
-  });
-
-  // ^^ all gyms actions ^^
 
   // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
   // when a user clicks the 'add bulletin' button, this function
