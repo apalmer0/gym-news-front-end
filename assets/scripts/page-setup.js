@@ -14,6 +14,7 @@ var hidePageElements = function hidePageElements() {
   $('.message-account-exists').hide();
   $('.bulletin-created').hide();
   $('.climb-edited').hide();
+  $('.climb-deleted').hide();
   $('.climb-favorited').hide();
   $('.welcome').hide();
   $('.new-climbs').hide();

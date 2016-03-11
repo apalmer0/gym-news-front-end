@@ -2,6 +2,7 @@
 
 let globalVariables = require('./global-variables');
 let pageChanges = require('./page-changes');
+let ajax = require('./ajax');
 
 require('./create-climb');
 require('./edit-climb');
@@ -53,7 +54,84 @@ let addNewClimbs = function addNewClimbs(event) {
   });
 };
 
+let openEditClimbModal = function openEditClimbModal(event) {
+  event.preventDefault();
+  $("#editClimbModal").modal("show");
+  console.log('opening edit menu!');
+  let climbId = event.target.dataset.editClimbId;
+  $('.delete-climb-button').attr('data-delete-climb-id', climbId);
+  $('.submit-climb-edits-button').attr('data-climb-id', climbId);
+  $.ajax({
+    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    headers: {
+      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+    },
+    method: 'GET',
+    contentType: false,
+    processData: false
+  }).done(function (single_climb) {
+    console.log(single_climb);
+    $('.edit-climb-pane').empty();
+    let editClimbTemplate = require('./handlebars/climbs/edit-climb.handlebars');
+    $('.edit-climb-pane').append(editClimbTemplate(single_climb));
+    console.log('editing climb no '+climbId);
+  }).fail(function (jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+let submitClimbEdit = function submitClimbEdit(event) {
+  event.preventDefault();
+  var formData = new FormData(event.target);
+  let climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
+  console.log(event.target);
+  $.ajax({
+    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    headers: {
+      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+    },
+    method: 'PATCH',
+    contentType: false,
+    processData: false,
+    data: formData,
+  }).done(function (data) {
+    console.log(data);
+    pageChanges.displayMessage('.climb-edited');
+    pageChanges.hideModal();
+    $("#editClimbModal").modal("hide");
+    ajax.showNewsfeed(event);
+    $('.edit-climb-pane').empty();
+  }).fail(function (jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+let deleteClimb = function deleteClimb(event) {
+  event.preventDefault();
+  let climbId = event.target.dataset.deleteClimbId;
+  console.log(climbId);
+  $.ajax({
+    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    headers: {
+      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+    },
+    method: 'DELETE',
+    contentType: false,
+    processData: false
+  }).done(function () {
+    console.log('deleting climb no '+climbId);
+    $('.climbNumber'+climbId).remove();
+    pageChanges.hideModal();
+    pageChanges.displayMessage('.climb-deleted');
+  }).fail(function (jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
 module.exports = {
   addFavoriteClimb,
-  addNewClimbs
+  addNewClimbs,
+  openEditClimbModal,
+  submitClimbEdit,
+  deleteClimb
 };
