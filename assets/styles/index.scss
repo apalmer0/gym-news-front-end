@@ -222,13 +222,7 @@ body {
 .story {
   background-color: $white;
   border-bottom: 1px solid $light-gray;
-}
-
-.story-header {
-  border-right: 5px solid $white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 60%;
-  height: 100%;
+  padding: 10px;
 }
 
 .content-thumbnail {
@@ -239,9 +233,10 @@ body {
 }
 
 .bulletin-thumbnail {
-  height: 80px;
-  margin: 10px;
-  width: 80px;
+  max-width: 100px;
+  min-width: 60px;
+  padding: 10px;
+  width: 100%;
 }
 
 .story-body {

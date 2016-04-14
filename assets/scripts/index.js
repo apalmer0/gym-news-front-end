@@ -19,7 +19,7 @@ $(document).ready(() => {
 
   // make sure the appropriate page elements are displayed
   // based on whether or not you're logged in
-  if (!globalVariables.myApp.user) {
+  if (!globalVariables.user) {
     pageSetup.toggleLoggedOut();
   } else {
     pageSetup.toggleLoggedIn();
