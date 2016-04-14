@@ -6,9 +6,9 @@ let pageChanges = require('./page-changes');
 let getAllGyms = function getAllGyms (event) {
   event.preventDefault();
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms',
+    url: globalVariables.baseUrl + '/gyms',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
@@ -25,7 +25,7 @@ let getAllGyms = function getAllGyms (event) {
         // this is passing the JSON object into the bookListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
-      // globalVariables.myApp.gyms = gyms;
+      // globalVariables.gyms = gyms;
     } else {
       $('.feed-header').text('All gyms');
       $('.content-header').text('No gyms found.');
@@ -42,9 +42,9 @@ let createNewGym = function createNewGym(event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms',
+    url: globalVariables.baseUrl + '/gyms',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'POST',
     contentType: false,

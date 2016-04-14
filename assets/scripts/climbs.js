@@ -9,13 +9,13 @@ require('./edit-climb');
 
 let addFavoriteClimb = function addFavoriteClimb(event) {
   event.preventDefault();
-  let userId = globalVariables.myApp.user.id;
+  let userId = globalVariables.user.id;
   let climbId = $(this)[0].dataset.favoriteClimbId;
   let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/favorites',
+    url: globalVariables.baseUrl + '/favorites',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'POST',
     contentType: "application/json",
@@ -35,9 +35,9 @@ let addNewClimbs = function addNewClimbs(event) {
   var formData = new FormData(event.target);
   let gymId = $('.new-climbs-button')[0].dataset.gymId;
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/'+ gymId + '/climbs',
+    url: globalVariables.baseUrl + '/gyms/'+ gymId + '/climbs',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'POST',
     contentType: false,
@@ -62,9 +62,9 @@ let openEditClimbModal = function openEditClimbModal(event) {
   $('.delete-climb-button').attr('data-delete-climb-id', climbId);
   $('.submit-climb-edits-button').attr('data-climb-id', climbId);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    url: globalVariables.baseUrl + '/climbs/' + climbId,
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
@@ -86,9 +86,9 @@ let submitClimbEdit = function submitClimbEdit(event) {
   let climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
   console.log(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    url: globalVariables.baseUrl + '/climbs/' + climbId,
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'PATCH',
     contentType: false,
@@ -111,9 +111,9 @@ let deleteClimb = function deleteClimb(event) {
   let climbId = event.target.dataset.deleteClimbId;
   console.log(climbId);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    url: globalVariables.baseUrl + '/climbs/' + climbId,
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'DELETE',
     contentType: false,

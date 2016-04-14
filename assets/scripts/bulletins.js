@@ -25,9 +25,9 @@ let createNewBulletin = function createNewBulletin(event) {
   let gymId = parseInt($('.new-bulletin-button')[0].dataset.gymId);
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
+    url: globalVariables.baseUrl + '/gyms/' + gymId + '/bulletins',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'POST',
     contentType: false,
@@ -39,9 +39,9 @@ let createNewBulletin = function createNewBulletin(event) {
       $('#add-new-climb-form').trigger('submit');
     }
     pageChanges.hideModal();
-    for (let i = 0; i < globalVariables.myApp.gyms.length; i++) {
-      if (globalVariables.myApp.gyms[i].id === gymId) {
-        ajax.getGymsBulletins(globalVariables.myApp.gyms[i]);
+    for (let i = 0; i < globalVariables.gyms.length; i++) {
+      if (globalVariables.gyms[i].id === gymId) {
+        ajax.getGymsBulletins(globalVariables.gyms[i]);
       }
     }
     pageChanges.displayMessage('.bulletin-created');

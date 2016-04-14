@@ -10,14 +10,14 @@ let signIn = function signIn (event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/sign-in',
+    url: globalVariables.baseUrl + '/sign-in',
     method: 'POST',
     contentType: false,
     processData: false,
     data: formData,
   }).done(function (user) {
     localStorage.setItem('User', JSON.stringify(user));
-    globalVariables.myApp.user = user;
+    globalVariables.user = user;
     pageSetup.toggleLoggedIn();
     pageChanges.hideModal();
     $('.site-content').hide();
@@ -36,7 +36,7 @@ let signUp = function signUp(event) {
   var formData = new FormData(event.target);
   console.log('starting signup');
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/sign-up',
+    url: globalVariables.baseUrl + '/sign-up',
     method: 'POST',
     contentType: false,
     processData: false,
@@ -57,9 +57,9 @@ let signOut = function signOut (event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/sign-out/' + globalVariables.myApp.user.id,
+    url: globalVariables.baseUrl + '/sign-out/' + globalVariables.user.id,
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'DELETE',
     contentType: false,
@@ -81,9 +81,9 @@ let changePassword = function changePassword (event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/change-password/' + globalVariables.myApp.user.id,
+    url: globalVariables.baseUrl + '/change-password/' + globalVariables.user.id,
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'PATCH',
     contentType: false,

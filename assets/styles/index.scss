@@ -26,8 +26,6 @@ $porch-blue: #006ba6;
 $purple: #90c;
 $pink: #f6f;
 
-$image-width: 100%;
-
 html,
 body {
   background-color: $background-color;
@@ -84,10 +82,10 @@ body {
 }
 
 .intro-page-image {
-  height: $image-width * .67;
+  height: 67%;
   opacity: .3;
   position: relative;
-  width: $image-width;
+  width: 100%;
 }
 
 .hero {
@@ -98,9 +96,6 @@ body {
   width: 100%;
 }
 
-.title {
-  font-size: 500%;
-}
 
 .subtitle {
   font-size: 200%;
@@ -222,32 +217,31 @@ body {
 .story {
   background-color: $white;
   border-bottom: 1px solid $light-gray;
-}
-
-.story-header {
-  border-right: 5px solid $white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 60%;
-  height: 100%;
+  padding: 10px;
 }
 
 .content-thumbnail {
   border: 1px solid $black;
-  height: 80px;
-  margin: 10px;
-  width: 80px;
+  // height: 80px;
+  // margin: 10px;
+  // width: 80px;
+  max-width: 100px;
+  min-width: 60px;
+  padding: 10px;
+  width: 100%;
 }
 
 .bulletin-thumbnail {
-  height: 80px;
-  margin: 10px;
-  width: 80px;
+  max-width: 100px;
+  min-width: 60px;
+  padding: 10px;
+  width: 100%;
 }
 
 .story-body {
   font-family: 'Open Sans', sans-serif;
   height: 100%;
-  margin-top: 10px;
+  // margin-top: 10px;
   padding-right: 20px;
   position: relative;
   text-align: left;
@@ -264,6 +258,13 @@ body {
   position: absolute;
   right: 20px;
   text-align: center;
+}
+
+.story-header {
+  // border-right: 5px solid $white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 60%;
+  height: 100%;
 }
 
 .inactive {
@@ -579,7 +580,28 @@ body {
   }
 
   .overlay {
-    top: -70px;
+    display: none;
+  }
+
+  .title {
+    font-size: 210%;
+    margin-top: 50px
+  }
+
+  .subtitle {
+    font-size: 100%;
+    margin-top: 25%
+  }
+
+  .carousel-control .icon-prev,
+  .carousel-control .glyphicon-chevron-left,
+  .carousel-control .glyphicon-chevron-right {
+    font-size: 80%;
+    margin-top: 100%;
+  }
+
+  .carousel-indicators {
+    bottom: -10px;
   }
 }
 
@@ -592,9 +614,12 @@ body {
     width: 400px;
   }
 
+  .title {
+    font-size: 500%;
+  }
 }
 
-// this will be applied for browsers bigger than 564px wide
+// this will be applied for browsers bigger than 900px wide
 @media (min-width: 990px) {
   .well {
     height: 340px;

@@ -5,9 +5,9 @@ let globalVariables = require('./global-variables');
 let getAllUsers = function getAllUsers (event) {
   event.preventDefault();
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/users',
+    url: globalVariables.baseUrl + '/users',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
@@ -23,7 +23,7 @@ let getAllUsers = function getAllUsers (event) {
       // this is passing the JSON object into the bookListingTemplate
       // where handlebars will deal with each item of the array individually
     }));
-    globalVariables.myApp.users = users;
+    globalVariables.users = users;
 
   }).fail(function (jqxhr) {
     console.error(jqxhr);
@@ -34,9 +34,9 @@ let getMyProfile = function getMyProfile(event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/users/' + globalVariables.myApp.user.id,
+    url: globalVariables.baseUrl + '/users/' + globalVariables.user.id,
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
