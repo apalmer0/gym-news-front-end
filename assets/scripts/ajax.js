@@ -3,18 +3,18 @@
 let globalVariables = require('./global-variables');
 
 let setGyms = function setGyms() {
-  globalVariables.myApp.gyms = [];
+  globalVariables.gyms = [];
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/2',
+    url: globalVariables.baseUrl + '/gyms/2',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
     processData: false,
   }).done(function (gym) {
     console.log('success');
-    globalVariables.myApp.gyms.push(gym);
+    globalVariables.gyms.push(gym);
   }).fail(function (jqxhr) {
     console.error(jqxhr);
   });
@@ -26,9 +26,9 @@ let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
     bulletins
   }));
   for (let i = 0; i < $('.bulletin-climbs-list').length; i++) {
-    for (let j = 0; j < globalVariables.myApp.climbs.length; j++) {
-      if (Number(globalVariables.myApp.climbs[j].bulletin_id) === Number($('.bulletin-climbs-list')[i].dataset.bulletinId)) {
-        $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).append("<div class='climb-square bk-"+globalVariables.myApp.climbs[j].color+" climbNumber"+globalVariables.myApp.climbs[j].id+"' data-edit-climb-id="+globalVariables.myApp.climbs[j].id+">" + globalVariables.myApp.climbs[j].climb_type + globalVariables.myApp.climbs[j].grade + globalVariables.myApp.climbs[j].modifier + '</div>');
+    for (let j = 0; j < globalVariables.climbs.length; j++) {
+      if (Number(globalVariables.climbs[j].bulletin_id) === Number($('.bulletin-climbs-list')[i].dataset.bulletinId)) {
+        $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).append("<div class='climb-square bk-"+globalVariables.climbs[j].color+" climbNumber"+globalVariables.climbs[j].id+"' data-edit-climb-id="+globalVariables.climbs[j].id+">" + globalVariables.climbs[j].climb_type + globalVariables.climbs[j].grade + globalVariables.climbs[j].modifier + '</div>');
         // $('.bulletin'+$('.bulletin-climbs-list')[i].dataset.bulletinId).attr('data-climb-id', myApp.climbs[j].id);
       }
     }
@@ -39,19 +39,19 @@ let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
 let showNewsfeed = function showNewsfeed(event) {
   event.preventDefault();
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
+    url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
     processData: false,
-  }).done(function (bulletins) {
+  }).done(function () {
     $('.feed-header').text('New in your gyms');
     $('.content-header').text('Top stories');
     $('.content-body').empty();
     $('.action-items').empty();
-    getGymsBulletins(globalVariables.myApp.gyms[0]);
+    getGymsBulletins(globalVariables.gyms[0]);
   }).fail(function (jqxhr) {
     $('.feed-header').text('New in your gyms');
     $('.content-header').text('You\'re not following any gyms yet!');
@@ -64,19 +64,19 @@ let showNewsfeed = function showNewsfeed(event) {
 // vvv get all bulletins for a single gym vvv
 let getGymsBulletins = function getGymsBulletins(single_gym) {
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
+    url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/climbs',
     headers: {
-      Authorization: 'Token token=' + globalVariables.myApp.user.token,
+      Authorization: 'Token token=' + globalVariables.user.token,
     },
     method: 'GET',
     contentType: false,
     processData: false,
   }).done(function (climbs) {
-    globalVariables.myApp.climbs = climbs;
+    globalVariables.climbs = climbs;
     $.ajax({
-      url: globalVariables.myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+      url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
       headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.user.token,
       },
       method: 'GET',
       contentType: false,
@@ -116,9 +116,9 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
       path = '';
     }
     $.ajax({
-      url: globalVariables.myApp.baseUrl + path,
+      url: globalVariables.baseUrl + path,
       headers: {
-        Authorization: 'Token token=' + globalVariables.myApp.user.token,
+        Authorization: 'Token token=' + globalVariables.user.token,
       },
       method: 'GET',
       contentType: false,
@@ -129,8 +129,8 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
       console.log(single_entity);
       // gyms below
       if (targetResource === '/gyms/') {
-        globalVariables.myApp.gym = single_entity;
-        $('.feed-header').text(globalVariables.myApp.gym.name);
+        globalVariables.gym = single_entity;
+        $('.feed-header').text(globalVariables.gym.name);
         $('.content-header').text('The latest');
         $('.action-items').empty();
         let bulletinButtonTemplate = require('./handlebars/bulletins/bulletin-button.handlebars');
@@ -138,10 +138,10 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
         getGymsBulletins(single_entity);
       // users below
       } else if (targetResource === '/users/') {
-        globalVariables.myApp.visited_user = single_entity;
+        globalVariables.visited_user = single_entity;
         console.log(single_entity);
-        $('.feed-header').text(globalVariables.myApp.visited_user.email);
-        $('.content-header').text(globalVariables.myApp.visited_user.email);
+        $('.feed-header').text(globalVariables.visited_user.email);
+        $('.content-header').text(globalVariables.visited_user.email);
         $('.content-body').empty();
         // let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
         // $('.content-body').append(bulletinsListingTemplate({
