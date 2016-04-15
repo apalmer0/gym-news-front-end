@@ -220,6 +220,7 @@ webpackJsonp([0],[
 	var ajax = __webpack_require__(8);
 
 	var signIn = function signIn(event) {
+	  console.log('signing in');
 	  event.preventDefault();
 	  var formData = new FormData(event.target);
 	  $.ajax({
@@ -229,15 +230,13 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (user) {
-	    localStorage.setItem('User', JSON.stringify(user));
 	    globalVariables.user = user;
+	    console.log(globalVariables);
 	    pageSetup.toggleLoggedIn();
 	    pageChanges.hideModal();
-	    $('.site-content').hide();
 	    $('.homepage').show();
 	    pageChanges.displayMessage('.welcome');
-	    ajax.setGyms();
-	    ajax.showNewsfeed(event);
+	    ajax.setGyms(event);
 	  }).fail(function (jqxhr) {
 	    $('.wrong-password').show();
 	    console.error(jqxhr);
@@ -358,24 +357,6 @@ webpackJsonp([0],[
 
 	var globalVariables = __webpack_require__(4);
 
-	var setGyms = function setGyms() {
-	  globalVariables.gyms = [];
-	  $.ajax({
-	    url: globalVariables.baseUrl + '/gyms/2',
-	    headers: {
-	      Authorization: 'Token token=' + globalVariables.user.token
-	    },
-	    method: 'GET',
-	    contentType: false,
-	    processData: false
-	  }).done(function (gym) {
-	    console.log('success');
-	    globalVariables.gyms.push(gym);
-	  }).fail(function (jqxhr) {
-	    console.error(jqxhr);
-	  });
-	};
-
 	var showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
 	  var bulletinListingTemplate = __webpack_require__(9);
 	  $('.content-body').append(bulletinListingTemplate({
@@ -389,32 +370,6 @@ webpackJsonp([0],[
 	      }
 	    }
 	  }
-	};
-
-	// vvv show newsfeed vvv
-	var showNewsfeed = function showNewsfeed(event) {
-	  event.preventDefault();
-	  $.ajax({
-	    url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
-	    headers: {
-	      Authorization: 'Token token=' + globalVariables.user.token
-	    },
-	    method: 'GET',
-	    contentType: false,
-	    processData: false
-	  }).done(function () {
-	    $('.feed-header').text('New in your gyms');
-	    $('.content-header').text('Top stories');
-	    $('.content-body').empty();
-	    $('.action-items').empty();
-	    getGymsBulletins(globalVariables.gyms[0]);
-	  }).fail(function (jqxhr) {
-	    $('.feed-header').text('New in your gyms');
-	    $('.content-header').text('You\'re not following any gyms yet!');
-	    $('.content-body').empty();
-	    $('.action-items').empty();
-	    console.error(jqxhr);
-	  });
 	};
 
 	// vvv get all bulletins for a single gym vvv
@@ -449,6 +404,61 @@ webpackJsonp([0],[
 	};
 
 	// ^^^^ get all bulletins for a single gym ^^^^
+
+	// vvv show newsfeed vvv
+	var showNewsfeed = function showNewsfeed(event) {
+	  event.preventDefault();
+	  console.log('show newsfeed');
+	  if (globalVariables.gyms.length > 0) {
+	    $.ajax({
+	      url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
+	      headers: {
+	        Authorization: 'Token token=' + globalVariables.user.token
+	      },
+	      method: 'GET',
+	      contentType: false,
+	      processData: false
+	    }).done(function () {
+	      $('.feed-header').text('New in your gyms');
+	      $('.content-header').text('Top stories');
+	      $('.content-body').empty();
+	      $('.action-items').empty();
+	      getGymsBulletins(globalVariables.gyms[0]);
+	    }).fail(function (jqxhr) {
+	      $('.feed-header').text('New in your gyms');
+	      $('.content-header').text('You\'re not following any gyms yet!');
+	      $('.content-body').empty();
+	      $('.action-items').empty();
+	      console.error(jqxhr);
+	    });
+	  } else {
+	    $('.feed-header').text('New in your gyms');
+	    $('.content-header').text('No gyms found!');
+	  }
+	};
+
+	var setGyms = function setGyms() {
+	  console.log('set gyms');
+	  globalVariables.gyms = [];
+	  $.ajax({
+	    url: globalVariables.baseUrl + '/gyms',
+	    headers: {
+	      Authorization: 'Token token=' + globalVariables.user.token
+	    },
+	    method: 'GET',
+	    contentType: false,
+	    processData: false
+	  }).done(function (gyms) {
+	    console.log('setgyms success');
+	    console.log(gyms);
+	    for (var i = 0; i < gyms.length; i++) {
+	      globalVariables.gyms.push(gyms[i]);
+	    }
+	    showNewsfeed(event);
+	  }).fail(function (jqxhr) {
+	    console.error(jqxhr);
+	  });
+	};
 
 	var getSingleUserOrGym = function getSingleUserOrGym(event) {
 	  event.preventDefault();
@@ -1774,7 +1784,7 @@ webpackJsonp([0],[
 	      var gymListingTemplate = __webpack_require__(32);
 	      $('.content-body').append(gymListingTemplate({
 	        gyms: gyms
-	        // this is passing the JSON object into the bookListingTemplate
+	        // this is passing the JSON object into the gymListingTemplate
 	        // where handlebars will deal with each item of the array individually
 	      }));
 	      // globalVariables.gyms = gyms;
