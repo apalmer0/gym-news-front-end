@@ -13,6 +13,8 @@ let getAllUsers = function getAllUsers (event) {
     contentType: false,
     processData: false,
   }).done(function (users) {
+    // Object.assign(globalVariables, users);
+    globalVariables.users = users;
     $('.feed-header').text('All users');
     $('.content-header').text('Users');
     $('.content-body').empty();
@@ -23,7 +25,6 @@ let getAllUsers = function getAllUsers (event) {
       // this is passing the JSON object into the bookListingTemplate
       // where handlebars will deal with each item of the array individually
     }));
-    globalVariables.users = users;
 
   }).fail(function (jqxhr) {
     console.error(jqxhr);

@@ -17,7 +17,8 @@ let signIn = function signIn (event) {
     processData: false,
     data: formData,
   }).done(function (user) {
-    Object.assign(globalVariables, user);
+    // Object.assign(globalVariables, user);
+    globalVariables.user = user;
     console.log(globalVariables);
     pageSetup.toggleLoggedIn();
     pageChanges.hideModal();
