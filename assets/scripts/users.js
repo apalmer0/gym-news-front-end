@@ -13,18 +13,19 @@ let getAllUsers = function getAllUsers (event) {
     method: 'GET',
     contentType: false,
     processData: false,
-  }).done(function (users) {
+  }).done(function (usersObject) {
     // Object.assign(globalVariables, users);
     console.log('all users:');
-    console.log(users);
-    globalVariables.users = users;
+    console.log(usersObject);
+    globalVariables.users = usersObject.users;
+    let allUsers = usersObject.users;
     $('.feed-header').text('All users');
     $('.content-header').text('Users');
     $('.content-body').empty();
     $('.action-items').empty();
     let userListingTemplate = require('./handlebars/users/users-listing.handlebars');
     $('.content-body').append(userListingTemplate({
-      users
+      allUsers
       // this is passing the JSON object into the bookListingTemplate
       // where handlebars will deal with each item of the array individually
     }));
@@ -47,9 +48,10 @@ let getMyProfile = function getMyProfile(event) {
     contentType: false,
     processData: false,
     data: formData,
-  }).done(function (data) {
+  }).done(function (userData) {
     console.log('my profile success');
-    console.log(data);
+    console.log(userData);
+    globalVariables.me = userData.user;
     $('.content-body').empty();
     $('.action-items').empty();
     $('.feed-header').text('Your profile');

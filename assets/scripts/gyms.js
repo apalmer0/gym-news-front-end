@@ -14,18 +14,19 @@ let getAllGyms = function getAllGyms (event) {
     method: 'GET',
     contentType: false,
     processData: false,
-  }).done(function (gyms) {
-    console.log(gyms);
-    if (gyms.count !== 0) {
+  }).done(function (gymsObject) {
+    console.log(gymsObject);
+    if (gymsObject.gyms.count !== 0) {
       // Object.assign(globalVariables, gyms);
-      globalVariables.gyms = gyms;
+      globalVariables.gyms = gymsObject.gyms;
+      let allGyms = gymsObject.gyms;
       $('.feed-header').text('All gyms');
       $('.content-header').text('Gyms');
       $('.content-body').empty();
       $('.action-items').empty();
       let gymListingTemplate = require('./handlebars/gyms/gyms-listing.handlebars');
       $('.content-body').append(gymListingTemplate({
-        gyms
+        allGyms
         // this is passing the JSON object into the gymListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
