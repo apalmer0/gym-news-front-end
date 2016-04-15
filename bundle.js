@@ -1769,6 +1769,7 @@ webpackJsonp([0],[
 
 	var getAllGyms = function getAllGyms(event) {
 	  event.preventDefault();
+	  console.log('get all gyms');
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/gyms',
 	    headers: {
@@ -1778,6 +1779,7 @@ webpackJsonp([0],[
 	    contentType: false,
 	    processData: false
 	  }).done(function (gyms) {
+	    console.log(gyms);
 	    if (gyms.count !== 0) {
 	      // Object.assign(globalVariables, gyms);
 	      globalVariables.gyms = gyms;
@@ -1805,6 +1807,7 @@ webpackJsonp([0],[
 
 	var createNewGym = function createNewGym(event) {
 	  event.preventDefault();
+	  console.log('creating new gym...');
 	  var formData = new FormData(event.target);
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/gyms',
@@ -1816,6 +1819,7 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (data) {
+	    console.log('new gym created!');
 	    console.log(data);
 	    pageChanges.hideModal();
 	    pageChanges.displayMessage('.new-gym');
@@ -1876,6 +1880,7 @@ webpackJsonp([0],[
 
 	var getAllUsers = function getAllUsers(event) {
 	  event.preventDefault();
+	  console.log('get all users');
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/users',
 	    headers: {
@@ -1886,6 +1891,8 @@ webpackJsonp([0],[
 	    processData: false
 	  }).done(function (users) {
 	    // Object.assign(globalVariables, users);
+	    console.log('all users:');
+	    console.log(users);
 	    globalVariables.users = users;
 	    $('.feed-header').text('All users');
 	    $('.content-header').text('Users');
@@ -1904,6 +1911,7 @@ webpackJsonp([0],[
 
 	var getMyProfile = function getMyProfile(event) {
 	  event.preventDefault();
+	  console.log('get my profile');
 	  var formData = new FormData(event.target);
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/users/' + globalVariables.user.id,
@@ -1915,6 +1923,7 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (data) {
+	    console.log('my profile success');
 	    console.log(data);
 	    $('.content-body').empty();
 	    $('.action-items').empty();
