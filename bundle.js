@@ -230,7 +230,7 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (user) {
-	    globalVariables.user = user;
+	    Object.assign(globalVariables, user);
 	    console.log(globalVariables);
 	    pageSetup.toggleLoggedIn();
 	    pageChanges.hideModal();
