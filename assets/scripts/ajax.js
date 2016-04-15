@@ -2,24 +2,6 @@
 
 let globalVariables = require('./global-variables');
 
-let setGyms = function setGyms() {
-  globalVariables.gyms = [];
-  $.ajax({
-    url: globalVariables.baseUrl + '/gyms/2',
-    headers: {
-      Authorization: 'Token token=' + globalVariables.user.token,
-    },
-    method: 'GET',
-    contentType: false,
-    processData: false,
-  }).done(function (gym) {
-    console.log('success');
-    globalVariables.gyms.push(gym);
-  }).fail(function (jqxhr) {
-    console.error(jqxhr);
-  });
-};
-
 let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
   let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
   $('.content-body').append(bulletinListingTemplate({
@@ -33,32 +15,6 @@ let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
       }
     }
   }
-};
-
-// vvv show newsfeed vvv
-let showNewsfeed = function showNewsfeed(event) {
-  event.preventDefault();
-  $.ajax({
-    url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
-    headers: {
-      Authorization: 'Token token=' + globalVariables.user.token,
-    },
-    method: 'GET',
-    contentType: false,
-    processData: false,
-  }).done(function () {
-    $('.feed-header').text('New in your gyms');
-    $('.content-header').text('Top stories');
-    $('.content-body').empty();
-    $('.action-items').empty();
-    getGymsBulletins(globalVariables.gyms[0]);
-  }).fail(function (jqxhr) {
-    $('.feed-header').text('New in your gyms');
-    $('.content-header').text('You\'re not following any gyms yet!');
-    $('.content-body').empty();
-    $('.action-items').empty();
-    console.error(jqxhr);
-  });
 };
 
 // vvv get all bulletins for a single gym vvv
@@ -93,6 +49,61 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
 };
 
 // ^^^^ get all bulletins for a single gym ^^^^
+
+// vvv show newsfeed vvv
+let showNewsfeed = function showNewsfeed(event) {
+  event.preventDefault();
+  console.log('show newsfeed');
+  if (globalVariables.gyms.length > 0) {
+    $.ajax({
+      url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
+      headers: {
+        Authorization: 'Token token=' + globalVariables.user.token,
+      },
+      method: 'GET',
+      contentType: false,
+      processData: false,
+    }).done(function () {
+      $('.feed-header').text('New in your gyms');
+      $('.content-header').text('Top stories');
+      $('.content-body').empty();
+      $('.action-items').empty();
+      getGymsBulletins(globalVariables.gyms[0]);
+    }).fail(function (jqxhr) {
+      $('.feed-header').text('New in your gyms');
+      $('.content-header').text('You\'re not following any gyms yet!');
+      $('.content-body').empty();
+      $('.action-items').empty();
+      console.error(jqxhr);
+    });
+  } else {
+    $('.feed-header').text('New in your gyms');
+    $('.content-header').text('No gyms found!');    
+  }
+};
+
+let setGyms = function setGyms() {
+  console.log('set gyms');
+  globalVariables.gyms = [];
+  $.ajax({
+    url: globalVariables.baseUrl + '/gyms',
+    headers: {
+      Authorization: 'Token token=' + globalVariables.user.token,
+    },
+    method: 'GET',
+    contentType: false,
+    processData: false,
+  }).done(function (gyms) {
+    console.log('setgyms success');
+    console.log(gyms);
+    for (let i = 0; i < gyms.length; i++) {
+      globalVariables.gyms.push(gyms[i]);
+    }
+    showNewsfeed(event);
+  }).fail(function (jqxhr) {
+    console.error(jqxhr);
+  });
+};
 
 let getSingleUserOrGym = function getSingleUserOrGym (event) {
   event.preventDefault();

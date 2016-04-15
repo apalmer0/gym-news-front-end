@@ -7,6 +7,7 @@ let globalVariables = require('./global-variables');
 let ajax = require('./ajax');
 
 let signIn = function signIn (event) {
+  console.log('signing in');
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
@@ -16,15 +17,13 @@ let signIn = function signIn (event) {
     processData: false,
     data: formData,
   }).done(function (user) {
-    localStorage.setItem('User', JSON.stringify(user));
     globalVariables.user = user;
+    console.log(globalVariables);
     pageSetup.toggleLoggedIn();
     pageChanges.hideModal();
-    $('.site-content').hide();
     $('.homepage').show();
     pageChanges.displayMessage('.welcome');
-    ajax.setGyms();
-    ajax.showNewsfeed(event);
+    ajax.setGyms(event);
   }).fail(function (jqxhr) {
     $('.wrong-password').show();
     console.error(jqxhr);

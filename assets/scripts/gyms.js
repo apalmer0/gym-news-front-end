@@ -22,7 +22,7 @@ let getAllGyms = function getAllGyms (event) {
       let gymListingTemplate = require('./handlebars/gyms/gyms-listing.handlebars');
       $('.content-body').append(gymListingTemplate({
         gyms
-        // this is passing the JSON object into the bookListingTemplate
+        // this is passing the JSON object into the gymListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
       // globalVariables.gyms = gyms;
