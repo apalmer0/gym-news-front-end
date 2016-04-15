@@ -15,6 +15,8 @@ let getAllGyms = function getAllGyms (event) {
     processData: false,
   }).done(function (gyms) {
     if (gyms.count !== 0) {
+      // Object.assign(globalVariables, gyms);
+      globalVariables.gyms = gyms;
       $('.feed-header').text('All gyms');
       $('.content-header').text('Gyms');
       $('.content-body').empty();
@@ -25,7 +27,6 @@ let getAllGyms = function getAllGyms (event) {
         // this is passing the JSON object into the gymListingTemplate
         // where handlebars will deal with each item of the array individually
       }));
-      // globalVariables.gyms = gyms;
     } else {
       $('.feed-header').text('All gyms');
       $('.content-header').text('No gyms found.');
