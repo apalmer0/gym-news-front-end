@@ -4,6 +4,7 @@ let globalVariables = require('./global-variables');
 
 let getAllUsers = function getAllUsers (event) {
   event.preventDefault();
+  console.log('get all users');
   $.ajax({
     url: globalVariables.baseUrl + '/users',
     headers: {
@@ -14,6 +15,8 @@ let getAllUsers = function getAllUsers (event) {
     processData: false,
   }).done(function (users) {
     // Object.assign(globalVariables, users);
+    console.log('all users:');
+    console.log(users);
     globalVariables.users = users;
     $('.feed-header').text('All users');
     $('.content-header').text('Users');
@@ -33,6 +36,7 @@ let getAllUsers = function getAllUsers (event) {
 
 let getMyProfile = function getMyProfile(event) {
   event.preventDefault();
+  console.log('get my profile');
   var formData = new FormData(event.target);
   $.ajax({
     url: globalVariables.baseUrl + '/users/' + globalVariables.user.id,
@@ -44,6 +48,7 @@ let getMyProfile = function getMyProfile(event) {
     processData: false,
     data: formData,
   }).done(function (data) {
+    console.log('my profile success');
     console.log(data);
     $('.content-body').empty();
     $('.action-items').empty();
