@@ -1778,18 +1778,19 @@ webpackJsonp([0],[
 	    method: 'GET',
 	    contentType: false,
 	    processData: false
-	  }).done(function (gyms) {
-	    console.log(gyms);
-	    if (gyms.count !== 0) {
+	  }).done(function (gymsObject) {
+	    console.log(gymsObject);
+	    if (gymsObject.gyms.count !== 0) {
 	      // Object.assign(globalVariables, gyms);
-	      globalVariables.gyms = gyms;
+	      globalVariables.gyms = gymsObject.gyms;
+	      var allGyms = gymsObject.gyms;
 	      $('.feed-header').text('All gyms');
 	      $('.content-header').text('Gyms');
 	      $('.content-body').empty();
 	      $('.action-items').empty();
 	      var gymListingTemplate = __webpack_require__(32);
 	      $('.content-body').append(gymListingTemplate({
-	        gyms: gyms
+	        allGyms: allGyms
 	        // this is passing the JSON object into the gymListingTemplate
 	        // where handlebars will deal with each item of the array individually
 	      }));
@@ -1889,18 +1890,19 @@ webpackJsonp([0],[
 	    method: 'GET',
 	    contentType: false,
 	    processData: false
-	  }).done(function (users) {
+	  }).done(function (usersObject) {
 	    // Object.assign(globalVariables, users);
 	    console.log('all users:');
-	    console.log(users);
-	    globalVariables.users = users;
+	    console.log(usersObject);
+	    globalVariables.users = usersObject.users;
+	    var allUsers = usersObject.users;
 	    $('.feed-header').text('All users');
 	    $('.content-header').text('Users');
 	    $('.content-body').empty();
 	    $('.action-items').empty();
 	    var userListingTemplate = __webpack_require__(35);
 	    $('.content-body').append(userListingTemplate({
-	      users: users
+	      allUsers: allUsers
 	      // this is passing the JSON object into the bookListingTemplate
 	      // where handlebars will deal with each item of the array individually
 	    }));
@@ -1922,9 +1924,10 @@ webpackJsonp([0],[
 	    contentType: false,
 	    processData: false,
 	    data: formData
-	  }).done(function (data) {
+	  }).done(function (userData) {
 	    console.log('my profile success');
-	    console.log(data);
+	    console.log(userData);
+	    globalVariables.me = userData.user;
 	    $('.content-body').empty();
 	    $('.action-items').empty();
 	    $('.feed-header').text('Your profile');
