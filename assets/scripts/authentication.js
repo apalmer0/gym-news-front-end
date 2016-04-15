@@ -17,6 +17,7 @@ let signIn = function signIn (event) {
     processData: false,
     data: formData,
   }).done(function (user) {
+    console.log(user);
     // Object.assign(globalVariables, user);
     globalVariables.user = user;
     console.log(globalVariables);
