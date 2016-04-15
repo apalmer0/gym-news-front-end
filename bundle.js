@@ -230,7 +230,8 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (user) {
-	    Object.assign(globalVariables, user);
+	    // Object.assign(globalVariables, user);
+	    globalVariables.user = user;
 	    console.log(globalVariables);
 	    pageSetup.toggleLoggedIn();
 	    pageChanges.hideModal();
@@ -1777,6 +1778,8 @@ webpackJsonp([0],[
 	    processData: false
 	  }).done(function (gyms) {
 	    if (gyms.count !== 0) {
+	      // Object.assign(globalVariables, gyms);
+	      globalVariables.gyms = gyms;
 	      $('.feed-header').text('All gyms');
 	      $('.content-header').text('Gyms');
 	      $('.content-body').empty();
@@ -1787,7 +1790,6 @@ webpackJsonp([0],[
 	        // this is passing the JSON object into the gymListingTemplate
 	        // where handlebars will deal with each item of the array individually
 	      }));
-	      // globalVariables.gyms = gyms;
 	    } else {
 	        $('.feed-header').text('All gyms');
 	        $('.content-header').text('No gyms found.');
@@ -1882,6 +1884,8 @@ webpackJsonp([0],[
 	    contentType: false,
 	    processData: false
 	  }).done(function (users) {
+	    // Object.assign(globalVariables, users);
+	    globalVariables.users = users;
 	    $('.feed-header').text('All users');
 	    $('.content-header').text('Users');
 	    $('.content-body').empty();
@@ -1892,7 +1896,6 @@ webpackJsonp([0],[
 	      // this is passing the JSON object into the bookListingTemplate
 	      // where handlebars will deal with each item of the array individually
 	    }));
-	    globalVariables.users = users;
 	  }).fail(function (jqxhr) {
 	    console.error(jqxhr);
 	  });
