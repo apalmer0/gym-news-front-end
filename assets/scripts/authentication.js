@@ -16,10 +16,10 @@ let signIn = function signIn (event) {
     contentType: false,
     processData: false,
     data: formData,
-  }).done(function (user) {
-    console.log(user);
+  }).done(function (userData) {
+    console.log(userData);
     // Object.assign(globalVariables, user);
-    globalVariables.user = user;
+    globalVariables.user = userData.user;
     console.log(globalVariables);
     pageSetup.toggleLoggedIn();
     pageChanges.hideModal();
