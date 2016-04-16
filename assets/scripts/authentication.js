@@ -19,11 +19,8 @@ let signIn = function signIn (event) {
   }).done(function (userData) {
     console.log('userData:');
     console.log(userData);
-    // let parsedResponse = JSON.parse(userData);
-    console.log('typeof data:');
-    console.log(typeof userData);
     // Object.assign(globalVariables, user);
-    globalVariables.user = userData;
+    globalVariables.user = userData.user;
     console.log('global variables:');
     console.log(globalVariables);
     pageSetup.toggleLoggedIn();
