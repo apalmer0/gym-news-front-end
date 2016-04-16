@@ -95,12 +95,8 @@ webpackJsonp([0],[
 
 	'use strict';
 
-	var myApp = {
-	  baseUrl: document.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://fathomless-castle-93150.herokuapp.com'
-	};
-
 	module.exports = {
-	  myApp: myApp
+	  baseUrl: document.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://fathomless-castle-93150.herokuapp.com'
 	};
 
 /***/ },
