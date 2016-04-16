@@ -194,8 +194,8 @@ webpackJsonp([0],[
 	});
 
 	// vvvv create the new bulletin FORM (not the actual bulletin) vvvv
-	$('.action-items').on('click', 'button', function () {
-	  bulletins.setUpNewBulletinForm();
+	$('.action-items').on('click', 'button', function (event) {
+	  bulletins.setUpNewBulletinForm(event);
 	});
 
 	// vvvv here's where we actually create the bulletin. sweet. vvvv
@@ -222,6 +222,7 @@ webpackJsonp([0],[
 	var signIn = function signIn(event) {
 	  console.log('signing in');
 	  event.preventDefault();
+	  $('.signin-buttons').prop('disabled', true);
 	  var formData = new FormData(event.target);
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/sign-in',
@@ -230,10 +231,15 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (userData) {
+	    $('.signin-buttons').prop('disabled', false);
 	    console.log('userData:');
 	    console.log(userData);
-	    // Object.assign(globalVariables, user);
+
+	    // for heroku:
 	    globalVariables.user = userData.user;
+	    // for localhost:
+	    // globalVariables.user = userData;
+
 	    console.log('global variables:');
 	    console.log(globalVariables);
 	    pageSetup.toggleLoggedIn();
@@ -1782,10 +1788,17 @@ webpackJsonp([0],[
 	    processData: false
 	  }).done(function (gymsObject) {
 	    console.log(gymsObject);
+
+	    // for heroku:
+	    globalVariables.gyms = gymsObject.gyms;
+	    var allGyms = gymsObject.gyms;
 	    if (gymsObject.gyms.count !== 0) {
-	      // Object.assign(globalVariables, gyms);
-	      globalVariables.gyms = gymsObject.gyms;
-	      var allGyms = gymsObject.gyms;
+
+	      // for localhost:
+	      //   globalVariables.gyms = gymsObject;
+	      //   let allGyms = gymsObject;
+	      // if (gymsObject.count !== 0) {
+
 	      $('.feed-header').text('All gyms');
 	      $('.content-header').text('Gyms');
 	      $('.content-body').empty();
@@ -1893,11 +1906,17 @@ webpackJsonp([0],[
 	    contentType: false,
 	    processData: false
 	  }).done(function (usersObject) {
-	    // Object.assign(globalVariables, users);
 	    console.log('all users:');
 	    console.log(usersObject);
+
+	    // for heroku:
 	    globalVariables.users = usersObject.users;
 	    var allUsers = usersObject.users;
+
+	    // for localhost:
+	    // globalVariables.users = usersObject;
+	    // let allUsers = usersObject;
+
 	    $('.feed-header').text('All users');
 	    $('.content-header').text('Users');
 	    $('.content-body').empty();
@@ -2366,16 +2385,15 @@ webpackJsonp([0],[
 	// when a user clicks the 'add bulletin' button, this function
 	// then appends the gym id to the submit button of the
 	// ensuing new-climbs list in the bulletin modal
-	var setUpNewBulletinForm = function setUpNewBulletinForm() {
+	var setUpNewBulletinForm = function setUpNewBulletinForm(event) {
 	  console.log('set up new bulletin form');
-	  if ($(this).hasClass('new-bulletin-button')) {
-	    var gymId = $(this)[0].dataset.gymId;
-	    $('.new-bulletin-list').empty();
-	    var newBulletinTemplate = __webpack_require__(44);
-	    $('.new-bulletin-list').append(newBulletinTemplate({ gymId: gymId }));
-	    $('.new-climbs-button').attr('data-gym-id', $(this)[0].dataset.gymId);
-	    $('.new-bulletin-button').attr('data-gym-id', $(this)[0].dataset.gymId);
-	  }
+	  console.log(event.target);
+	  var gymId = event.target.dataset.gymId;
+	  $('.new-bulletin-list').empty();
+	  var newBulletinTemplate = __webpack_require__(44);
+	  $('.new-bulletin-list').append(newBulletinTemplate({ gymId: gymId }));
+	  $('.new-climbs-button').attr('data-gym-id', gymId);
+	  $('.new-bulletin-button').attr('data-gym-id', gymId);
 	};
 
 	var createNewBulletin = function createNewBulletin(event) {
@@ -2392,6 +2410,7 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (data) {
+	    console.log(data);
 	    $('.inputClimbBulletinId').val(data.id);
 	    if ($('.new-climbs-list').children().length !== 0) {
 	      $('#add-new-climb-form').trigger('submit');
