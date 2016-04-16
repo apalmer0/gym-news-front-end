@@ -6,7 +6,7 @@ let getAllUsers = function getAllUsers (event) {
   event.preventDefault();
   console.log('get all users');
   $.ajax({
-    url: globalVariables.baseUrl + '/users',
+    url: globalVariables.myApp.baseUrl + '/users',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -40,7 +40,7 @@ let getMyProfile = function getMyProfile(event) {
   console.log('get my profile');
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.baseUrl + '/users/' + globalVariables.user.id,
+    url: globalVariables.myApp.baseUrl + '/users/' + globalVariables.user.id,
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },

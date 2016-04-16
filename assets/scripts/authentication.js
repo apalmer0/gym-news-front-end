@@ -11,7 +11,7 @@ let signIn = function signIn (event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.baseUrl + '/sign-in',
+    url: globalVariables.myApp.baseUrl + '/sign-in',
     method: 'POST',
     contentType: false,
     processData: false,
@@ -37,7 +37,7 @@ let signUp = function signUp(event) {
   var formData = new FormData(event.target);
   console.log('starting signup');
   $.ajax({
-    url: globalVariables.baseUrl + '/sign-up',
+    url: globalVariables.myApp.baseUrl + '/sign-up',
     method: 'POST',
     contentType: false,
     processData: false,
@@ -58,7 +58,7 @@ let signOut = function signOut (event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.baseUrl + '/sign-out/' + globalVariables.user.id,
+    url: globalVariables.myApp.baseUrl + '/sign-out/' + globalVariables.user.id,
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -82,7 +82,7 @@ let changePassword = function changePassword (event) {
   event.preventDefault();
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.baseUrl + '/change-password/' + globalVariables.user.id,
+    url: globalVariables.myApp.baseUrl + '/change-password/' + globalVariables.user.id,
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },

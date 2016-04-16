@@ -20,7 +20,7 @@ let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
 // vvv get all bulletins for a single gym vvv
 let getGymsBulletins = function getGymsBulletins(single_gym) {
   $.ajax({
-    url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/climbs',
+    url: globalVariables.myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -30,7 +30,7 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
   }).done(function (climbs) {
     globalVariables.climbs = climbs;
     $.ajax({
-      url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+      url: globalVariables.myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
       headers: {
         Authorization: 'Token token=' + globalVariables.user.token,
       },
@@ -56,7 +56,7 @@ let showNewsfeed = function showNewsfeed(event) {
   console.log('show newsfeed');
   if (globalVariables.gyms.length > 0) {
     $.ajax({
-      url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
+      url: globalVariables.myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
       headers: {
         Authorization: 'Token token=' + globalVariables.user.token,
       },
@@ -86,7 +86,7 @@ let setGyms = function setGyms() {
   console.log('set gyms');
   globalVariables.gyms = [];
   $.ajax({
-    url: globalVariables.baseUrl + '/gyms',
+    url: globalVariables.myApp.baseUrl + '/gyms',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -127,7 +127,7 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
       path = '';
     }
     $.ajax({
-      url: globalVariables.baseUrl + path,
+      url: globalVariables.myApp.baseUrl + path,
       headers: {
         Authorization: 'Token token=' + globalVariables.user.token,
       },
