@@ -543,13 +543,9 @@ webpackJsonp([0],[
 	        // gyms below
 	        if (targetResource === '/gyms/') {
 
-	          // for heroku
-	          globalVariables.gym = single_entity.gym;
-	          var singleGym = single_entity.gym;
-	          // for localhost
-	          // globalVariables.gym = single_entity;
-	          // let singleGym = single_entity;
+	          globalVariables.gym = single_entity;
 
+	          var singleGym = single_entity;
 	          $('.feed-header').text(singleGym.name);
 	          $('.content-header').text('The latest');
 	          $('.action-items').empty();
