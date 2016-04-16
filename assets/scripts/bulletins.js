@@ -10,6 +10,7 @@ let pageChanges = require('./page-changes');
 // then appends the gym id to the submit button of the
 // ensuing new-climbs list in the bulletin modal
 let setUpNewBulletinForm = function setUpNewBulletinForm() {
+  console.log('set up new bulletin form');
   if ($(this).hasClass('new-bulletin-button')) {
     let gymId = $(this)[0].dataset.gymId;
     $('.new-bulletin-list').empty();
