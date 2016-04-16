@@ -18,12 +18,12 @@ let getAllUsers = function getAllUsers (event) {
     console.log(usersObject);
 
     // for heroku:
-    // globalVariables.users = usersObject.users;
-    // let allUsers = usersObject.users;
+    globalVariables.users = usersObject.users;
+    let allUsers = usersObject.users;
 
     // for localhost:
-    globalVariables.users = usersObject;
-    let allUsers = usersObject;
+    // globalVariables.users = usersObject;
+    // let allUsers = usersObject;
 
     $('.feed-header').text('All users');
     $('.content-header').text('Users');
