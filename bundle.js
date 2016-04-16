@@ -406,7 +406,12 @@ webpackJsonp([0],[
 	    console.log('climbsObject returned:');
 	    console.log(climbsObject);
 	    console.log('got gym climbs. now getting bulletins');
-	    globalVariables.climbs = climbsObject;
+
+	    // for heroku
+	    globalVariables.climbs = climbsObject.climbs;
+	    // for localhost
+	    // globalVariables.climbs = climbsObject;
+
 	    $.ajax({
 	      url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
 	      headers: {
@@ -420,7 +425,11 @@ webpackJsonp([0],[
 	      console.log(bulletinsObject);
 	      console.log('on a roll, got bulletins. now to show bulletins with climbs');
 	      $('.content-body').empty();
-	      showBulletinsWithClimbs(bulletinsObject);
+
+	      // for heroku
+	      showBulletinsWithClimbs(bulletinsObject.bulletins);
+	      // for localhost
+	      // showBulletinsWithClimbs(bulletinsObject);
 	    }).fail(function (jqxhr) {
 	      console.log('didnt get bulletins, so were not going to show bulletins with climbs');
 	      console.error(jqxhr);
