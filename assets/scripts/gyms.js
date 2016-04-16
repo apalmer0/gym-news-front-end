@@ -7,7 +7,7 @@ let getAllGyms = function getAllGyms (event) {
   event.preventDefault();
   console.log('get all gyms');
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms',
+    url: globalVariables.baseUrl + '/gyms',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -47,7 +47,7 @@ let createNewGym = function createNewGym(event) {
   console.log('creating new gym...');
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms',
+    url: globalVariables.baseUrl + '/gyms',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },

@@ -228,7 +228,7 @@ webpackJsonp([0],[
 	  event.preventDefault();
 	  var formData = new FormData(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/sign-in',
+	    url: globalVariables.baseUrl + '/sign-in',
 	    method: 'POST',
 	    contentType: false,
 	    processData: false,
@@ -254,7 +254,7 @@ webpackJsonp([0],[
 	  var formData = new FormData(event.target);
 	  console.log('starting signup');
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/sign-up',
+	    url: globalVariables.baseUrl + '/sign-up',
 	    method: 'POST',
 	    contentType: false,
 	    processData: false,
@@ -275,7 +275,7 @@ webpackJsonp([0],[
 	  event.preventDefault();
 	  var formData = new FormData(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/sign-out/' + globalVariables.user.id,
+	    url: globalVariables.baseUrl + '/sign-out/' + globalVariables.user.id,
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -299,7 +299,7 @@ webpackJsonp([0],[
 	  event.preventDefault();
 	  var formData = new FormData(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/change-password/' + globalVariables.user.id,
+	    url: globalVariables.baseUrl + '/change-password/' + globalVariables.user.id,
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -381,7 +381,7 @@ webpackJsonp([0],[
 	// vvv get all bulletins for a single gym vvv
 	var getGymsBulletins = function getGymsBulletins(single_gym) {
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/gyms/' + single_gym.id + '/climbs',
+	    url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/climbs',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -391,7 +391,7 @@ webpackJsonp([0],[
 	  }).done(function (climbs) {
 	    globalVariables.climbs = climbs;
 	    $.ajax({
-	      url: globalVariables.myApp.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
+	      url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
 	      headers: {
 	        Authorization: 'Token token=' + globalVariables.user.token
 	      },
@@ -417,7 +417,7 @@ webpackJsonp([0],[
 	  console.log('show newsfeed');
 	  if (globalVariables.gyms.length > 0) {
 	    $.ajax({
-	      url: globalVariables.myApp.baseUrl + '/gyms/' + 2 + '/bulletins',
+	      url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
 	      headers: {
 	        Authorization: 'Token token=' + globalVariables.user.token
 	      },
@@ -447,7 +447,7 @@ webpackJsonp([0],[
 	  console.log('set gyms');
 	  globalVariables.gyms = [];
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/gyms',
+	    url: globalVariables.baseUrl + '/gyms',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -489,7 +489,7 @@ webpackJsonp([0],[
 	        path = '';
 	      }
 	      $.ajax({
-	        url: globalVariables.myApp.baseUrl + path,
+	        url: globalVariables.baseUrl + path,
 	        headers: {
 	          Authorization: 'Token token=' + globalVariables.user.token
 	        },
@@ -1775,7 +1775,7 @@ webpackJsonp([0],[
 	  event.preventDefault();
 	  console.log('get all gyms');
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/gyms',
+	    url: globalVariables.baseUrl + '/gyms',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -1815,7 +1815,7 @@ webpackJsonp([0],[
 	  console.log('creating new gym...');
 	  var formData = new FormData(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/gyms',
+	    url: globalVariables.baseUrl + '/gyms',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -1887,7 +1887,7 @@ webpackJsonp([0],[
 	  event.preventDefault();
 	  console.log('get all users');
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/users',
+	    url: globalVariables.baseUrl + '/users',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -1920,7 +1920,7 @@ webpackJsonp([0],[
 	  console.log('get my profile');
 	  var formData = new FormData(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/users/' + globalVariables.user.id,
+	    url: globalVariables.baseUrl + '/users/' + globalVariables.user.id,
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -2000,7 +2000,7 @@ webpackJsonp([0],[
 	  var climbId = $(this)[0].dataset.favoriteClimbId;
 	  var favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/favorites',
+	    url: globalVariables.baseUrl + '/favorites',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -2022,7 +2022,7 @@ webpackJsonp([0],[
 	  var formData = new FormData(event.target);
 	  var gymId = $('.new-climbs-button')[0].dataset.gymId;
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/gyms/' + gymId + '/climbs',
+	    url: globalVariables.baseUrl + '/gyms/' + gymId + '/climbs',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -2049,7 +2049,7 @@ webpackJsonp([0],[
 	  $('.delete-climb-button').attr('data-delete-climb-id', climbId);
 	  $('.submit-climb-edits-button').attr('data-climb-id', climbId);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+	    url: globalVariables.baseUrl + '/climbs/' + climbId,
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -2073,7 +2073,7 @@ webpackJsonp([0],[
 	  var climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
 	  console.log(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+	    url: globalVariables.baseUrl + '/climbs/' + climbId,
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -2098,7 +2098,7 @@ webpackJsonp([0],[
 	  var climbId = event.target.dataset.deleteClimbId;
 	  console.log(climbId);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+	    url: globalVariables.baseUrl + '/climbs/' + climbId,
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },
@@ -2385,7 +2385,7 @@ webpackJsonp([0],[
 	  var gymId = parseInt($('.new-bulletin-button')[0].dataset.gymId);
 	  var formData = new FormData(event.target);
 	  $.ajax({
-	    url: globalVariables.myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
+	    url: globalVariables.baseUrl + '/gyms/' + gymId + '/bulletins',
 	    headers: {
 	      Authorization: 'Token token=' + globalVariables.user.token
 	    },

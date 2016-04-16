@@ -26,7 +26,7 @@ let createNewBulletin = function createNewBulletin(event) {
   let gymId = parseInt($('.new-bulletin-button')[0].dataset.gymId);
   var formData = new FormData(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/' + gymId + '/bulletins',
+    url: globalVariables.baseUrl + '/gyms/' + gymId + '/bulletins',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },

@@ -13,7 +13,7 @@ let addFavoriteClimb = function addFavoriteClimb(event) {
   let climbId = $(this)[0].dataset.favoriteClimbId;
   let favoriteData = { "user_id": userId, "climb_id": parseInt(climbId) };
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/favorites',
+    url: globalVariables.baseUrl + '/favorites',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -35,7 +35,7 @@ let addNewClimbs = function addNewClimbs(event) {
   var formData = new FormData(event.target);
   let gymId = $('.new-climbs-button')[0].dataset.gymId;
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/gyms/'+ gymId + '/climbs',
+    url: globalVariables.baseUrl + '/gyms/'+ gymId + '/climbs',
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -62,7 +62,7 @@ let openEditClimbModal = function openEditClimbModal(event) {
   $('.delete-climb-button').attr('data-delete-climb-id', climbId);
   $('.submit-climb-edits-button').attr('data-climb-id', climbId);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    url: globalVariables.baseUrl + '/climbs/' + climbId,
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -86,7 +86,7 @@ let submitClimbEdit = function submitClimbEdit(event) {
   let climbId = $('.submit-climb-edits-button')[0].dataset.climbId;
   console.log(event.target);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    url: globalVariables.baseUrl + '/climbs/' + climbId,
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
@@ -111,7 +111,7 @@ let deleteClimb = function deleteClimb(event) {
   let climbId = event.target.dataset.deleteClimbId;
   console.log(climbId);
   $.ajax({
-    url: globalVariables.myApp.baseUrl + '/climbs/' + climbId,
+    url: globalVariables.baseUrl + '/climbs/' + climbId,
     headers: {
       Authorization: 'Token token=' + globalVariables.user.token,
     },
