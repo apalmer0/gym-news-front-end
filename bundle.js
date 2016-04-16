@@ -80,6 +80,7 @@ webpackJsonp([0],[
 	  $('.password').hide();
 	  $('.wrong-password').hide();
 	  $('.new-gym').hide();
+	  $('.progress').hide();
 	};
 
 	module.exports = {
@@ -223,6 +224,7 @@ webpackJsonp([0],[
 	  console.log('signing in');
 	  event.preventDefault();
 	  $('.signin-buttons').prop('disabled', true);
+	  $('.progress').show();
 	  var formData = new FormData(event.target);
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/sign-in',
@@ -232,14 +234,15 @@ webpackJsonp([0],[
 	    data: formData
 	  }).done(function (userData) {
 	    $('.signin-buttons').prop('disabled', false);
+	    $('.progress').hide();
 	    console.log('userData:');
 	    console.log(userData);
 
 	    // for heroku:
-	    globalVariables.user = userData.user;
+	    // globalVariables.user = userData.user;
 
 	    // for localhost:
-	    // globalVariables.user = userData;
+	    globalVariables.user = userData;
 
 	    console.log('global variables:');
 	    console.log(globalVariables);
@@ -250,6 +253,8 @@ webpackJsonp([0],[
 	    ajax.setGyms(event);
 	  }).fail(function (jqxhr) {
 	    $('.wrong-password').show();
+	    $('.signin-buttons').prop('disabled', false);
+	    $('.progress').hide();
 	    console.error(jqxhr);
 	  });
 	};
@@ -388,6 +393,7 @@ webpackJsonp([0],[
 
 	// vvv get all bulletins for a single gym vvv
 	var getGymsBulletins = function getGymsBulletins(single_gym) {
+	  console.log('get gym bulletins start');
 	  $.ajax({
 	    url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/climbs',
 	    headers: {
@@ -397,6 +403,7 @@ webpackJsonp([0],[
 	    contentType: false,
 	    processData: false
 	  }).done(function (climbs) {
+	    console.log('got gym climbs. now getting bulletins');
 	    globalVariables.climbs = climbs;
 	    $.ajax({
 	      url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
@@ -407,12 +414,15 @@ webpackJsonp([0],[
 	      contentType: false,
 	      processData: false
 	    }).done(function (bulletins) {
+	      console.log('on a roll, got bulletins. now to show bulletins with climbs');
 	      $('.content-body').empty();
 	      showBulletinsWithClimbs(bulletins);
 	    }).fail(function (jqxhr) {
+	      console.log('didnt get bulletins, so were not going to show bulletins with climbs');
 	      console.error(jqxhr);
 	    });
 	  }).fail(function (jqxhr) {
+	    console.log('didnt get climbs, so were not going to get bulletins');
 	    console.error(jqxhr);
 	  });
 	};
@@ -423,9 +433,12 @@ webpackJsonp([0],[
 	var showNewsfeed = function showNewsfeed(event) {
 	  event.preventDefault();
 	  console.log('show newsfeed');
+	  console.log('globalVariables.gyms:');
+	  console.log(globalVariables.gyms);
+	  // you need to fix this - this is always referencing the first gym.
 	  if (globalVariables.gyms.length > 0) {
 	    $.ajax({
-	      url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
+	      url: globalVariables.baseUrl + '/gyms/' + globalVariables.gyms[0].id + '/bulletins',
 	      headers: {
 	        Authorization: 'Token token=' + globalVariables.user.token
 	      },
@@ -446,6 +459,7 @@ webpackJsonp([0],[
 	      console.error(jqxhr);
 	    });
 	  } else {
+	    console.log('globalVariables.gyms was not > 0');
 	    $('.feed-header').text('New in your gyms');
 	    $('.content-header').text('No gyms found!');
 	  }
@@ -1794,14 +1808,14 @@ webpackJsonp([0],[
 	    console.log(gymsObject);
 
 	    // for heroku:
-	    globalVariables.gyms = gymsObject.gyms;
-	    var allGyms = gymsObject.gyms;
-	    if (gymsObject.gyms.count !== 0) {
+	    //   globalVariables.gyms = gymsObject.gyms;
+	    //   let allGyms = gymsObject.gyms;
+	    // if (gymsObject.gyms.count !== 0) {
 
-	      // for localhost:
-	      //   globalVariables.gyms = gymsObject;
-	      //   let allGyms = gymsObject;
-	      // if (gymsObject.count !== 0) {
+	    // for localhost:
+	    globalVariables.gyms = gymsObject;
+	    var allGyms = gymsObject;
+	    if (gymsObject.count !== 0) {
 
 	      $('.feed-header').text('All gyms');
 	      $('.content-header').text('Gyms');
@@ -1914,12 +1928,12 @@ webpackJsonp([0],[
 	    console.log(usersObject);
 
 	    // for heroku:
-	    globalVariables.users = usersObject.users;
-	    var allUsers = usersObject.users;
+	    // globalVariables.users = usersObject.users;
+	    // let allUsers = usersObject.users;
 
 	    // for localhost:
-	    // globalVariables.users = usersObject;
-	    // let allUsers = usersObject;
+	    globalVariables.users = usersObject;
+	    var allUsers = usersObject;
 
 	    $('.feed-header').text('All users');
 	    $('.content-header').text('Users');
