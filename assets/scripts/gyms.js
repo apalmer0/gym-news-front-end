@@ -18,14 +18,14 @@ let getAllGyms = function getAllGyms (event) {
     console.log(gymsObject);
 
       // for heroku:
-      globalVariables.gyms = gymsObject.gyms;
-      let allGyms = gymsObject.gyms;
-    if (gymsObject.gyms.count !== 0) {
+    //   globalVariables.gyms = gymsObject.gyms;
+    //   let allGyms = gymsObject.gyms;
+    // if (gymsObject.gyms.count !== 0) {
 
       // for localhost:
-    //   globalVariables.gyms = gymsObject;
-    //   let allGyms = gymsObject;
-    // if (gymsObject.count !== 0) {
+      globalVariables.gyms = gymsObject;
+      let allGyms = gymsObject;
+    if (gymsObject.count !== 0) {
 
       $('.feed-header').text('All gyms');
       $('.content-header').text('Gyms');

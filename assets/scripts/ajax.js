@@ -37,9 +37,9 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
     console.log('got gym climbs. now getting bulletins');
 
     // for heroku
-    globalVariables.climbs = climbsObject.climbs;
+    // globalVariables.climbs = climbsObject.climbs;
     // for localhost
-    // globalVariables.climbs = climbsObject;
+    globalVariables.climbs = climbsObject;
 
     $.ajax({
       url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
@@ -56,9 +56,9 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
       $('.content-body').empty();
 
       // for heroku
-      showBulletinsWithClimbs(bulletinsObject.bulletins);
+      // showBulletinsWithClimbs(bulletinsObject.bulletins);
       // for localhost
-      // showBulletinsWithClimbs(bulletinsObject);
+      showBulletinsWithClimbs(bulletinsObject);
 
     }).fail(function (jqxhr) {
       console.log('didnt get bulletins, so were not going to show bulletins with climbs');
@@ -124,11 +124,11 @@ let setGyms = function setGyms() {
     console.log(gymsObject);
 
     // for heroku
-    for (let i = 0; i < gymsObject.gyms.length; i++) {
-      globalVariables.gyms.push(gymsObject.gyms[i]);
+    // for (let i = 0; i < gymsObject.gyms.length; i++) {
+    //   globalVariables.gyms.push(gymsObject.gyms[i]);
       // for localhost
-    // for (let i = 0; i < gymsObject.length; i++) {
-      // globalVariables.gyms.push(gymsObject[i]);
+    for (let i = 0; i < gymsObject.length; i++) {
+      globalVariables.gyms.push(gymsObject[i]);
 
     }
     showNewsfeed(event);
@@ -172,26 +172,38 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
       console.log(single_entity);
       // gyms below
       if (targetResource === '/gyms/') {
+
+        // for heroku
+        // globalVariables.gym = single_entity.gym;
+        // let singleGym = single_entity.gym;
+        // for localhost
         globalVariables.gym = single_entity;
-        $('.feed-header').text(globalVariables.gym.name);
+        let singleGym = single_entity;
+
+        $('.feed-header').text(singleGym.name);
         $('.content-header').text('The latest');
         $('.action-items').empty();
         let bulletinButtonTemplate = require('./handlebars/bulletins/bulletin-button.handlebars');
-        $('.action-items').append(bulletinButtonTemplate(single_entity));
-        getGymsBulletins(single_entity);
+        $('.action-items').append(bulletinButtonTemplate(singleGym));
+        getGymsBulletins(singleGym);
       // users below
       } else if (targetResource === '/users/') {
+
+        // for heroku
+        // globalVariables.visited_user = single_entity.user;
+        // let singleUser = single_entity.user;
+        // for localhost
         globalVariables.visited_user = single_entity;
-        console.log(single_entity);
-        $('.feed-header').text(globalVariables.visited_user.email);
-        $('.content-header').text(globalVariables.visited_user.email);
+        let singleUser = single_entity;
+
+        console.log(singleUser);
+        $('.feed-header').text(singleUser.email);
+        $('.content-header').text(singleUser.email);
         $('.content-body').empty();
-        // let bulletinsListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
-        // $('.content-body').append(bulletinsListingTemplate({
-        //   single_entity
-        //   // this is passing the JSON object into the bookListingTemplate
-        //   // where handlebars will deal with each item of the array individually
-        // }));
+        let userTemplate = require('./handlebars/users/user.handlebars');
+        $('.content-body').append(userTemplate({
+          singleUser
+        }));
       // anything else... i have no idea what would trigger this.
       } else {
         $('.feed-header').text('error');
