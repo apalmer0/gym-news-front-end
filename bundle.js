@@ -237,6 +237,7 @@ webpackJsonp([0],[
 
 	    // for heroku:
 	    globalVariables.user = userData.user;
+
 	    // for localhost:
 	    // globalVariables.user = userData;
 
@@ -368,6 +369,9 @@ webpackJsonp([0],[
 	var globalVariables = __webpack_require__(4);
 
 	var showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
+	  console.log('show bulletins with climbs');
+	  console.log('globalVariables.climbs:');
+	  console.log(globalVariables.climbs);
 	  var bulletinListingTemplate = __webpack_require__(9);
 	  $('.content-body').append(bulletinListingTemplate({
 	    bulletins: bulletins
