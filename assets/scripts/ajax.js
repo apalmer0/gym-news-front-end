@@ -31,9 +31,11 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
     method: 'GET',
     contentType: false,
     processData: false,
-  }).done(function (climbs) {
+  }).done(function (climbsObject) {
+    console.log('climbsObject returned:');
+    console.log(climbsObject);
     console.log('got gym climbs. now getting bulletins');
-    globalVariables.climbs = climbs;
+    globalVariables.climbs = climbsObject;
     $.ajax({
       url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
       headers: {
@@ -42,16 +44,18 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
       method: 'GET',
       contentType: false,
       processData: false,
-    }).done(function (bulletins) {
+    }).done(function (bulletinsObject) {
+      console.log('bulletinsObject returned:');
+      console.log(bulletinsObject);
       console.log('on a roll, got bulletins. now to show bulletins with climbs');
       $('.content-body').empty();
-      showBulletinsWithClimbs(bulletins);
+      showBulletinsWithClimbs(bulletinsObject);
     }).fail(function (jqxhr) {
       console.log('didnt get bulletins, so were not going to show bulletins with climbs');
       console.error(jqxhr);
     });
   }).fail(function (jqxhr) {
-    console.log('didnt get climbs, so were not going to get bulletins')
+    console.log('didnt get climbs, so were not going to get bulletins');
     console.error(jqxhr);
   });
 };
