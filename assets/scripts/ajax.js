@@ -22,6 +22,7 @@ let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
 
 // vvv get all bulletins for a single gym vvv
 let getGymsBulletins = function getGymsBulletins(single_gym) {
+  console.log('get gym bulletins start');
   $.ajax({
     url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/climbs',
     headers: {
@@ -31,6 +32,7 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
     contentType: false,
     processData: false,
   }).done(function (climbs) {
+    console.log('got gym climbs. now getting bulletins');
     globalVariables.climbs = climbs;
     $.ajax({
       url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
@@ -41,12 +43,15 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
       contentType: false,
       processData: false,
     }).done(function (bulletins) {
+      console.log('on a roll, got bulletins. now to show bulletins with climbs');
       $('.content-body').empty();
       showBulletinsWithClimbs(bulletins);
     }).fail(function (jqxhr) {
+      console.log('didnt get bulletins, so were not going to show bulletins with climbs');
       console.error(jqxhr);
     });
   }).fail(function (jqxhr) {
+    console.log('didnt get climbs, so were not going to get bulletins')
     console.error(jqxhr);
   });
 };
@@ -57,9 +62,12 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
 let showNewsfeed = function showNewsfeed(event) {
   event.preventDefault();
   console.log('show newsfeed');
+  console.log('globalVariables.gyms:');
+  console.log(globalVariables.gyms);
+  // you need to fix this - this is always referencing the first gym.
   if (globalVariables.gyms.length > 0) {
     $.ajax({
-      url: globalVariables.baseUrl + '/gyms/' + 2 + '/bulletins',
+      url: globalVariables.baseUrl + '/gyms/' + globalVariables.gyms[0].id + '/bulletins',
       headers: {
         Authorization: 'Token token=' + globalVariables.user.token,
       },
@@ -80,6 +88,7 @@ let showNewsfeed = function showNewsfeed(event) {
       console.error(jqxhr);
     });
   } else {
+    console.log('globalVariables.gyms was not > 0');
     $('.feed-header').text('New in your gyms');
     $('.content-header').text('No gyms found!');
   }
