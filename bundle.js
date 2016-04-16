@@ -214,6 +214,8 @@ webpackJsonp([0],[
 
 	// let domEvents = require('./page-setup');
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 	var pageSetup = __webpack_require__(3);
 	var pageChanges = __webpack_require__(7);
 	var globalVariables = __webpack_require__(4);
@@ -230,9 +232,14 @@ webpackJsonp([0],[
 	    processData: false,
 	    data: formData
 	  }).done(function (userData) {
+	    console.log('userData:');
 	    console.log(userData);
+	    // let parsedResponse = JSON.parse(userData);
+	    console.log('typeof data:');
+	    console.log(typeof userData === 'undefined' ? 'undefined' : _typeof(userData));
 	    // Object.assign(globalVariables, user);
-	    globalVariables.user = userData.user;
+	    globalVariables.user = userData;
+	    console.log('global variables:');
 	    console.log(globalVariables);
 	    pageSetup.toggleLoggedIn();
 	    pageChanges.hideModal();
