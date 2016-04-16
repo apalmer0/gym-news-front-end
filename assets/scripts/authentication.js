@@ -17,9 +17,14 @@ let signIn = function signIn (event) {
     processData: false,
     data: formData,
   }).done(function (userData) {
+    console.log('userData:');
     console.log(userData);
+    let jSonData = JSON.parse(userData);
+    console.log('json data:');
+    console.log(jSonData);
     // Object.assign(globalVariables, user);
     globalVariables.user = userData.user;
+    console.log('global variables');
     console.log(globalVariables);
     pageSetup.toggleLoggedIn();
     pageChanges.hideModal();
