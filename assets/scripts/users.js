@@ -18,12 +18,12 @@ let getAllUsers = function getAllUsers (event) {
     console.log(usersObject);
 
     // for heroku:
-    // globalVariables.users = usersObject.users;
-    // let allUsers = usersObject.users;
+    globalVariables.users = usersObject.users;
+    let allUsers = usersObject.users;
 
     // for localhost:
-    globalVariables.users = usersObject;
-    let allUsers = usersObject;
+    // globalVariables.users = usersObject;
+    // let allUsers = usersObject;
 
     $('.feed-header').text('All users');
     $('.content-header').text('Users');
@@ -43,7 +43,7 @@ let getAllUsers = function getAllUsers (event) {
 
 let getMyProfile = function getMyProfile(event) {
   event.preventDefault();
-  console.log('get my profile');
+  console.log('get my profile start');
   var formData = new FormData(event.target);
   $.ajax({
     url: globalVariables.baseUrl + '/users/' + globalVariables.user.id,
@@ -58,10 +58,15 @@ let getMyProfile = function getMyProfile(event) {
     console.log('my profile success');
     console.log(userData);
     globalVariables.me = userData.user;
+    let singleUser = globalVariables.me;
     $('.content-body').empty();
     $('.action-items').empty();
     $('.feed-header').text('Your profile');
     $('.content-header').text('You');
+    let userTemplate = require('./handlebars/users/one_user.handlebars');
+    $('.content-body').append(userTemplate({
+      singleUser
+    }));
   }).fail(function (jqxhr) {
     console.error(jqxhr);
   });

@@ -25,10 +25,10 @@ let signIn = function signIn (event) {
     console.log(userData);
 
     // for heroku:
-    // globalVariables.user = userData.user;
+    globalVariables.user = userData.user;
 
     // for localhost:
-    globalVariables.user = userData;
+    // globalVariables.user = userData;
 
     console.log('global variables:');
     console.log(globalVariables);

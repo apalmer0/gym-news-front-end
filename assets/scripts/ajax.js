@@ -37,9 +37,9 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
     console.log('got gym climbs. now getting bulletins');
 
     // for heroku
-    // globalVariables.climbs = climbsObject.climbs;
+    globalVariables.climbs = climbsObject.climbs;
     // for localhost
-    globalVariables.climbs = climbsObject;
+    // globalVariables.climbs = climbsObject;
 
     $.ajax({
       url: globalVariables.baseUrl + '/gyms/' + single_gym.id + '/bulletins',
@@ -56,9 +56,9 @@ let getGymsBulletins = function getGymsBulletins(single_gym) {
       $('.content-body').empty();
 
       // for heroku
-      // showBulletinsWithClimbs(bulletinsObject.bulletins);
+      showBulletinsWithClimbs(bulletinsObject.bulletins);
       // for localhost
-      showBulletinsWithClimbs(bulletinsObject);
+      // showBulletinsWithClimbs(bulletinsObject);
 
     }).fail(function (jqxhr) {
       console.log('didnt get bulletins, so were not going to show bulletins with climbs');
@@ -124,11 +124,11 @@ let setGyms = function setGyms() {
     console.log(gymsObject);
 
     // for heroku
-    // for (let i = 0; i < gymsObject.gyms.length; i++) {
-    //   globalVariables.gyms.push(gymsObject.gyms[i]);
+    for (let i = 0; i < gymsObject.gyms.length; i++) {
+      globalVariables.gyms.push(gymsObject.gyms[i]);
       // for localhost
-    for (let i = 0; i < gymsObject.length; i++) {
-      globalVariables.gyms.push(gymsObject[i]);
+    // for (let i = 0; i < gymsObject.length; i++) {
+    //   globalVariables.gyms.push(gymsObject[i]);
 
     }
     showNewsfeed(event);
@@ -174,11 +174,11 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
       if (targetResource === '/gyms/') {
 
         // for heroku
-        // globalVariables.gym = single_entity.gym;
-        // let singleGym = single_entity.gym;
+        globalVariables.gym = single_entity.gym;
+        let singleGym = single_entity.gym;
         // for localhost
-        globalVariables.gym = single_entity;
-        let singleGym = single_entity;
+        // globalVariables.gym = single_entity;
+        // let singleGym = single_entity;
 
         $('.feed-header').text(singleGym.name);
         $('.content-header').text('The latest');
@@ -190,17 +190,17 @@ let getSingleUserOrGym = function getSingleUserOrGym (event) {
       } else if (targetResource === '/users/') {
 
         // for heroku
-        // globalVariables.visited_user = single_entity.user;
-        // let singleUser = single_entity.user;
+        globalVariables.visited_user = single_entity.user;
+        let singleUser = single_entity.user;
         // for localhost
-        globalVariables.visited_user = single_entity;
-        let singleUser = single_entity;
+        // globalVariables.visited_user = single_entity;
+        // let singleUser = single_entity;
 
         console.log(singleUser);
         $('.feed-header').text(singleUser.email);
         $('.content-header').text(singleUser.email);
         $('.content-body').empty();
-        let userTemplate = require('./handlebars/users/user.handlebars');
+        let userTemplate = require('./handlebars/users/one_user.handlebars');
         $('.content-body').append(userTemplate({
           singleUser
         }));
