@@ -239,10 +239,10 @@ webpackJsonp([0],[
 	    console.log(userData);
 
 	    // for heroku:
-	    // globalVariables.user = userData.user;
+	    globalVariables.user = userData.user;
 
 	    // for localhost:
-	    globalVariables.user = userData;
+	    // globalVariables.user = userData;
 
 	    console.log('global variables:');
 	    console.log(globalVariables);
@@ -1808,14 +1808,14 @@ webpackJsonp([0],[
 	    console.log(gymsObject);
 
 	    // for heroku:
-	    //   globalVariables.gyms = gymsObject.gyms;
-	    //   let allGyms = gymsObject.gyms;
-	    // if (gymsObject.gyms.count !== 0) {
+	    globalVariables.gyms = gymsObject.gyms;
+	    var allGyms = gymsObject.gyms;
+	    if (gymsObject.gyms.count !== 0) {
 
-	    // for localhost:
-	    globalVariables.gyms = gymsObject;
-	    var allGyms = gymsObject;
-	    if (gymsObject.count !== 0) {
+	      // for localhost:
+	      //   globalVariables.gyms = gymsObject;
+	      //   let allGyms = gymsObject;
+	      // if (gymsObject.count !== 0) {
 
 	      $('.feed-header').text('All gyms');
 	      $('.content-header').text('Gyms');
@@ -1928,12 +1928,12 @@ webpackJsonp([0],[
 	    console.log(usersObject);
 
 	    // for heroku:
-	    // globalVariables.users = usersObject.users;
-	    // let allUsers = usersObject.users;
+	    globalVariables.users = usersObject.users;
+	    var allUsers = usersObject.users;
 
 	    // for localhost:
-	    globalVariables.users = usersObject;
-	    var allUsers = usersObject;
+	    // globalVariables.users = usersObject;
+	    // let allUsers = usersObject;
 
 	    $('.feed-header').text('All users');
 	    $('.content-header').text('Users');
