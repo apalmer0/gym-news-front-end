@@ -9,6 +9,7 @@ let ajax = require('./ajax');
 let signIn = function signIn (event) {
   console.log('signing in');
   event.preventDefault();
+  $('.signin-buttons').prop('disabled', true);
   var formData = new FormData(event.target);
   $.ajax({
     url: globalVariables.baseUrl + '/sign-in',
@@ -17,10 +18,13 @@ let signIn = function signIn (event) {
     processData: false,
     data: formData,
   }).done(function (userData) {
+    $('.signin-buttons').prop('disabled', false);
     console.log('userData:');
     console.log(userData);
-    // Object.assign(globalVariables, user);
-    globalVariables.user = userData.user;
+    // for heroku:
+    // globalVariables.user = userData.user;
+    // for localhost:
+    globalVariables.user = userData;
     console.log('global variables:');
     console.log(globalVariables);
     pageSetup.toggleLoggedIn();

@@ -14,11 +14,17 @@ let getAllUsers = function getAllUsers (event) {
     contentType: false,
     processData: false,
   }).done(function (usersObject) {
-    // Object.assign(globalVariables, users);
     console.log('all users:');
     console.log(usersObject);
-    globalVariables.users = usersObject.users;
-    let allUsers = usersObject.users;
+
+    // for heroku:
+    // globalVariables.users = usersObject.users;
+    // let allUsers = usersObject.users;
+
+    // for localhost:
+    globalVariables.users = usersObject;
+    let allUsers = usersObject;
+
     $('.feed-header').text('All users');
     $('.content-header').text('Users');
     $('.content-body').empty();

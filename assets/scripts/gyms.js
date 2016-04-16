@@ -16,10 +16,16 @@ let getAllGyms = function getAllGyms (event) {
     processData: false,
   }).done(function (gymsObject) {
     console.log(gymsObject);
-    if (gymsObject.gyms.count !== 0) {
-      // Object.assign(globalVariables, gyms);
-      globalVariables.gyms = gymsObject.gyms;
-      let allGyms = gymsObject.gyms;
+
+      // for heroku:
+      // globalVariables.gyms = gymsObject.gyms;
+      // let allGyms = gymsObject.gyms;
+    // if (gymsObject.gyms.count !== 0) {
+
+      // for localhost:
+      globalVariables.gyms = gymsObject;
+      let allGyms = gymsObject;
+    if (gymsObject.count !== 0) {
       $('.feed-header').text('All gyms');
       $('.content-header').text('Gyms');
       $('.content-body').empty();

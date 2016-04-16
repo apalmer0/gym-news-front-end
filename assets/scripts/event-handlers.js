@@ -89,8 +89,8 @@ $('.delete-climb-button').on('click', function (event) {
 });
 
 // vvvv create the new bulletin FORM (not the actual bulletin) vvvv
-$('.action-items').on('click', 'button', function() {
-  bulletins.setUpNewBulletinForm();
+$('.action-items').on('click', 'button', function(event) {
+  bulletins.setUpNewBulletinForm(event);
 });
 
 // vvvv here's where we actually create the bulletin. sweet. vvvv
