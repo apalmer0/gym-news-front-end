@@ -3,6 +3,9 @@
 let globalVariables = require('./global-variables');
 
 let showBulletinsWithClimbs = function showBulletinsWithClimbs(bulletins) {
+  console.log('show bulletins with climbs');
+  console.log('globalVariables.climbs:');
+  console.log(globalVariables.climbs);
   let bulletinListingTemplate = require('./handlebars/bulletins/bulletins-listing.handlebars');
   $('.content-body').append(bulletinListingTemplate({
     bulletins
@@ -78,7 +81,7 @@ let showNewsfeed = function showNewsfeed(event) {
     });
   } else {
     $('.feed-header').text('New in your gyms');
-    $('.content-header').text('No gyms found!');    
+    $('.content-header').text('No gyms found!');
   }
 };
 

@@ -24,6 +24,7 @@ let signIn = function signIn (event) {
 
     // for heroku:
     globalVariables.user = userData.user;
+
     // for localhost:
     // globalVariables.user = userData;
 
