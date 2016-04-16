@@ -489,11 +489,15 @@ webpackJsonp([0],[
 	    method: 'GET',
 	    contentType: false,
 	    processData: false
-	  }).done(function (gyms) {
+	  }).done(function (gymsObject) {
 	    console.log('setgyms success');
-	    console.log(gyms);
+	    console.log(gymsObject);
 	    for (var i = 0; i < gyms.length; i++) {
-	      globalVariables.gyms.push(gyms[i]);
+
+	      // for heroku
+	      globalVariables.gyms.push(gymsObject.gyms[i]);
+	      // for localhost
+	      // globalVariables.gyms.push(gymsObject[i]);
 	    }
 	    showNewsfeed(event);
 	  }).fail(function (jqxhr) {
