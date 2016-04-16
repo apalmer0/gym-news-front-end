@@ -10,6 +10,7 @@ let signIn = function signIn (event) {
   console.log('signing in');
   event.preventDefault();
   $('.signin-buttons').prop('disabled', true);
+  $('.progress').show();
   var formData = new FormData(event.target);
   $.ajax({
     url: globalVariables.baseUrl + '/sign-in',
@@ -19,6 +20,7 @@ let signIn = function signIn (event) {
     data: formData,
   }).done(function (userData) {
     $('.signin-buttons').prop('disabled', false);
+    $('.progress').hide();
     console.log('userData:');
     console.log(userData);
 
@@ -37,6 +39,8 @@ let signIn = function signIn (event) {
     ajax.setGyms(event);
   }).fail(function (jqxhr) {
     $('.wrong-password').show();
+    $('.signin-buttons').prop('disabled', false);
+    $('.progress').hide();
     console.error(jqxhr);
   });
 };

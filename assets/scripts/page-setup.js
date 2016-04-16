@@ -21,6 +21,7 @@ var hidePageElements = function hidePageElements() {
   $('.password').hide();
   $('.wrong-password').hide();
   $('.new-gym').hide();
+  $('.progress').hide();
 };
 
 
