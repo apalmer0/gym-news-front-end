@@ -492,11 +492,12 @@ webpackJsonp([0],[
 	  }).done(function (gymsObject) {
 	    console.log('setgyms success');
 	    console.log(gymsObject);
-	    for (var i = 0; i < gyms.length; i++) {
 
-	      // for heroku
+	    // for heroku
+	    for (var i = 0; i < gymsObject.gyms.length; i++) {
 	      globalVariables.gyms.push(gymsObject.gyms[i]);
 	      // for localhost
+	      // for (let i = 0; i < gymsObject.length; i++) {
 	      // globalVariables.gyms.push(gymsObject[i]);
 	    }
 	    showNewsfeed(event);
