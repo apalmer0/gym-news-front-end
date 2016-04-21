@@ -1,14 +1,20 @@
 # Gym News
 
-## Hosted on github pages
+## Hosted on Github pages
 
-  [Gym News Front End](http://apalmer0.github.io/gym-news-front-end/index.html)
-  [Gym News Back End](https://gym-news.herokuapp.com/)
+View app/API here:<br>
+  [Gym News: Client](http://apalmer0.github.io/gym-news-front-end/index.html)
+  <br>
+  [Gym News: API](https://gym-news.herokuapp.com/)
 
 ## Front End Mockups
 
-  ![Mockup](assets/images/mockup1.JPG?raw=true)
-  ![Mockup](assets/images/mockup2.JPG?raw=true)
+Pageviews:
+  ![Mockup](assets/images/IMG_2849.JPG)
+
+## Live Screenshot
+
+  ![Screenshot](assets/images/GymNews.png)
 
 ## About
 
@@ -27,10 +33,13 @@
     -   Refactor my code. Despite setting out to be clearer this time around,
         the code quickly degenerated into a long and hard to follow tangle. The
         first thing I'll do is introduce multiple files to separate tasks.
-    -   Improve the way all data is rendered - there are a lot of features built
-        into this app that aren't available to the front-end user because of
-        some challenges with making the data accessible to them.
-    -   Add in some new features: favorites, subscriptions, ascent recording.
+        <br>**UPDATE Done!** Code has been broken up into multiple files for
+      improved readability. Woot!
+    -   Improve the user interface to accomodate some features that are fully
+        built, but not available to the front end user. This includes things
+        like 'favoriting' of climbs, which has been built but not incorporated
+        into the layout.
+    -   Add in some new features like subscriptions and ascent recording.
 
 ## Code
 
